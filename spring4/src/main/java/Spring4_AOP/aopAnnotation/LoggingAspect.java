@@ -41,7 +41,7 @@ import java.util.Arrays;
  */
 
 /**
- * LoggingAspect:把这个类声明为一个切面：
+ * LoggingAspectXML:把这个类声明为一个切面：
  * 1、需要把该类放入到IOC容器中@Component
  * 2、再声明为一个切面@Aspect
  * @author Lcw 2015/11/13

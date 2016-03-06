@@ -1,14 +1,13 @@
-package Spring4_AOP.aopAnnotation;
+package Spring4_AOP.aopXML;
 
-import org.springframework.stereotype.Component;
+import Spring4_AOP.aopAnnotation.ArithmeticCalculator;
 
 /**
  * ArithmeticCalculatorImplXML
  *
  * @author Lcw 2015/11/12
  */
-@Component("arithmeticCalculator")
-public class ArithmeticCalculatorImpl implements ArithmeticCalculator {
+public class ArithmeticCalculatorImplXML implements ArithmeticCalculator {
     public int add(int i, int j) {
         return i + j;
     }

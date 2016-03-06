@@ -3,6 +3,7 @@ package Spring4_AOP;
 import Spring4_AOP.aopAnnotation.ArithmeticCalculator;
 import Spring4_AOP.aopAnnotation.ArithmeticCalculatorLoggingImpl;
 import Spring4_AOP.aopAnnotation.ArithmeticCalculatorLoggingProxy;
+import Spring4_AOP.aopXML.ArithmeticCalculatorImplXML;
 import org.junit.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
@@ -23,7 +24,22 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
  */
 public class SpringAOPTest {
     @Test
-    public void testAOP() {
+    public void testXML() {
+        //1、创建Spring的IOC的容器
+        ApplicationContext ctx = new ClassPathXmlApplicationContext("Spring4_AOP/applicationContext-xml.xml");
+
+        //2、从IOC容器中获取bean的实例
+        ArithmeticCalculatorImplXML arithmeticCalculator = (ArithmeticCalculatorImplXML) ctx.getBean("arithmeticCalculator");
+
+        //3、使用bean
+        int result = arithmeticCalculator.add(3, 3);
+        System.out.println("result:" + result);
+
+        arithmeticCalculator.div(10, 0);
+    }
+
+    @Test
+    public void testAOPAnnotation() {
         //1、创建Spring的IOC的容器
         ApplicationContext ctx = new ClassPathXmlApplicationContext("Spring4_AOP/applicationContext-aop.xml");
 
