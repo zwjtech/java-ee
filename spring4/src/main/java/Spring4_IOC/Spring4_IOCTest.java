@@ -1,6 +1,9 @@
 package Spring4_IOC;
 
+import Spring4_IOC.annotation.TestObject;
 import Spring4_IOC.annotation.controler.UserController;
+import Spring4_IOC.annotation.repository.UserRepository;
+import Spring4_IOC.annotation.service.UserService;
 import Spring4_IOC.bean.*;
 import Spring4_IOC.bean.CarCycle;
 import org.junit.Test;
@@ -38,19 +41,19 @@ public class Spring4_IOCTest {
     public void testAnnotation() {
         ApplicationContext ctx = new ClassPathXmlApplicationContext("Spring4_IOC/beans-annotation.xml");
 
-//        TestObject to = (TestObject) ctx.getBean("testObject");
-//        System.out.println(to);
+        TestObject to = (TestObject) ctx.getBean("testObject");
+        System.out.println(to);
 
         //类UserController第一个字母小写 userController
         UserController userController = (UserController) ctx.getBean("userController");
         System.out.println(userController);
         userController.execute();
-//
-//        UserService userService = (UserService) ctx.getBean("userService");
-//        System.out.println(userService);
-//
-//        UserRepository userRepository = (UserRepository) ctx.getBean("userRepository");
-//        System.out.println(userRepository);
+
+        UserService userService = (UserService) ctx.getBean("userService");
+        System.out.println(userService);
+
+        UserRepository userRepository = (UserRepository) ctx.getBean("userRepository");
+        System.out.println(userRepository);
     }
 
 
