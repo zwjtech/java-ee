@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+       <!-- 配置视图解析器  BeanNameViewResolver 解析器: 使用视图的名字来解析视图 -->
+       <!-- 通过 order 属性来定义视图解析器的优先级, order 值越小优先级越高 -->
+       <!--<bean class="org.springframework.web.servlet.view.BeanNameViewResolver">-->
+       <!--<property name="order" value="100"/>-->
+       <!--</bean>-->
+
+       <!-- 若项目中使用了JSTL，则SpringMVC会自动把视图由InternalResourceView转为JstlView
+        * 若使用JSTl的fmt标签，则需要在SpringMVC的配置文件中配置国际化资源文件
+          配置国际化资源文件 -->
+       <!--<bean id="messageSource"-->
+       <!--class="org.springframework.context.support.ResourceBundleMessageSource">-->
+       <!--<property name="basename" value="i18n"/>-->
+       <!--</bean>-->
+
+       <!-- 配置直接转发的页面 -->
+       <!-- 可以直接相应转发的页面, 而无需再经过 Handler 的方法.
+       但必须配置下面的 mvc:annotation-driven 标签 ，不然以前RequestMapping映射不起作用-->
+       <!--<mvc:view-controller path="/success" view-name="success"/>-->
+
+       <!--<mvc:annotation-driven /> 会自动注册RequestMappingHandlerMapping
+        、RequestMappingHandlerAdapter 与ExceptionHandlerExceptionResolver 三个bean
+        •还将提供以下支持：
+        –支持使用 ConversionService 实例对表单参数进行类型转换
+        –支持使用 @NumberFormat annotation、@DateTimeFormat注解完成数据类型的格式化
+       –支持使用 @Valid 注解对 JavaBean 实例进行 JSR 303 验证
+       –支持使用 @RequestBody 和 @ResponseBody 注解 -->
+
+       <!-- 在实际开发中通常都需配置 mvc:annotation-driven 标签 -->
+       <!--<mvc:annotation-driven/>-->
+</beans>
