@@ -1,7 +1,6 @@
 package Spring4_IOC;
 
 import Spring4_IOC.annotation.TestObject;
-import Spring4_IOC.annotation.controler.UserController;
 import Spring4_IOC.annotation.repository.UserRepository;
 import Spring4_IOC.annotation.service.UserService;
 import Spring4_IOC.bean.*;

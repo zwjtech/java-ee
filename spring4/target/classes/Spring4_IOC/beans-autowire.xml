@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
+
+    <!--抽象bean: bean的abstract属性为true的bean,这样的bean 不能被IOC容器实例化，只用来被继承配置
+       abstract="true"
+       若某一个bean的class属性没有指定，则该bean必须是一个抽象bean，也就是一个模板-->
+    <bean id="address" class="Spring4_IOC.bean.Address"
+          p:city="Beijing" p:street="DaZhongShi">
+    </bean>
+
+    <bean id="car2" class="Spring4_IOC.bean.Car2"
+            p:brand="Audi" p:company="pachira" p:price="300000"/>
+
+    <!--<bean id="person" class="Spring4_IOC.bean.PersonAutowire"
+          p:name="Tome"  p:address-ref="address" p:car-ref="car"/>-->
+    <!--将上面改为自动注入
+
+        可以使用autowire属性指定自动装配的方式，
+        byName 根据Bean的名字!!和当前bean 的setter风格的属性名进行自动装配。
+        若有匹配的，则会自动装配；若无，则不会。
+        因为PersonAutowire类里的setCar刚好跟上面定义的bean的id为car，所以可以自动注入进来，如将改为id="car2"，则car的结果为Null
+        -->
+    <bean id="person" class="Spring4_IOC.bean.PersonAutowire"
+          p:name="Tom" autowire="byName"/>
+
+    <!--byType 根据bean的类型!!和当前bean 的属性的类型进行自动装配，
+               如果IOC容器中有1个以上的类型匹配的bean,则会异常。比如再添加一个Address的bean  -->
+    <bean id="person2" class="Spring4_IOC.bean.PersonAutowire"
+          p:name="Tom" autowire="byType"/>
+
+</beans>

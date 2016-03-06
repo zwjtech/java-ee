@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
+
+    <!-- 通过全类名配置一个 bean，
+        class：bean的全类名，是Spring通过反射的方式在IOC容器中创建Bean（对象），
+              所有Bean一定要有无参的构造器
+        id：标识容器中的Bean，id是唯一的
+        property name：对应setter方法（public void setUser(String user)）-->
+    <bean id="helloWorld" class="Spring4_IOC.bean.HelloWorldBean">
+        <property name="user" value="Tom"/>
+    </bean>
+
+
+    <!-- Spring 支持 3 种依赖注入的方式
+            属性注入(最常用）
+            构造器注入
+            工厂方法注入（很少使用，不推荐）-->
+    <bean id="helloWorld2" class="Spring4_IOC.bean.HelloWorldBean">
+        <!-- 为属性赋值 -->
+        <!-- 通过属性注入: 通过 setter 方法注入属性值 如setUser() -->
+        <property name="user" value="Tom2"/>
+    </bean>
+    <!-- 通过构造器注入属性值 -->
+    <bean id="helloWorld3" class="Spring4_IOC.bean.HelloWorldBean">
+        <!-- 要求: 在 Bean 中必须有对应的构造器.（public HelloWorldBean(String user)）  -->
+        <constructor-arg value="Mike"/>
+    </bean>
+
+    <!-- 默认是按顺序配置的(个数），
+         若一个 bean 有多个构造器, 则还需要通过参数的类型来配置，如car2 -->
+    <!-- 可以根据 index 和 value 进行更加精确的定位. (了解) -->
+    <bean name="car" class="Spring4_IOC.bean.Car">
+        <constructor-arg value="KUGA" index="0"/>
+        <constructor-arg value="ChangAnFord" index="1"/>
+        <constructor-arg value="250000" type="float"/>
+    </bean>
+
+    <bean id="car2" class="Spring4_IOC.bean.Car">
+        <!--最好设置参数类型-->
+        <constructor-arg value="ChangAnMazda" type="java.lang.String"/>
+        <!-- 若字面值中包含特殊字符, 则可以使用 CDATA 来进行赋值. (了解) -->
+        <constructor-arg value="ShangHai" type="java.lang.String"/>
+        <!--value里的字符为<ShangHai>
+        <constructor-arg type="java.lang.String">
+            <value><![CDATA[<ShangHai>]]></value>
+        </constructor-arg>-->
+        <constructor-arg value="180" type="int"/>
+<!--       上面也可以用这个代替
+        <constructor-arg type="int">
+            <value>180</value>
+        </constructor-arg>-->
+        <!-- 测试null,没有什么意义，因为属性本来就是null。<null/>的专有标记
+        <constructor-arg ><null/> </constructor-arg>
+        -->
+    </bean>
+
+    <bean id="person" class="Spring4_IOC.bean.Person">
+        <property name="name" value="changwen"/>
+        <property name="age" value="24"/>
+        <!-- 可以使用property的ref 属于建立bean之间的引用关系。-->
+        <property name="car" ref="car2"/>
+<!--    也可以这么写
+        <property name="car">
+            <ref bean="car2"/>
+        </property>
+-->
+<!--    还能用内部bean,这个bean不能被外部引用，只能在内部使用
+        <property name="car">
+            <bean class="Spring4_IOC.bean.CarCycle">
+                <constructor-arg value="KUGA" type="java.lang.String"/>
+                <constructor-arg value="ChangAnFord" type="java.lang.String"/>
+                <constructor-arg value="180" type="int"/>
+            </bean>
+        </property>
+-->
+    </bean>
+
+    <bean id="person2" class="Spring4_IOC.bean.Person">
+        <constructor-arg value="changwen"/>
+        <constructor-arg value="25"/>
+        <constructor-arg ref="car"/>
+        <!--为级联属性赋值。注意：属性需要先初始化才可以为级联属性赋值，否则有异常，和struts2不同
+        car.price,在Car类里要有set方法-->
+        <property name="car.maxSpeed" value="300"/>
+    </bean>
+
+    <!--测试如何配置List集合属性-->
+    <bean id="person3" class="Spring4_IOC.bean.PersonCarList">
+        <property name="name" value="Mike"/>
+        <property name="age" value="22"/>
+        <property name="cars">
+            <!--使用List节点为List类型的属性赋值-->
+            <list>
+                <ref bean="car"/>
+                <ref bean="car2"/>
+                <!-- 这里也可以用内部类-->
+            </list>
+        </property>
+    </bean>
+
+
+    <!--配置Map属性值-->
+    <bean id="person4" class="Spring4_IOC.bean.PersonCarMap">
+        <property name="name" value="Rose"/>
+        <property name="age" value="28"/>
+        <property name="cars">
+            <!--使用map结点及Map的entry的子节点配置Map类型属性-->
+            <map>
+                <entry key="AA" value-ref="car"/>
+                <entry key="BB" value-ref="car2"/>
+            </map>
+        </property>
+    </bean>
+
+    <!--配置Properties属性值,在整合hibernate时常用，只是将class改为com.mchange.v2.c3p0.ComboPooledDataSource-->
+    <bean id="dataSource" class="Spring4_IOC.bean.DataSource">
+        <!--这里的class类的属性有一个是Properties类型-->
+        <property name="properties">
+            <!--使用props和prop子节点来为Properties属性赋值-->
+            <props>
+                <prop key="user">root</prop>
+                <prop key="password">123456</prop>
+                <prop key="jdbcUrl">jdbc:mysql:///test</prop>
+                <prop key="driverClass">com.mysql.jdbc.Driver</prop>
+            </props>
+        </property>
+    </bean>
+
+    <!-- *************************************************** -->
+
+
+    <!--配置单例的集合bean,以供多个bean进行引用，需要导入util命名空间-->
+    <util:list id="carsList">
+        <ref bean="car"/>
+        <ref bean="car2"/>
+    </util:list>
+
+    <bean id="personCarList" class="Spring4_IOC.bean.PersonCarList">
+        <property name="name" value="Jack"/>
+        <property name="age" value="10"/>
+        <property name="cars" ref="carsList"/>
+    </bean>
+
+    <!--通过P命名空间为bean的属性赋值，需要先导入p命名空间-->
+    <bean id="person5" class="Spring4_IOC.bean.PersonCarList"
+          p:age="30" p:name="Queue" p:cars-ref="carsList">
+    </bean>
+</beans>
