@@ -1,6 +1,7 @@
 package Spring4_IOC;
 
 import Spring4_IOC.annotation.TestObject;
+import Spring4_IOC.annotation.controler.UserController;
 import Spring4_IOC.annotation.repository.UserRepository;
 import Spring4_IOC.annotation.service.UserService;
 import Spring4_IOC.bean.*;
@@ -23,7 +24,17 @@ import javax.sql.DataSource;
  * @author Administrator on 2016/3/5.
  */
 public class Spring4_IOCTest {
+    /**
+     * Spring 4.x 新特性：泛型依赖注入
+     */
+    @Test
+    public void testDI() {
+        ApplicationContext ctx = new ClassPathXmlApplicationContext("Spring4_IOC/beans-generic.xml");
+        Spring4_IOC.di.UserService userService = (Spring4_IOC.di.UserService) ctx.getBean("userService");
+        System.out.println(userService);
+        userService.add();
 
+    }
     /**
      * 特定组件包括:
      * Component: 基本注解, 标识了一个受 Spring 管理的组件
