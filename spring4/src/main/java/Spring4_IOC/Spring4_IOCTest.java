@@ -14,28 +14,28 @@ import javax.sql.DataSource;
 
 
 /**
- * Spring Ìá¹©ÁËÁ½ÖÖÀàĞÍµÄ IOC ÈİÆ÷ÊµÏÖ.
- BeanFactory: IOC ÈİÆ÷µÄ»ù±¾ÊµÏÖ.
- ApplicationContext: Ìá¹©ÁË¸ü¶àµÄ¸ß¼¶ÌØĞÔ. ÊÇ BeanFactory µÄ×Ó½Ó¿Ú.
+ * Spring æä¾›äº†ä¸¤ç§ç±»å‹çš„ IOC å®¹å™¨å®ç°.
+ BeanFactory: IOC å®¹å™¨çš„åŸºæœ¬å®ç°.
+ ApplicationContext: æä¾›äº†æ›´å¤šçš„é«˜çº§ç‰¹æ€§. æ˜¯ BeanFactory çš„å­æ¥å£.
 
- BeanFactory ÊÇ Spring ¿ò¼ÜµÄ»ù´¡ÉèÊ©£¬ÃæÏò Spring ±¾Éí£»
- ApplicationContext ÃæÏòÊ¹ÓÃ Spring ¿ò¼ÜµÄ¿ª·¢Õß£¬¼¸ºõËùÓĞµÄÓ¦ÓÃ³¡ºÏ¶¼Ö±½ÓÊ¹ÓÃ ApplicationContext ¶ø·Çµ×²ãµÄ BeanFactory
- ÎŞÂÛÊ¹ÓÃºÎÖÖ·½Ê½, ÅäÖÃÎÄ¼şÊ±ÏàÍ¬µÄ.
+ BeanFactory æ˜¯ Spring æ¡†æ¶çš„åŸºç¡€è®¾æ–½ï¼Œé¢å‘ Spring æœ¬èº«ï¼›
+ ApplicationContext é¢å‘ä½¿ç”¨ Spring æ¡†æ¶çš„å¼€å‘è€…ï¼Œå‡ ä¹æ‰€æœ‰çš„åº”ç”¨åœºåˆéƒ½ç›´æ¥ä½¿ç”¨ ApplicationContext è€Œéåº•å±‚çš„ BeanFactory
+ æ— è®ºä½¿ç”¨ä½•ç§æ–¹å¼, é…ç½®æ–‡ä»¶æ—¶ç›¸åŒçš„.
  * @author Administrator on 2016/3/5.
  */
 public class Spring4_IOCTest {
 
     /**
-     * ÌØ¶¨×é¼ş°üÀ¨:
-     * Component: »ù±¾×¢½â, ±êÊ¶ÁËÒ»¸öÊÜ Spring ¹ÜÀíµÄ×é¼ş
-     * Respository: ±êÊ¶³Ö¾Ã²ã×é¼ş
-     * Service: ±êÊ¶·şÎñ²ã(ÒµÎñ²ã)×é¼ş: UserServiceImpl userService
-     * Controller: ±êÊ¶±íÏÖ²ã×é¼ş
+     * ç‰¹å®šç»„ä»¶åŒ…æ‹¬:
+     * Component: åŸºæœ¬æ³¨è§£, æ ‡è¯†äº†ä¸€ä¸ªå— Spring ç®¡ç†çš„ç»„ä»¶
+     * Respository: æ ‡è¯†æŒä¹…å±‚ç»„ä»¶
+     * Service: æ ‡è¯†æœåŠ¡å±‚(ä¸šåŠ¡å±‚)ç»„ä»¶: UserServiceImpl userService
+     * Controller: æ ‡è¯†è¡¨ç°å±‚ç»„ä»¶
      *
-     * ¶ÔÓÚÉ¨Ãèµ½µÄ×é¼ş, Spring ÓĞÄ¬ÈÏµÄÃüÃû²ßÂÔ:
-     * Ê¹ÓÃ·ÇÏŞ¶¨ÀàÃû, µÚÒ»¸ö×ÖÄ¸Ğ¡Ğ´!!!. Ò²¿ÉÒÔÔÚ×¢½âÖĞÍ¨¹ı value ÊôĞÔÖµ±êÊ¶×é¼şµÄÃû³Æ
+     * å¯¹äºæ‰«æåˆ°çš„ç»„ä»¶, Spring æœ‰é»˜è®¤çš„å‘½åç­–ç•¥:
+     * ä½¿ç”¨éé™å®šç±»å, ç¬¬ä¸€ä¸ªå­—æ¯å°å†™!!!. ä¹Ÿå¯ä»¥åœ¨æ³¨è§£ä¸­é€šè¿‡ value å±æ€§å€¼æ ‡è¯†ç»„ä»¶çš„åç§°
      *
-     * »¹ĞèÒªÔÚ Spring µÄÅäÖÃÎÄ¼şÖĞÉùÃ÷ <context:component-scan>
+     * è¿˜éœ€è¦åœ¨ Spring çš„é…ç½®æ–‡ä»¶ä¸­å£°æ˜ <context:component-scan>
      */
     @Test
     public void testAnnotation() {
@@ -44,7 +44,7 @@ public class Spring4_IOCTest {
         TestObject to = (TestObject) ctx.getBean("testObject");
         System.out.println(to);
 
-        //ÀàUserControllerµÚÒ»¸ö×ÖÄ¸Ğ¡Ğ´ userController
+        //ç±»UserControllerç¬¬ä¸€ä¸ªå­—æ¯å°å†™ userController
         UserController userController = (UserController) ctx.getBean("userController");
         System.out.println(userController);
         userController.execute();
@@ -57,17 +57,17 @@ public class Spring4_IOCTest {
     }
 
 
-    /**********BeanÅäÖÃĞÎÊ½£º
-     *         Ò»¡¢»ùÓÚ XML ÎÄ¼şµÄ·½Ê½£»
-     *         ¶ş¡¢»ùÓÚ×¢½âµÄ·½Ê½£¨»ùÓÚ×¢½âÅäÖÃ Bean£»»ùÓÚ×¢½âÀ´×°Åä Bean µÄÊôĞÔ£©
-     * ÏÂÃæµÄ·½·¨¶¼ÊÇÊ¹ÓÃµÄ»ùÓÚ XML ÎÄ¼şµÄ·½Ê½*************/
+    /**********Beané…ç½®å½¢å¼ï¼š
+     *         ä¸€ã€åŸºäº XML æ–‡ä»¶çš„æ–¹å¼ï¼›
+     *         äºŒã€åŸºäºæ³¨è§£çš„æ–¹å¼ï¼ˆåŸºäºæ³¨è§£é…ç½® Beanï¼›åŸºäºæ³¨è§£æ¥è£…é… Bean çš„å±æ€§ï¼‰
+     * ä¸‹é¢çš„æ–¹æ³•éƒ½æ˜¯ä½¿ç”¨çš„åŸºäº XML æ–‡ä»¶çš„æ–¹å¼*************/
 
 
     /**
-     * Bean µÄÅäÖÃ·½Ê½£º-¡¢Í¨¹ıÈ«ÀàÃû£¨·´Éä£©£»¶ş¡¢Í¨¹ı¹¤³§·½·¨£¨¾²Ì¬¹¤³§·½·¨ & ÊµÀı¹¤³§·½·¨£©£»Èı¡¢FactoryBean
+     * Bean çš„é…ç½®æ–¹å¼ï¼š-ã€é€šè¿‡å…¨ç±»åï¼ˆåå°„ï¼‰ï¼›äºŒã€é€šè¿‡å·¥å‚æ–¹æ³•ï¼ˆé™æ€å·¥å‚æ–¹æ³• & å®ä¾‹å·¥å‚æ–¹æ³•ï¼‰ï¼›ä¸‰ã€FactoryBean
      *
-     * ²âÊÔFactoryBean
-     * Spring ÖĞÓĞÁ½ÖÖÀàĞÍµÄ Bean, Ò»ÖÖÊÇÆÕÍ¨Bean, ÁíÒ»ÖÖÊÇ¹¤³§Bean, ¼´FactoryBean
+     * æµ‹è¯•FactoryBean
+     * Spring ä¸­æœ‰ä¸¤ç§ç±»å‹çš„ Bean, ä¸€ç§æ˜¯æ™®é€šBean, å¦ä¸€ç§æ˜¯å·¥å‚Bean, å³FactoryBean
      */
     @Test
     public void testFactoryBean() {
@@ -78,33 +78,33 @@ public class Spring4_IOCTest {
     }
 
     /**
-     * Bean µÄÅäÖÃ·½Ê½£º-¡¢Í¨¹ıÈ«ÀàÃû£¨·´Éä£©£»¶ş¡¢Í¨¹ı¹¤³§·½·¨£¨¾²Ì¬¹¤³§·½·¨ & ÊµÀı¹¤³§·½·¨£©£»Èı¡¢FactoryBean
+     * Bean çš„é…ç½®æ–¹å¼ï¼š-ã€é€šè¿‡å…¨ç±»åï¼ˆåå°„ï¼‰ï¼›äºŒã€é€šè¿‡å·¥å‚æ–¹æ³•ï¼ˆé™æ€å·¥å‚æ–¹æ³• & å®ä¾‹å·¥å‚æ–¹æ³•ï¼‰ï¼›ä¸‰ã€FactoryBean
      *
-     * ¾²Ì¬¹¤³§·½·¨£ºÖ±½Óµ÷ÓÃÄ³Ò»¸öÀàµÄ¾²Ì¬·½·¨¾Í¿ÉÒÔ·µ»ØBeanÊµÀı
-     * ÊµÀı¹¤³§·½·¨£ºÊµÀı¹¤³§µÄ·½·¨£¬¼´ĞèÒªÏÈ´´½¨¹¤³§±¾Éí£¬ÔÙµ÷ÓÃ¹¤³§µÄÊµÀı·½·¨À´·µ»ØbeanµÄÊµÀı
+     * é™æ€å·¥å‚æ–¹æ³•ï¼šç›´æ¥è°ƒç”¨æŸä¸€ä¸ªç±»çš„é™æ€æ–¹æ³•å°±å¯ä»¥è¿”å›Beanå®ä¾‹
+     * å®ä¾‹å·¥å‚æ–¹æ³•ï¼šå®ä¾‹å·¥å‚çš„æ–¹æ³•ï¼Œå³éœ€è¦å…ˆåˆ›å»ºå·¥å‚æœ¬èº«ï¼Œå†è°ƒç”¨å·¥å‚çš„å®ä¾‹æ–¹æ³•æ¥è¿”å›beançš„å®ä¾‹
      */
     @Test
     public void testStaticFactory() {
         ApplicationContext ctx = new ClassPathXmlApplicationContext("Spring4_IOC/beans-factory.xml");
-        //²âÊÔ¾²Ì¬¹¤³§·½·¨
+        //æµ‹è¯•é™æ€å·¥å‚æ–¹æ³•
         Car car1 = (Car) ctx.getBean("car1");
         System.out.println(car1);
 
-        //ÊµÀı¹¤³§·½·¨
+        //å®ä¾‹å·¥å‚æ–¹æ³•
         Car car2 = (Car) ctx.getBean("car2");
         System.out.println(car2);
     }
 
     /**
-     * IOC ÈİÆ÷ÖĞ Bean µÄÉúÃüÖÜÆÚ
-     * Spring IOC ÈİÆ÷¶Ô Bean µÄÉúÃüÖÜÆÚ½øĞĞ¹ÜÀíµÄ¹ı³Ì:
-     * -Í¨¹ı¹¹ÔìÆ÷»ò¹¤³§·½·¨´´½¨ Bean ÊµÀı
-     * -Îª Bean µÄÊôĞÔÉèÖÃÖµºÍ¶ÔÆäËû Bean µÄÒıÓÃ
-     * -µ÷ÓÃ Bean µÄ³õÊ¼»¯·½·¨ !!
-     * -Bean ¿ÉÒÔÊ¹ÓÃÁË
-     * -µ±ÈİÆ÷¹Ø±ÕÊ±, µ÷ÓÃ Bean µÄÏú»Ù·½·¨ !!
+     * IOC å®¹å™¨ä¸­ Bean çš„ç”Ÿå‘½å‘¨æœŸ
+     * Spring IOC å®¹å™¨å¯¹ Bean çš„ç”Ÿå‘½å‘¨æœŸè¿›è¡Œç®¡ç†çš„è¿‡ç¨‹:
+     * -é€šè¿‡æ„é€ å™¨æˆ–å·¥å‚æ–¹æ³•åˆ›å»º Bean å®ä¾‹
+     * -ä¸º Bean çš„å±æ€§è®¾ç½®å€¼å’Œå¯¹å…¶ä»– Bean çš„å¼•ç”¨
+     * -è°ƒç”¨ Bean çš„åˆå§‹åŒ–æ–¹æ³• !!
+     * -Bean å¯ä»¥ä½¿ç”¨äº†
+     * -å½“å®¹å™¨å…³é—­æ—¶, è°ƒç”¨ Bean çš„é”€æ¯æ–¹æ³• !!
      *
-     * ÔÚ Bean µÄÉùÃ÷ÀïÉèÖÃ init-method ºÍ destroy-method ÊôĞÔ, Îª Bean Ö¸¶¨³õÊ¼»¯ºÍÏú»Ù·½·¨.
+     * åœ¨ Bean çš„å£°æ˜é‡Œè®¾ç½® init-method å’Œ destroy-method å±æ€§, ä¸º Bean æŒ‡å®šåˆå§‹åŒ–å’Œé”€æ¯æ–¹æ³•.
      */
     @Test
     public void testCycle() {
@@ -112,11 +112,11 @@ public class Spring4_IOCTest {
         CarCycle car = (CarCycle) ctx.getBean("car");
         System.out.println(car);
 
-        //¹Ø±ÕIOCÈİÆ÷
+        //å…³é—­IOCå®¹å™¨
         ctx.close();
     }
     /**
-     * ²âÊÔSpEL
+     * æµ‹è¯•SpEL
      */
     @Test
     public void testSpEL() {
@@ -131,7 +131,7 @@ public class Spring4_IOCTest {
         System.out.println(person);
     }
     /**
-     * Ê¹ÓÃÍâ²¿ÊôĞÔÎÄ¼ş
+     * ä½¿ç”¨å¤–éƒ¨å±æ€§æ–‡ä»¶
      */
     @Test
     public void testProperties() {
@@ -140,10 +140,10 @@ public class Spring4_IOCTest {
         System.out.println(dataSource);
     }
     /**
-     * bean µÄ×÷ÓÃÓò£º
-     * singleton£ºÄ¬ÈÏÖµ£¬ÈİÆ÷³õÊ¼Ê±´´½¨beanÊµÀı£¬ÔÚÕû¸öÈİÆ÷µÄÉúÃüÖÜÆÚÄÚÖ»´´½¨ÕâÒ»¸öbean.µ¥ÀıµÄ
-     * prototype£ºÔ­ĞÍµÄ£¬ÈİÆ÷³õÊ¼»¯Ê±²»´´½¨beanµÄÊµÀı£¬¶øÔÚÃ¿´ÎÇëÇóÊ±¶¼´´½¨Ò»¸öĞÂµÄbeanÊµÀı!!£¬²¢·µ»Ø
-     * WEB »·¾³×÷ÓÃÓò(request,session)
+     * bean çš„ä½œç”¨åŸŸï¼š
+     * singletonï¼šé»˜è®¤å€¼ï¼Œå®¹å™¨åˆå§‹æ—¶åˆ›å»ºbeanå®ä¾‹ï¼Œåœ¨æ•´ä¸ªå®¹å™¨çš„ç”Ÿå‘½å‘¨æœŸå†…åªåˆ›å»ºè¿™ä¸€ä¸ªbean.å•ä¾‹çš„
+     * prototypeï¼šåŸå‹çš„ï¼Œå®¹å™¨åˆå§‹åŒ–æ—¶ä¸åˆ›å»ºbeançš„å®ä¾‹ï¼Œè€Œåœ¨æ¯æ¬¡è¯·æ±‚æ—¶éƒ½åˆ›å»ºä¸€ä¸ªæ–°çš„beanå®ä¾‹!!ï¼Œå¹¶è¿”å›
+     * WEB ç¯å¢ƒä½œç”¨åŸŸ(request,session)
      */
     @Test
     public void testScope() {
@@ -151,110 +151,110 @@ public class Spring4_IOCTest {
 
         Car2 car1 = (Car2) ctx.getBean("car");
         Car2 car2 = (Car2) ctx.getBean("car");
-        System.out.println(car1 == car2); //Ä¬ÈÏÊÇsingleton£¬½á¹ûÎªtrue
+        System.out.println(car1 == car2); //é»˜è®¤æ˜¯singletonï¼Œç»“æœä¸ºtrue
     }
 
     /**
-     * bean Ö®¼äµÄ¹ØÏµ£º¼Ì³Ğ£»ÒÀÀµ
+     * bean ä¹‹é—´çš„å…³ç³»ï¼šç»§æ‰¿ï¼›ä¾èµ–
      */
     @Test
     public void testRelation() {
         ApplicationContext ctx = new ClassPathXmlApplicationContext("Spring4_IOC/beans-relation.xml");
-        //²âÊÔ¼Ì³Ğ
+        //æµ‹è¯•ç»§æ‰¿
         Address address = (Address) ctx.getBean("address");
         System.out.println(address);
 
         Address address2 = (Address) ctx.getBean("address2");
         System.out.println(address2);
 
-        //²âÊÔÒÀÀµ
+        //æµ‹è¯•ä¾èµ–
         PersonAutowire person = (PersonAutowire) ctx.getBean("person");
-        System.out.println("²âÊÔÒÀÀµ: " + person);
+        System.out.println("æµ‹è¯•ä¾èµ–: " + person);
     }
 
     /**
-     * ×Ô¶¯×°Åä Bean
-     * byType(¸ù¾İÀàĞÍ×Ô¶¯×°Åä)
-     * byName(¸ù¾İÃû³Æ×Ô¶¯×°Åä)
-     * constructor(Í¨¹ı¹¹ÔìÆ÷×Ô¶¯×°Åä):²»ÍÆ¼öÊ¹ÓÃ
+     * è‡ªåŠ¨è£…é… Bean
+     * byType(æ ¹æ®ç±»å‹è‡ªåŠ¨è£…é…)
+     * byName(æ ¹æ®åç§°è‡ªåŠ¨è£…é…)
+     * constructor(é€šè¿‡æ„é€ å™¨è‡ªåŠ¨è£…é…):ä¸æ¨èä½¿ç”¨
      */
     @Test
     public void testAutowire() {
         ApplicationContext ctx = new ClassPathXmlApplicationContext("Spring4_IOC/beans-autowire.xml");
-        //²âÊÔ×Ô¶¯×°ÅäbyName
+        //æµ‹è¯•è‡ªåŠ¨è£…é…byName
         PersonAutowire person = (PersonAutowire) ctx.getBean("person");
-        System.out.println("²âÊÔ×Ô¶¯×°ÅäbyName: " + person);
+        System.out.println("æµ‹è¯•è‡ªåŠ¨è£…é…byName: " + person);
 
-        //²âÊÔ×Ô¶¯×°ÅäbyType
+        //æµ‹è¯•è‡ªåŠ¨è£…é…byType
         PersonAutowire person2 = (PersonAutowire) ctx.getBean("person2");
-        System.out.println("²âÊÔ×Ô¶¯×°ÅäbyType: " + person2);
+        System.out.println("æµ‹è¯•è‡ªåŠ¨è£…é…byType: " + person2);
     }
 
     /***********
-     * Bean µÄÅäÖÃ·½Ê½£º-¡¢Í¨¹ıÈ«ÀàÃû£¨·´Éä£©£»¶ş¡¢Í¨¹ı¹¤³§·½·¨£¨¾²Ì¬¹¤³§·½·¨ & ÊµÀı¹¤³§·½·¨£©£»Èı¡¢FactoryBean
+     * Bean çš„é…ç½®æ–¹å¼ï¼š-ã€é€šè¿‡å…¨ç±»åï¼ˆåå°„ï¼‰ï¼›äºŒã€é€šè¿‡å·¥å‚æ–¹æ³•ï¼ˆé™æ€å·¥å‚æ–¹æ³• & å®ä¾‹å·¥å‚æ–¹æ³•ï¼‰ï¼›ä¸‰ã€FactoryBean
      *
-     * ÅäÖÃBean£ºÅäÖÃ·½Ê½£ºÍ¨¹ıÈ«ÀàÃû£¨·´Éä£©***************/
-    //²âÊÔÒÀÀµ×¢Èë
+     * é…ç½®Beanï¼šé…ç½®æ–¹å¼ï¼šé€šè¿‡å…¨ç±»åï¼ˆåå°„ï¼‰***************/
+    //æµ‹è¯•ä¾èµ–æ³¨å…¥
     @Test
     public void testDependencyInjection() {
         ApplicationContext ctx = new ClassPathXmlApplicationContext("Spring4_IOC/applicationContext.xml");
         Car car = (Car) ctx.getBean("car");
         System.out.println(car);
 
-        //²âÊÔcarÀïÓĞ¶à¸ö¹¹ÔìÆ÷£¬ÈçºÎÅäÖÃIOC
+        //æµ‹è¯•caré‡Œæœ‰å¤šä¸ªæ„é€ å™¨ï¼Œå¦‚ä½•é…ç½®IOC
         Car car2 = (Car) ctx.getBean("car2");
         System.out.println(car2);
 
-        //²âÊÔ PersonÀàÀïÓĞÒ»¸öÊôĞÔÊÇCarÈçºÎÅäÖÃ£¬ÓÃref½¨Á¢beanÖ®¼äµÄÒıÓÃ¹ØÏµ
+        //æµ‹è¯• Personç±»é‡Œæœ‰ä¸€ä¸ªå±æ€§æ˜¯Carå¦‚ä½•é…ç½®ï¼Œç”¨refå»ºç«‹beanä¹‹é—´çš„å¼•ç”¨å…³ç³»
         Person person = (Person) ctx.getBean("person");
-        System.out.println("²âÊÔref: " + person);
+        System.out.println("æµ‹è¯•ref: " + person);
 
-        //²âÊÔ¼¶ÁªÊôĞÔ
+        //æµ‹è¯•çº§è”å±æ€§
         Person person2 = (Person) ctx.getBean("person2");
-        System.out.println("²âÊÔ¼¶ÁªÊôĞÔ: " + person2);
+        System.out.println("æµ‹è¯•çº§è”å±æ€§: " + person2);
 
 
-        //²âÊÔÊ¹ÓÃList¼¯ºÏÊôĞÔ
+        //æµ‹è¯•ä½¿ç”¨Listé›†åˆå±æ€§
         PersonCarList person3 = (PersonCarList) ctx.getBean("person3");
-        System.out.println("²âÊÔÊ¹ÓÃList¼¯ºÏÊôĞÔ: " + person3);
+        System.out.println("æµ‹è¯•ä½¿ç”¨Listé›†åˆå±æ€§: " + person3);
 
-        //²âÊÔÊ¹ÓÃµ¥ÀıList¼¯ºÏÊôĞÔ
+        //æµ‹è¯•ä½¿ç”¨å•ä¾‹Listé›†åˆå±æ€§
         PersonCarList person3_2 = (PersonCarList) ctx.getBean("personCarList");
-        System.out.println("²âÊÔµ¥ÀıµÄList¼¯ºÏ: " + person3_2);
+        System.out.println("æµ‹è¯•å•ä¾‹çš„Listé›†åˆ: " + person3_2);
 
-        //²âÊÔÊ¹ÓÃMap¼¯ºÏÊôĞÔ
+        //æµ‹è¯•ä½¿ç”¨Mapé›†åˆå±æ€§
         PersonCarMap person4 = (PersonCarMap) ctx.getBean("person4");
-        System.out.println("²âÊÔÊ¹ÓÃMap¼¯ºÏÊôĞÔ: " + person4);
+        System.out.println("æµ‹è¯•ä½¿ç”¨Mapé›†åˆå±æ€§: " + person4);
 
-        //²âÊÔÊ¹ÓÃProperties¼¯ºÏÊôĞÔ£¬ÕâÀïÒ»°ãÊÇÓÃÀ´²âÊÔÊı¾İ¿âÊÇ·ñÁ¬½Ó³É¹¦£¡£¡£¡
+        //æµ‹è¯•ä½¿ç”¨Propertiesé›†åˆå±æ€§ï¼Œè¿™é‡Œä¸€èˆ¬æ˜¯ç”¨æ¥æµ‹è¯•æ•°æ®åº“æ˜¯å¦è¿æ¥æˆåŠŸï¼ï¼ï¼
         DataSource dataSource = (DataSource) ctx.getBean("dataSource");
-        System.out.println("²âÊÔÊ¹ÓÃProperties¼¯ºÏÊôĞÔ: " + dataSource);
+        System.out.println("æµ‹è¯•ä½¿ç”¨Propertiesé›†åˆå±æ€§: " + dataSource);
 
-        //²âÊÔÍ¨¹ıPÃüÃû¿Õ¼äÎªbeanµÄÊôĞÔ¸³Öµ
+        //æµ‹è¯•é€šè¿‡På‘½åç©ºé—´ä¸ºbeançš„å±æ€§èµ‹å€¼
         PersonCarList person5 = (PersonCarList) ctx.getBean("person5");
-        System.out.println("²âÊÔÍ¨¹ıPÃüÃû¿Õ¼äÎªbeanµÄÊôĞÔ¸³Öµ: " + person5);
+        System.out.println("æµ‹è¯•é€šè¿‡På‘½åç©ºé—´ä¸ºbeançš„å±æ€§èµ‹å€¼: " + person5);
     }
 
 
     @Test
     public void testHelloWorld() {
-        //        Ç°Á½ĞĞ¿ÉÒÔÓÃSpringÀ´ÊµÏÖ
+        //        å‰ä¸¤è¡Œå¯ä»¥ç”¨Springæ¥å®ç°
 //        HelloWorldBean helloWorldBean = new HelloWorldBean();
 //        helloWorldBean.setUser("Tom");
 //        helloWorldBean.hello();
 
-        //1. ´´½¨ Spring µÄ IOC ÈİÆ÷(ApplicationContext´ú±íSpring µÄ IOC ÈİÆ÷£©
-        //´´½¨µÄÊ±ºò»áÏÈµ÷ÓÃÎŞ²Î¹¹ÔìÆ÷£¬Í¬Ê±»áµ÷ÓÃ setter·½·¨¶ÔÊôĞÔ¸³Öµ!!
+        //1. åˆ›å»º Spring çš„ IOC å®¹å™¨(ApplicationContextä»£è¡¨Spring çš„ IOC å®¹å™¨ï¼‰
+        //åˆ›å»ºçš„æ—¶å€™ä¼šå…ˆè°ƒç”¨æ— å‚æ„é€ å™¨ï¼ŒåŒæ—¶ä¼šè°ƒç”¨ setteræ–¹æ³•å¯¹å±æ€§èµ‹å€¼!!
         ApplicationContext ctx = new ClassPathXmlApplicationContext("Spring4_IOC/applicationContext.xml");
 
-        //2. ´Ó IOC ÈİÆ÷ÖĞµÄid»ñÈ¡ bean µÄÊµÀı
+        //2. ä» IOC å®¹å™¨ä¸­çš„idè·å– bean çš„å®ä¾‹
         HelloWorldBean helloWorldBean = (HelloWorldBean) ctx.getBean("helloWorld");
 
-        //¸ù¾İÀàĞÍÀ´»ñÈ¡ bean µÄÊµÀı: ÒªÇóÔÚ  IOC ÈİÆ÷ÖĞÖ»ÓĞÒ»¸öÓëÖ®ÀàĞÍÆ¥ÅäµÄ bean, ÈôÓĞ¶à¸öÔò»áÅ×³öÒì³£.
-        //Ò»°ãÇé¿öÏÂ, ¸Ã·½·¨¿ÉÓÃ, ÒòÎªÒ»°ãÇé¿öÏÂ, ÔÚÒ»¸ö IOC ÈİÆ÷ÖĞÒ»¸öÀàĞÍ¶ÔÓ¦µÄ bean Ò²Ö»ÓĞÒ»¸ö.
+        //æ ¹æ®ç±»å‹æ¥è·å– bean çš„å®ä¾‹: è¦æ±‚åœ¨  IOC å®¹å™¨ä¸­åªæœ‰ä¸€ä¸ªä¸ä¹‹ç±»å‹åŒ¹é…çš„ bean, è‹¥æœ‰å¤šä¸ªåˆ™ä¼šæŠ›å‡ºå¼‚å¸¸.
+        //ä¸€èˆ¬æƒ…å†µä¸‹, è¯¥æ–¹æ³•å¯ç”¨, å› ä¸ºä¸€èˆ¬æƒ…å†µä¸‹, åœ¨ä¸€ä¸ª IOC å®¹å™¨ä¸­ä¸€ä¸ªç±»å‹å¯¹åº”çš„ bean ä¹Ÿåªæœ‰ä¸€ä¸ª.
 //       HelloWorldBean helloWorld1 = ctx.getBean(HelloWorldBean.class);
 
-        //3. Ê¹ÓÃ bean
+        //3. ä½¿ç”¨ bean
         helloWorldBean.hello();
     }
 }

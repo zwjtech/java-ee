@@ -7,9 +7,9 @@ public class PersonSpEL {
     private Car car;
     private String name;
 
-    //¸ù¾İcarµÄpriceÈ·¶¨Info
+    //æ ¹æ®carçš„priceç¡®å®šInfo
     private String info;
-    //ÒıÓÃaddress beanµÄcityµÄÊôĞÔ
+    //å¼•ç”¨address beançš„cityçš„å±æ€§
     private String city;
 
     @Override
