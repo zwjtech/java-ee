@@ -1,14 +1,17 @@
 package com.changWen.springMVC.SpringMVC_base;
 
+import com.changWen.springMVC.SpringMVC_base.entities.User;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-
-/*import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;*/
+import java.io.Writer;
+import java.util.Arrays;
+import java.util.Date;
+import java.util.Map;
 
 /**
  * Spring 为展现层提供的基于 MVC 设计理念的优秀的Web 框架，是目前最主流的 MVC 框架之一
@@ -23,19 +26,19 @@ import javax.servlet.http.HttpServletResponse;*/
 @RequestMapping("/springMVC")
 @Controller
 public class SpringMVCTest {
-    private static final String SUCCESS = "success";
+    private static final String SUCCESS = "SpringMVC_base/success";
 
     /**
      * redirect:success.jsp: 会完成一个到success.jsp的重定向的操作
      * forward:success.jsp: 会完成一个到success.jsp的转发操作
      */
-/*    @RequestMapping("/testRedirect")
+    @RequestMapping("/testRedirect")
     public String testRedirect(){
         System.out.println("testRedirect");
         return "redirect:/springMVCTest.jsp";
     }
 //
-//    *//**
+//    /**
 //     * t执行/views/HelloView
 //     *//*
 //    @RequestMapping("/testView")
@@ -44,17 +47,17 @@ public class SpringMVCTest {
 //        return "helloView";//类名第一个小写
 //    }
 
-    *//**
+    /**
      * SpringMVC借助ViewResolver 视图解析器得到最终的视图对象（View）
      * internalResourceViewResolver 视图解析器 prefix + returnVal + 后缀
-     *//*
+     */
     @RequestMapping("/testViewAndViewResolver")
     public String testViewAndViewResolver(){
         System.out.println("testViewAndViewResolver");
         return SUCCESS;
     }
 
-    *//**
+    /**
      * 处理模型数据
      * Spring MVC 提供了以下几种途径输出模型数据：
      * –ModelAndView: 处理方法返回值类型为 ModelAndView时, 方法体即可通过该对象添加模型数据
@@ -67,7 +70,7 @@ public class SpringMVCTest {
      * 2. @ModelAttribute 注解也可以来修饰目标方法 POJO 类型的入参, 其 value 属性值有如下的作用:
      * 1). SpringMVC 会使用 value 属性值在 implicitModel 中查找对应的对象, 若存在则会直接传入到目标方法的入参中.
      * 2). SpringMVC 会一 value 为 key, POJO 类型的对象为 value, 存入到 request 中.
-     *//*
+     */
     @ModelAttribute
     public void getUser(@RequestParam(value="id",required=false) Integer id,
                         Map<String, Object> map){
@@ -81,7 +84,7 @@ public class SpringMVCTest {
         }
     }
 
-    *//**
+    /**
      * 运行流程:
      * 1. 执行 @ModelAttribute 注解修饰的方法: 从数据库中取出对象, 把对象放入到了 Map 中. 键为: user
      * 2. SpringMVC 从 Map 中取出 User 对象, 并把表单的请求参数赋给该 User 对象的对应属性.
@@ -121,7 +124,7 @@ public class SpringMVCTest {
      * 3). *SpringMVC 会把 WebDataBinder 的 attrName 和 target 给到 implicitModel.
      * 近而传到 request 域对象中.
      * 4). 把 WebDataBinder 的 target 作为参数传递给目标方法的入参.
-     *//*
+     */
     //这里的测试不能获取到password，要修改后，密码不变，还需要上面的方法
     @RequestMapping("/testModelAttribute")
     public String testModelAttribute(User user1){
@@ -129,7 +132,7 @@ public class SpringMVCTest {
         return SUCCESS;
     }
 
-    *//**
+    /**
      * 若希望在多个请求之间共用某个模型属性数据，则可以在控制器类上(也就是当前类上）标注一个 @SessionAttributes,
      * Spring MVC将在模型中对应的属性暂存到 HttpSession 中。
 
@@ -137,7 +140,7 @@ public class SpringMVCTest {
      * 还可以通过模型属性的对象类型指定哪些模型属性需要放到会话中(实际上使用的是 types 属性值)
      *
      * 注意: 该注解只能放在类的上面. 而不能修饰放方法.
-     *//*
+     */
     @RequestMapping("/testSessionAttributes")
     public String testSessionAttributes(Map<String, Object> map){
         User user = new User("Tom", "123456", "tom@atguigu.com", 15);
@@ -146,9 +149,9 @@ public class SpringMVCTest {
         return SUCCESS;
     }
 
-    *//**
+    /**
      * 目标方法可以添加 Map 类型(实际上也可以是 Model 类型或 ModelMap 类型)的参数.
-     *//*
+     */
     @RequestMapping("/testMap")
     public String testMap(Map<String, Object> map){
         System.out.println(map.getClass().getName());
@@ -156,7 +159,7 @@ public class SpringMVCTest {
         return SUCCESS;
     }
 
-    *//**
+    /**
      * 目标方法的返回值可以是 ModelAndView 类型。
      * 其中可以包含视图和模型信息,(可以简单 将数据模型看成Map<Spring,Object>对象)
      * SpringMVC 会把 ModelAndView 的 model 中数据放入到 request 域对象中.
@@ -168,7 +171,7 @@ public class SpringMVCTest {
      * 可以通过如下设置视图：
      * void setView（View view）；//指定一个具体的视图对象
      * void setViewName（String viewName）；//指定一个逻辑视图名
-     *//*
+     */
     @RequestMapping("/testModelAndView")
     public ModelAndView testModelAndView(){
         String viewName = SUCCESS;
@@ -180,19 +183,12 @@ public class SpringMVCTest {
         return modelAndView;
     }
 
-    *//**-------------------------------------------------------------------
+    /**-------------------------------------------------------------------
      * 可以使用 Serlvet 原生的 API 作为目标方法的参数 具体支持以下类型
-     * HttpServletRequest
-     * HttpServletResponse
-     * HttpSession
-     * java.security.Principal
-     * Locale
-     * InputStream
-     * OutputStream
-     * Reader
-     * Writer
+     * HttpServletRequest、HttpServletResponse、HttpSession、java.security.Principal
+     * Locale、InputStream、OutputStream、Reader、Writer
      * @throws IOException
-     *//*
+     */
     @RequestMapping("/testServletAPI")
     public void testServletAPI(HttpServletRequest request,
                                HttpServletResponse response, Writer out) throws IOException {
@@ -201,10 +197,10 @@ public class SpringMVCTest {
 //		return SUCCESS;
     }
 
-    *//**
+    /**
      * Spring MVC 会按请求参数名和 POJO 属性名进行自动匹配， 自动为该对象填充属性值。支持级联属性。
      * 如：dept.deptId、dept.address.tel 等
-     *//*
+     */
     @RequestMapping("/testPojo")
     public String testPojo(User user) {
         System.out.println("testPojo: " + user);
@@ -226,20 +222,20 @@ public class SpringMVCTest {
 //        return SUCCESS;
 //    }
 
-    *//**
+    /**
      * 了解:
      *
      * CookieValue: 映射一个 Cookie 值. 属性同 @RequestParam
-     *//*
+     */
     @RequestMapping("/testCookieValue")
     public String testCookieValue(@CookieValue("JSESSIONID") String sessionId) {
         System.out.println("testCookieValue: sessionId: " + sessionId);
         return SUCCESS;
     }
 
-    *//**--------------------------------------------------------------------------------------
+    /**--------------------------------------------------------------------------------------
      * 了解: 映射请求头信息 用法同 @RequestParam
-     *//*
+     */
     @RequestMapping("/testRequestHeader")
     public String testRequestHeader(
             @RequestHeader(value = "Accept-Language") String al) {
@@ -247,7 +243,7 @@ public class SpringMVCTest {
         return SUCCESS;
     }
 
-    *//**
+    /**
      * Spring MVC 通过分析处理方法的签名，将 HTTP 请求信息绑定到处理方法的相应人参中。
      *
      * 使用 @RequestParam 绑定请求参数值
@@ -256,7 +252,7 @@ public class SpringMVCTest {
      *       value 值即请求参数的参数名
      *       required 该参数是否必须. 默认为 true，如果为false，没有age这个参数也能执行
      *       defaultValue 请求参数的默认值，如果没这个参数，要将int改为Integer
-     *//*
+     */
     @RequestMapping(value = "/testRequestParam")
     public String testRequestParam(
             @RequestParam(value = "username") String un,
@@ -266,7 +262,7 @@ public class SpringMVCTest {
         return SUCCESS;
     }
 
-    *//**-------------------------------------------------------------------------------------
+    /**-------------------------------------------------------------------------------------
      * HiddenHttpMethodFilter: 浏览器form表单只支持Get中Post请求，不支持Delete，put请求
      * Spring3.0添加一个过滤器，可以将这些请求转换为标准的http方法，使得支持这四种请求
      *
@@ -284,7 +280,7 @@ public class SpringMVCTest {
      * 在 SpringMVC 的目标方法中如何得到 id 呢? 使用 @PathVariable 注解，这个注解是restful风格的请求参数，不是真正意义上的请求参数(如上）
      * 有可能不能显示成功的页面，但能输出，是tomcat版本的问题，我用的是tomcat8, 换成tomcat7就可以了
      *
-     *//*
+     */
     @RequestMapping(value = "/testRest/{id}", method = RequestMethod.PUT)
     public String testRestPut(@PathVariable Integer id) {
         System.out.println("testRest Put: " + id);
@@ -309,30 +305,31 @@ public class SpringMVCTest {
         return SUCCESS;
     }
 
-    *//**
+    /**
      *------------------------------------------------------------
      * 带占位符的 URL 是 Spring3.0 新增的功能，该功能在pringMVC
      * 向 REST 目标挺进发展过程中具有里程碑的意义
      *
      * PathVariable 可以来映射 URL 中的占位符(例如下面的{id})到目标方法的参数id2中.
-     *//*
+     */
     @RequestMapping("/testPathVariable/{id}")
     public String testPathVariable(@PathVariable("id") Integer id2) {
         System.out.println("testPathVariable: " + id2);
         return SUCCESS;
     }
 
-    *//**-------------------------------------------------------------------------------
-     * "*" 代表在两个路径下可以任意个字符 ant风格的路径，了解*//*
+    /**-------------------------------------------------------------------------------
+     * "*" 代表在两个路径下可以任意个字符 ant风格的路径，了解*/
 //    @RequestMapping("/testAntPath")
 //    public String testAntPath() {
 //        System.out.println("testAntPath");
 //        return SUCCESS;
 //    }
 
-    *//**
-     * 了解: 可以使用 params 和 headers 来更加精确的映射请求. params 和 headers 支持简单的表达式.
-     *//*
+    /**
+     * 了解: 可以使用 params（表示HTTP协议中的请求参数） 和 headers（表示HTTP协议中的请求头） 来更加精确的映射请求.
+     * params 和 headers 支持简单的表达式.
+     */
     @RequestMapping(value = "testParamsAndHeaders", params = { "username", "age!=10" },
             headers = { "Accept-Language=en-US,zh;q=0.8" })
     public String testParamsAndHeaders() {
@@ -340,16 +337,21 @@ public class SpringMVCTest {
         return SUCCESS;
     }
 
-    *//**
+    /**
      * RequestMapping 的 value、method、params 及 heads
      * 分别表示HTTP协议中的 请求URL、请求方法、请求参数及请求头的映射条件，
      * 他们之间是与的关系，联合使用多个条件可让请求映射更加精确化。
 
      * 比较常用: 使用 method 属性来指定请求方式
      */
-    @RequestMapping(value = "/testMethod", method = RequestMethod.POST)
+    @RequestMapping(value = "/testPostMethod", method = RequestMethod.POST)
     public String testMethod(@RequestParam(value = "username") String name) {
         System.out.println("testMethod: " + name);
+        return SUCCESS;
+    }
+    @RequestMapping(value = "/testGetMethod", method = RequestMethod.GET)
+    public String testMethod() {
+        System.out.println("this is get method ");
         return SUCCESS;
     }
 
@@ -369,6 +371,6 @@ public class SpringMVCTest {
     @RequestMapping("/testRequestMapping")
     public String testRequestMapping() {
         System.out.println("testRequestMapping");
-        return "SpringMVC_base/success";
+        return SUCCESS;
     }
 }

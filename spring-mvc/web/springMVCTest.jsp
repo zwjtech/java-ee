@@ -76,7 +76,7 @@
 <a href="springMVC/testRequestHeader">com.changwen.springmvc.crud2.SpringMVCTest RequestHeader</a>
 <br><br>
 
-<a href="springMVC/testRequestParam?username=atguigu&age=11">com.changwen.springmvc.crud2.SpringMVCTest RequestParam</a>
+<a href="springMVC/testRequestParam?username=atguigu&age=11">Test RequestParam</a>
 <br><br>
 
 <%-------------------------restfu----------------------------------->--%>
@@ -99,27 +99,27 @@
 <br><br>
 
 <a href="springMVC/testRest/1">Test Rest Get</a>
-<br><br>
 
-<%--------------------------------------------------------------%>
 
-<a href="springMVC/testPathVariable/1">Test PathVariable</a>
-<br><br>
-
-<a href="springMVC/testAntPath/mnxyz/abc">Test AntPath</a>
+--------------------------------------------------------------
+    <br><br>
+    <a href="springMVC/testPathVariable/1">Test7. RequestMapping_PathVariable注解</a>
 
     <br><br>
-    <a href="springMVC/testParamsAndHeaders?username=changWen&age=10">Test ParamsAndHeaders</a>
+    <a href="springMVC/testAntPath/mnxyz/abc">Test AntPath</a>
 
     <br><br>
-    <%--post请求，比较常用--%>
-    <form action="springMVC/testMethod" method="POST">
+    <a href="springMVC/testParamsAndHeaders?username=changWen&age=10">Test5. RequestMapping_请求参数&请求头</a>
+
+
+    下面两个是测试RequestMapping_请求方式，一个是POST请求，一个是GET请求
+    <br><br>
+    <form action="springMVC/testPostMethod" method="POST">
         username: <label><input type="text" name="username"/></label>
         <input type="submit" value="submit"/>
     </form>
-
     <br><br>
-    <a href="springMVC/testMethod">Test Method</a>
+    <a href="springMVC/testGetMethod">测试 GET请求</a>
 
     <br><br>
     <a href="springMVC/testRequestMapping">Test RequestMapping</a>

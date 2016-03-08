@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:mvc="http://www.springframework.org/schema/mvc"
 
-       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd">
        <!-- 配置视图解析器  BeanNameViewResolver 解析器: 使用视图的名字来解析视图 -->
        <!-- 通过 order 属性来定义视图解析器的优先级, order 值越小优先级越高 -->
        <!--<bean class="org.springframework.web.servlet.view.BeanNameViewResolver">-->
@@ -31,5 +31,5 @@
        –支持使用 @RequestBody 和 @ResponseBody 注解 -->
 
        <!-- 在实际开发中通常都需配置 mvc:annotation-driven 标签 -->
-       <!--<mvc:annotation-driven/>-->
+       <mvc:annotation-driven/>
 </beans>
