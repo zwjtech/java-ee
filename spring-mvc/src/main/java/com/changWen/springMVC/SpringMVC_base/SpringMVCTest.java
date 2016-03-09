@@ -20,15 +20,17 @@ import java.util.Map;
  * •支持 REST 风格的 URL 请求
  * •采用了松散耦合可插拔组件结构，比其他 MVC 框架更具扩展性和灵活性
  */
-//这里的user跟testSessionAttributes里map.put的"user"一样，即value,types,对应（key,value)
-//如果有SessionAttributes注解，一定要有ModelAttribute注解
-//@SessionAttributes(value={"user"}, types={String.class})
+/*
+    value是一个数组，里面可以放多个值
+    这里的user跟testSessionAttributes里map.put的"user"一样，即value,types,对应（key，value)，只有满足其中一个，就能对应
+    如果有SessionAttributes注解，一定要有ModelAttribute注解，不然在测试testModelAttribute时有异常*/
+@SessionAttributes(value = {"user"}, types = {String.class})
 @RequestMapping("/springMVC")
-@Controller
+@Controller//这里的user跟testSessionAttributes里map.put的"user"一样，即value,types,对应（key,value)
 public class SpringMVCTest {
     private static final String SUCCESS = "SpringMVC_base/success";
 
-    /**
+    /**Test28
      * redirect:success.jsp: 会完成一个到success.jsp的重定向的操作
      * forward:success.jsp: 会完成一个到success.jsp的转发操作
      */
@@ -47,9 +49,11 @@ public class SpringMVCTest {
 //        return "helloView";//类名第一个小写
 //    }
 
-    /**
-     * SpringMVC借助ViewResolver 视图解析器得到最终的视图对象（View）
-     * internalResourceViewResolver 视图解析器 prefix + returnVal + 后缀
+    /**Test24
+     * 如果得到jsp页面
+     * 1、请求处理方法执行完成后，最终返回一个 ModelAndView对象
+     * 2、SpringMVC借助ViewResolver 视图解析器得到最终的视图对象（View）
+     * 3、internalResourceViewResolver 视图解析器 prefix + returnVal + 后缀
      */
     @RequestMapping("/testViewAndViewResolver")
     public String testViewAndViewResolver(){
@@ -57,15 +61,21 @@ public class SpringMVCTest {
         return SUCCESS;
     }
 
-    /**
+    /** ****************************************************************************
      * 处理模型数据
-     * Spring MVC 提供了以下几种途径输出模型数据：
-     * –ModelAndView: 处理方法返回值类型为 ModelAndView时, 方法体即可通过该对象添加模型数据
-     * –Map 及 Model: 入参为org.springframework.ui.Model、org.springframework.ui.ModelMap 或 java.uti.Map 时，处理方法返回时，Map中的数据会自动添加到模型中。
-     * –@SessionAttributes: 将模型中的某个属性暂存到HttpSession 中，以便多个请求之间可以共享这个属性
-     * –@ModelAttribute: 方法入参标注该注解后, 入参的对象就会放到数据模型中
-     *//*
-    *//**----------------------------------------------------------------------
+     * •Spring MVC 提供了以下几种途径输出模型数据：
+     * –1、ModelAndView: 处理方法返回值类型为 ModelAndView时, 方法体即可通过该对象添加模型数据
+     * –2、Map 及 Model: 入参为org.springframework.ui.Model、org.springframework.ui.ModelMap
+     *                  或 java.uti.Map 时，处理方法返回时，Map中的数据会自动添加到模型中。
+     *
+     * –3、@SessionAttributes: 将模型中的某个属性暂存到 HttpSession 中，以便多个请求之间可以共享这个属性
+     * –4、@ModelAttribute: 方法入参标注该注解后, 入参的对象就会放到数据模型中
+     *
+     * 前面两个是将模型数据放在请求域！！里面; SessionAttributes是把模型数据放在Session里面！！！！
+     ****************************************************************************/
+
+
+     /**----------------------------------------------------------------------
      * !!!1. 有 @ModelAttribute 标记的方法, 会在每个目标方法执行之前被 SpringMVC 调用!
      * 2. @ModelAttribute 注解也可以来修饰目标方法 POJO 类型的入参, 其 value 属性值有如下的作用:
      * 1). SpringMVC 会使用 value 属性值在 implicitModel 中查找对应的对象, 若存在则会直接传入到目标方法的入参中.
@@ -84,7 +94,7 @@ public class SpringMVCTest {
         }
     }
 
-    /**
+    /**Test17
      * 运行流程:
      * 1. 执行 @ModelAttribute 注解修饰的方法: 从数据库中取出对象, 把对象放入到了 Map 中. 键为: user
      * 2. SpringMVC 从 Map 中取出 User 对象, 并把表单的请求参数赋给该 User 对象的对应属性.
@@ -132,7 +142,7 @@ public class SpringMVCTest {
         return SUCCESS;
     }
 
-    /**
+    /**Test16
      * 若希望在多个请求之间共用某个模型属性数据，则可以在控制器类上(也就是当前类上）标注一个 @SessionAttributes,
      * Spring MVC将在模型中对应的属性暂存到 HttpSession 中。
 
@@ -149,17 +159,19 @@ public class SpringMVCTest {
         return SUCCESS;
     }
 
-    /**
+    /**Test15
      * 目标方法可以添加 Map 类型(实际上也可以是 Model 类型或 ModelMap 类型)的参数.
      */
     @RequestMapping("/testMap")
     public String testMap(Map<String, Object> map){
         System.out.println(map.getClass().getName());
         map.put("names", Arrays.asList("Tom", "Jerry", "Mike"));
+
+        //在success.jsp里增加names
         return SUCCESS;
     }
 
-    /**
+    /**Test14
      * 目标方法的返回值可以是 ModelAndView 类型。
      * 其中可以包含视图和模型信息,(可以简单 将数据模型看成Map<Spring,Object>对象)
      * SpringMVC 会把 ModelAndView 的 model 中数据放入到 request 域对象中.
@@ -177,13 +189,14 @@ public class SpringMVCTest {
         String viewName = SUCCESS;
         ModelAndView modelAndView = new ModelAndView(viewName);
 
-        //添加模型数据到 ModelAndView 中.,在success.jsp里增加
-        modelAndView.addObject("time", new Date());
+        //添加（键值对）模型数据到 ModelAndView 中.,在success.jsp里增加
+        modelAndView.addObject("time", new Date()); //在目标页面viewName里打印出时间
 
         return modelAndView;
     }
 
     /**-------------------------------------------------------------------
+     * Test13
      * 可以使用 Serlvet 原生的 API 作为目标方法的参数 具体支持以下类型
      * HttpServletRequest、HttpServletResponse、HttpSession、java.security.Principal
      * Locale、InputStream、OutputStream、Reader、Writer
@@ -197,7 +210,7 @@ public class SpringMVCTest {
 //		return SUCCESS;
     }
 
-    /**
+    /**Test12
      * Spring MVC 会按请求参数名和 POJO 属性名进行自动匹配， 自动为该对象填充属性值。支持级联属性。
      * 如：dept.deptId、dept.address.tel 等
      */
@@ -234,6 +247,7 @@ public class SpringMVCTest {
     }
 
     /**--------------------------------------------------------------------------------------
+     * Test10
      * 了解: 映射请求头信息 用法同 @RequestParam
      */
     @RequestMapping("/testRequestHeader")
@@ -243,7 +257,7 @@ public class SpringMVCTest {
         return SUCCESS;
     }
 
-    /**
+    /**Test9
      * Spring MVC 通过分析处理方法的签名，将 HTTP 请求信息绑定到处理方法的相应人参中。
      *
      * 使用 @RequestParam 绑定请求参数值
@@ -262,24 +276,37 @@ public class SpringMVCTest {
         return SUCCESS;
     }
 
-    /**-------------------------------------------------------------------------------------
+    /**
+     * -------------------------------------------------------------------------------------
+     * REST：即 Representational State Transfer。（资源）表现层状态转化
+     * 资源（Resources）：网络上的一个实体，或者说是网络上的一个具体信息。
+     * 可以用一个URI（统一资源定位符）指向它，每种资源对应一个特定的 URI 。要获取这个资源，访问它的URI就可以，
+     * 因此 URI 即为每一个资源的独一无二的识别符。
+     * 表现层（Representation）：把资源具体呈现出来的形式，叫做它的表现层。如，文本可以用 txt 格式表现，也可以用 HTML 格式、XML 格式、JSON 格式表现
+     * 状态转化（State Transfer）：每发出一个请求，就代表了客户端和服务器的一次交互过程。
+     * HTTP协议，是一个无状态协议，即所有的状态都保存在服务器端。
+     * 因此，如果客户端想要操作服务器，必须通过某种手段，让服务器端发生“状态转化”（State Transfer）。
+     * 而这种转化是建立在表现层之上的，所以就是 “表现层状态转化”。
+     * 具体说，就是 HTTP 协议里面，四个表示操作方式的动词：GET、POST、PUT、DELETE。
+     * 它们分别对应四种基本操作：GET 用来获取资源，POST 用来新建资源，PUT 用来更新资源，DELETE 用来删除资源。
+     * <p/>
+     * Test8
      * HiddenHttpMethodFilter: 浏览器form表单只支持Get中Post请求，不支持Delete，put请求
      * Spring3.0添加一个过滤器，可以将这些请求转换为标准的http方法，使得支持这四种请求
-     *
-     * Rest 风格的 URL. 以 com.changwn.springMVC.CRUD 为例:
+     * <p/>
+     * Rest 风格的 URL. 以 CRUD 为例:
      * 新增: /order           HTTP POST   新增order（用来新建资源）
      * 修改: /order/1         HTTP PUT update?id=1
      * 获取: /order/1         HTTP GET get?id=1   得到id=1的order （用来获取资源）
      * 删除: /order/1(占位符)  HTTP DELETE delete?id=1
-     *
+     * <p/>
      * 如何发送 PUT 请求和 DELETE 请求呢 ?
      * 1. 需要配置 HiddenHttpMethodFilter
      * 2. 需要发送 POST 请求
      * 3. 需要在发送 POST 请求时携带一个 name="_method" 的隐藏域, 值为 DELETE 或 PUT
-     *
+     * <p/>
      * 在 SpringMVC 的目标方法中如何得到 id 呢? 使用 @PathVariable 注解，这个注解是restful风格的请求参数，不是真正意义上的请求参数(如上）
      * 有可能不能显示成功的页面，但能输出，是tomcat版本的问题，我用的是tomcat8, 换成tomcat7就可以了
-     *
      */
     @RequestMapping(value = "/testRest/{id}", method = RequestMethod.PUT)
     public String testRestPut(@PathVariable Integer id) {

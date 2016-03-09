@@ -12,8 +12,7 @@
     <artifactId>spring-mvc</artifactId>
 
     <dependencies>
-<!--
-        &lt;!&ndash;必须要有的包&ndash;&gt;
+        <!--必须要有的包-->
         <dependency>
             <groupId>commons-logging</groupId>
             <artifactId>commons-logging</artifactId>
@@ -25,7 +24,7 @@
             <version>1.2</version>
         </dependency>
 
-        &lt;!&ndash;Spring相关包&ndash;&gt;
+        <!--Spring相关包-->
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-aop</artifactId>
@@ -91,7 +90,6 @@
             <artifactId>standard</artifactId>
             <version>1.1.2</version>
         </dependency>
--->
 
         <!--web.xml里的DispatcherServlet需要的包-->
         <dependency>
