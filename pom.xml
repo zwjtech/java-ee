@@ -17,6 +17,7 @@
         <module>shiro</module>
         <module>spring-security</module>
         <module>spring-data</module>
+        <module>Test</module>
     </modules>
 
     <dependencies>

@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="com.changwen.hibernate4.mapped.oneToManyBoth.pojo">
+    
+    <class name="Customer" table="customers">
+    
+        <id name="customerId" column="customer_id" type="java.lang.Integer">
+            <generator class="native" />
+        </id>
+
+        <property name="customerName" column="customer_name" type="java.lang.String"/>
+
+        <!--
+            映射1对多的那个集合属性
+            name是Customer类里属性，table是Order.hbm.xml里的<class name="Order" table="orders">的table里的值
+            外键column跟Order.hbm.xml里 <many-to-one里的column里值一样
+        -->
+        <set name="orders" table="orders" inverse="true">
+            <key column="customer_ID2"/>
+            <one-to-many class="Order"/>
+        </set>
+    </class>
+    
+</hibernate-mapping>
