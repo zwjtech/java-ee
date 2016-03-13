@@ -18,7 +18,7 @@ public class BookShopServiceImpl implements BookShopService {
     private BookShopDao bookShopDao;
 
     /**
-     * Spring hibernate 事务的流程
+     * Spring utils 事务的流程
      * 1. 在方法开始之前
      * ①. 获取 Session
      * ②. 把 Session 和当前线程绑定, 这样就可以在 Dao 中使用 SessionFactory 的

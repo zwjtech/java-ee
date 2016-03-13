@@ -1,18 +1,15 @@
-package com.changwen.hibernate4.mapped.manyToMany;
-
-import java.util.HashSet;
-import java.util.Set;
+package com.changwen.hibernate4.session.sessionPojo;
 
 /**
- * Category
+ * Worker
  *
  * @author lcw 2015/12/23
  */
-public class Category {
+public class Worker {
     private Integer id;
     private String name;
-    private Set<Item> items = new HashSet<Item>();
 
+    private Pay pay;
 
     public Integer getId() {
         return id;
@@ -30,12 +27,12 @@ public class Category {
         this.name = name;
     }
 
-    public Set<Item> getItems() {
-        return items;
+    public Pay getPay() {
+        return pay;
     }
 
-    public void setItems(Set<Item> items) {
-        this.items = items;
+    public void setPay(Pay pay) {
+        this.pay = pay;
     }
 
 

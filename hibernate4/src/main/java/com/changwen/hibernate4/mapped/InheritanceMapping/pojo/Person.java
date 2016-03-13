@@ -1,17 +1,14 @@
-package com.changwen.hibernate4.mapped.manyToMany;
-
-import java.util.HashSet;
-import java.util.Set;
+package com.changwen.hibernate4.mapped.InheritanceMapping.pojo;
 
 /**
- * Category
+ * Person
  *
  * @author lcw 2015/12/23
  */
-public class Category {
+public class Person {
     private Integer id;
     private String name;
-    private Set<Item> items = new HashSet<Item>();
+    private int age;
 
 
     public Integer getId() {
@@ -30,14 +27,11 @@ public class Category {
         this.name = name;
     }
 
-    public Set<Item> getItems() {
-        return items;
+    public int getAge() {
+        return age;
     }
 
-    public void setItems(Set<Item> items) {
-        this.items = items;
+    public void setAge(int age) {
+        this.age = age;
     }
-
-
-
 }

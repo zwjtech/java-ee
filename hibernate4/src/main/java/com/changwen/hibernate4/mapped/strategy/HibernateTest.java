@@ -44,7 +44,7 @@ public class HibernateTest {
 
     @Test
     public void testMany2OneStrategy(){
-//		Order order = (Order) session.get(Order.class, 1);
+//		Order order = (Order) sessionPojo.get(Order.class, 1);
 //		System.out.println(order.getCustomer().getCustomerName());
 
         List<Order> orders = session.createQuery("FROM Order o").list();

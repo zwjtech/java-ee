@@ -12,7 +12,7 @@
     <artifactId>hibernate4</artifactId>
 
     <dependencies>
-        <!--hibernate-->
+        <!--utils-->
         <dependency>
             <groupId>commons-logging</groupId>
             <artifactId>commons-logging</artifactId>

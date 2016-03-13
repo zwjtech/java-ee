@@ -15,9 +15,13 @@
         <!--
             映射1对多的那个集合属性
             name是Customer类里属性，table是Order.hbm.xml里的<class name="Order" table="orders">的table里的值
-            外键column跟Order.hbm.xml里 <many-to-one里的column里值一样
+            外键column跟Order.hbm.xml里 <many-to-one里的column里值一样\
+
+            inverse 属性的来决定是由双向关联的哪一方来维护表和表之间的关系
+            cascade 设置级联属性,开发时不建议设置该属性，建议使用手工的方式来处理
+            order-by 在查询时对集合的元素进行排序，order-by 中使用的是表的字段名，而不是类的属性名
         -->
-        <set name="orders" table="orders" inverse="true">
+        <set name="orders" table="orders" inverse="true" cascade="delete">
             <key column="customer_ID2"/>
             <one-to-many class="Order"/>
         </set>

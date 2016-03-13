@@ -153,7 +153,7 @@ public class Spring4_IOCTest {
      * bean 的作用域：
      * singleton：默认值，容器初始时创建bean实例，在整个容器的生命周期内只创建这一个bean.单例的
      * prototype：原型的，容器初始化时不创建bean的实例，而在每次请求时都创建一个新的bean实例!!，并返回
-     * WEB 环境作用域(request,session)
+     * WEB 环境作用域(request,sessionPojo)
      */
     @Test
     public void testScope() {

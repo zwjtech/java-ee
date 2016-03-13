@@ -37,8 +37,15 @@ public class OneToManyBothTest {
     }
 
     @Test
+    public void testCascade() {
+        Customer customer = (Customer) session.get(Customer.class, 8);
+        customer.getOrders().clear();
+    }
+
+    @Test
     public void testDelete(){
         //在不设定级联关系的情况下, 且 1 这一端的对象有 n 的对象在引用, 不能直接删除 1 这一端的对象
+        //如果有一的那端设置cascade 属性（级联属性），则可以删除
         Customer customer = (Customer) session.get(Customer.class, 8);
         session.delete(customer); //不能删除
     }
@@ -69,7 +76,7 @@ public class OneToManyBothTest {
     public void testMany2OneGet(){
         //结论1. 若查询多的一端的一个对象, 则默认情况下, 只查询了多的一端的对象.
         //      而没有查询关联的1 的那一端的对象!
-//        Order order = (Order) session.get(Order.class, 8);
+//        Order order = (Order) sessionPojo.get(Order.class, 8);
 //        System.out.println(order.getOrderName());
         //获取 Order 对象时, 默认情况下, 其关联的 Customer 对象是一个代理对象!
 //        System.out.println(order.getCustomer().getClass().getName());
@@ -80,7 +87,7 @@ public class OneToManyBothTest {
         //上面1，2的输出结果顺序是:sql语句-->sout-->sql语句-->sout
 
         //3. 在查询 Customer 对象时, 由多的一端导航到 1 的一端时,
-        //若此时 session 已被关闭, 则默认情况下会发生 LazyInitializationException 异常
+        //若此时 sessionPojo 已被关闭, 则默认情况下会发生 LazyInitializationException 异常
         Order order2 = (Order) session.get(Order.class, 8);
         System.out.println(order2.getOrderName());
 
@@ -126,11 +133,12 @@ public class OneToManyBothTest {
 		session.save(order2);
 
         // 在没有设置inverse的情况下：先插入 Order, 再插入 Customer. 3 条 INSERT, 4 条 UPDATE
-/*        session.save(order1);
-        session.save(order2);
-        session.save(customer1);*/
+/*        sessionPojo.save(order1);
+        sessionPojo.save(order2);
+        sessionPojo.save(customer1);*/
     }
 
+    //测试的时候，请注意配置文件里的各种设置，如inverse
     @Test
     public void test() {
 

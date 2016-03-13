@@ -1,9 +1,9 @@
 package com.changwen.hibernate4.session;
 
-import com.changwen.hibernate4.session.session.News;
-import com.changwen.hibernate4.session.session.News2;
-import com.changwen.hibernate4.session.session.Pay;
-import com.changwen.hibernate4.session.session.Worker;
+import com.changwen.hibernate4.session.sessionPojo.News;
+import com.changwen.hibernate4.session.sessionPojo.News2;
+import com.changwen.hibernate4.session.sessionPojo.Pay;
+import com.changwen.hibernate4.session.sessionPojo.Worker;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -15,8 +15,6 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.io.InputStream;
-import java.sql.Blob;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Date;
@@ -42,11 +40,11 @@ public class SessionTest {
 
     @Before
     public void init(){
-        // 创建 Configuration 对象: 对应 hibernate 的基本配置信息和 对象关系映射信息
+        // 创建 Configuration 对象: 对应 utils 的基本配置信息和 对象关系映射信息
         Configuration configuration = new Configuration().configure();
 
-        // 创建一个 ServiceRegistry 对象: hibernate 4.x 新添加的对象
-        //hibernate 的任何配置和服务都需要在该对象中注册后才能有效.
+        // 创建一个 ServiceRegistry 对象: utils 4.x 新添加的对象
+        //utils 的任何配置和服务都需要在该对象中注册后才能有效.
         ServiceRegistry serviceRegistry =
                 new ServiceRegistryBuilder().applySettings(configuration.getProperties())
                         .buildServiceRegistry();
@@ -97,11 +95,11 @@ public class SessionTest {
 //		news.setTitle("CC");
 //
 //		InputStream stream = new FileInputStream("Hydrangeas.jpg");
-//		Blob image = Hibernate.getLobCreator(session)
+//		Blob image = Hibernate.getLobCreator(sessionPojo)
 //				              .createBlob(stream, stream.available());
 //		news.setImage(image);
 //
-//		session.save(news);
+//		sessionPojo.save(news);
 
         News2 news = (News2) session.get(News.class, 1);
        // Blob image = news.getImage();
@@ -181,7 +179,7 @@ public class SessionTest {
      * delete: 执行删除操作. 只要 OID 和数据表中一条记录对应, 就会准备执行 delete 操作
      *         若 OID 在数据表中没有对应的记录, 则抛出异常
      *
-     * 可以通过设置 hibernate 配置文件 hibernate.use_identifier_rollback 为 true,
+     * 可以通过设置 utils 配置文件 utils.use_identifier_rollback 为 true,
      * 使删除对象后, 把其 OID 置为  null
      */
     @Test
@@ -211,8 +209,8 @@ public class SessionTest {
      * update:
      * 什么时候用？
      * 1. 若更新一个持久化对象, 不需要显示的调用 update 方法.
-     *    因为在调用 Transaction的 commit() 方法时, 会先执行 session 的 flush 方法.
-     * 2. 更新一个游离对象, 需要显式的调用 session 的 update 方法.
+     *    因为在调用 Transaction的 commit() 方法时, 会先执行 sessionPojo 的 flush 方法.
+     * 2. 更新一个游离对象, 需要显式的调用 sessionPojo 的 update 方法.
      *    可以把一个游离对象变为持久化对象
      *
      * 需要注意的:
@@ -233,9 +231,9 @@ public class SessionTest {
         //若更新一个持久化对象, 不需要显示的调用 update 方法
         News news = (News) session.get(News.class, 1);
         news.setAuthor("changwen1");
-        //session.update(news);  //这个update方法没必要写
+        //sessionPojo.update(news);  //这个update方法没必要写
 
-        //更新一个游离对象, 需要显式的调用 session 的 update 方法.
+        //更新一个游离对象, 需要显式的调用 sessionPojo 的 update 方法.
         News news2 = (News) session.get(News.class, 1);
         transaction.commit();
         session.close();
@@ -367,17 +365,17 @@ public class SessionTest {
         News news = (News) session.get(News.class, 1);
         System.out.println(news);
 
-        //session.flush();   //这里不会发送select语句
+        //sessionPojo.flush();   //这里不会发送select语句
         session.refresh(news);  //这里会强制发送select语句
         System.out.println(news);
     }
 
     /**
      * flush(): 使数据表中的记录和 Session 缓存中的对象的状态保持一致. 为了保持一致, 则可能会发送对应的 SQL 语句.
-     * 1. 在 Transaction 的 commit() 方法中: 先调用 session 的 flush 方法, 再提交事务
+     * 1. 在 Transaction 的 commit() 方法中: 先调用 sessionPojo 的 flush 方法, 再提交事务
      * 2. flush() 方法会可能会发送 SQL 语句, 但不会提交事务!!!
      *
-     * 3. 注意: 在未提交事务或显式的调用 session.flush() 方法之前, 也有可能会进行 flush() 操作.
+     * 3. 注意: 在未提交事务或显式的调用 sessionPojo.flush() 方法之前, 也有可能会进行 flush() 操作.
      * 1). 执行 HQL 或 QBC 查询, 会先进行 flush() 操作, 以得到数据表的最新的记录
      * 2). 例外的情况：若记录的 ID 是由底层数据库使用自增的方式生成的, 则在调用 save() 方法时, 就会立即发送 INSERT 语句.
      *      因为 save 方法后, 必须保证对象的 ID 是存在的!
@@ -393,7 +391,7 @@ public class SessionTest {
         News news = (News) session.get(News.class, 1);
         news.setAuthor("Oracle");
 
-//      session.flush();
+//      sessionPojo.flush();
 //      System.out.println("flush");
 
         News news2 = (News) session.createCriteria(News.class).uniqueResult();

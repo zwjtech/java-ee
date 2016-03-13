@@ -2,7 +2,7 @@
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 
-<hibernate-mapping package="com.changwen.hibernate4.session.session">
+<hibernate-mapping package="com.changwen.hibernate4.session.sessionPojo">
 
     <class name="News" table="NEWS" dynamic-update="true">
     

@@ -126,7 +126,7 @@ public class SpringMVCTest {
      * ②. 确定 target 属性:
      * 	> 在 implicitModel 中查找 attrName 对应的属性值. 若存在, ok
      * 	> *若不存在: 则验证当前 Handler 是否使用了 @SessionAttributes 进行修饰, 若使用了, 则尝试从 Session 中
-     * 获取 attrName 所对应的属性值. 若 session 中没有对应的属性值, 则抛出了异常.
+     * 获取 attrName 所对应的属性值. 若 sessionPojo 中没有对应的属性值, 则抛出了异常.
      * 	> 若 Handler 没有使用 @SessionAttributes 进行修饰, 或 @SessionAttributes 中没有使用 value 值指定的 key
      * 和 attrName 相匹配, 则通过反射创建了 POJO 对象
      *

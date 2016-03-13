@@ -11,7 +11,6 @@ import java.util.Set;
 public class Item {
     private Integer id;
     private String name;
-
     private Set<Category> categories = new HashSet<Category>();
 
     public Integer getId() {

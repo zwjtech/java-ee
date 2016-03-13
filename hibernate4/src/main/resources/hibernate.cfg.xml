@@ -4,7 +4,7 @@
         "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
 <hibernate-configuration>
     <session-factory>
-        <!-- 配置连接数据库的基本信息 jdbc:mysql://localhost:3306/hibernate-->
+        <!-- 配置连接数据库的基本信息 jdbc:mysql://localhost:3306/utils-->
 <!--
         <property name="connection.url">jdbc:mysql://localhost/hibernate1</property>
 -->
@@ -14,9 +14,9 @@
         <property name="connection.username">changwen</property>
         <property name="connection.password">123456</property>
 
-        <!-- 配置 hibernate 的基本信息 -->
-        <!-- hibernate 所使用的数据库方言 MySQL5Dialect-->
-        <!--<property name="dialect">org.hibernate.dialect.MySQLInnoDBDialect</property>-->
+        <!-- 配置 utils 的基本信息 -->
+        <!-- utils 所使用的数据库方言 MySQL5Dialect-->
+        <!--<property name="dialect">org.utils.dialect.MySQLInnoDBDialect</property>-->
         <property name="dialect">org.hibernate.dialect.Oracle10gDialect</property>
         <!-- 执行操作时是否在控制台打印 SQL -->
         <property name="show_sql">true</property>
@@ -52,7 +52,19 @@
         <mapping resource="hbm/manyToOne/Order.hbm.xml"/>
         <mapping resource="hbm/manyToOne/Customer.hbm.xml"/>-->
 
-        <mapping resource="hbm/oneToManyBoth/Order.hbm.xml"/>
-        <mapping resource="hbm/oneToManyBoth/Customer.hbm.xml"/>
+<!--        <mapping resource="hbm/oneToManyBoth/Order.hbm.xml"/>
+        <mapping resource="hbm/oneToManyBoth/Customer.hbm.xml"/>-->
+
+<!--            <mapping resource="hbm/oneToOne/foreign/Department.hbm.xml"/>
+            <mapping resource="hbm/oneToOne/foreign/Manager.hbm.xml"/>-->
+
+<!--            <mapping resource="hbm/oneToOne/primary/Department.hbm.xml"/>
+            <mapping resource="hbm/oneToOne/primary/Manager.hbm.xml"/>-->
+
+<!--            <mapping resource="hbm/manyToMany/Item.hbm.xml"/>
+            <mapping resource="hbm/manyToMany/Category.hbm.xml"/>-->
+
+            <mapping resource="hbm/query/Department.hbm.xml"/>
+            <mapping resource="hbm/query/Employee.hbm.xml"/>
     </session-factory>
 </hibernate-configuration>

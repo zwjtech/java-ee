@@ -1,7 +1,7 @@
 package Spring4_hibernate.entities;
 
 /**
- * com.changwen.spring.hibernate.entities.Account
+ * com.changwen.spring.utils.entities.Account
  *
  * @author lcw 2015/11/14
  */

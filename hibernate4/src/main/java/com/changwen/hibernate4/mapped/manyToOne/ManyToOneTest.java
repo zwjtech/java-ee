@@ -53,7 +53,7 @@ public class ManyToOneTest {
     public void testMany2OneGet(){
         //结论1. 若查询多的一端的一个对象, 则默认情况下, 只查询了多的一端的对象.
         //      而没有查询关联的1 的那一端的对象!
-//        Order order = (Order) session.get(Order.class, 8);
+//        Order order = (Order) sessionPojo.get(Order.class, 8);
 //        System.out.println(order.getOrderName());
         //获取 Order 对象时, 默认情况下, 其关联的 Customer 对象是一个代理对象!
 //        System.out.println(order.getCustomer().getClass().getName());
@@ -64,7 +64,7 @@ public class ManyToOneTest {
         //上面1，2的输出结果顺序是:sql语句-->sout-->sql语句-->sout
 
         //3. 在查询 Customer 对象时, 由多的一端导航到 1 的一端时,
-        //若此时 session 已被关闭, 则默认情况下会发生 LazyInitializationException 异常
+        //若此时 sessionPojo 已被关闭, 则默认情况下会发生 LazyInitializationException 异常
         Order order2 = (Order) session.get(Order.class, 8);
         System.out.println(order2.getOrderName());
 
@@ -103,9 +103,9 @@ public class ManyToOneTest {
         //先插入 Order, 再插入 Customer. 3 条 INSERT, 2 条 UPDATE
         //先插入 n 的一端, 再插入 1 的一端, 会多出 UPDATE 语句!
         //因为在插入多的一端时, 无法确定 1 的一端的外键值. 所以只能等 1 的一端插入后, 再额外发送 UPDATE 语句.
-/*        session.save(order1);
-        session.save(order2);
-        session.save(customer);*/
+/*        sessionPojo.save(order1);
+        sessionPojo.save(order2);
+        sessionPojo.save(customer);*/
     }
 
     @Test

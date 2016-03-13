@@ -84,7 +84,7 @@
             <artifactId>spring-webmvc</artifactId>
             <version>${spring.version}</version>
         </dependency>
-        <!--hibernate-->
+        <!--utils-->
         <dependency>
             <groupId>org.antlr</groupId>
             <artifactId>antlr</artifactId>
