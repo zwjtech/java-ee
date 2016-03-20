@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+
+	<properties resource="db.properties"/>
+
+	<!--typeAliases 类型命名
+	类型别名是为 Java 类型命名一个短的名字。它只和 XML 配置有关，只用来减少类完全
+限定名的多余部分-->
+	<typeAliases>
+		<!-- <typeAlias type="com.changwen.mybatis.bean.User" alias="_User"/> -->
+		<!--一般用这种-->
+		<package name="com.changwen.mybatis.bean"/>
+	</typeAliases>
+<!-- 
+	development : 开发模式,下面是用的这个
+	work : 工作模式
+ -->
+	<!--environments 环境-->
+	<environments default="development">
+		<!--environment 环境变量-->
+		<environment id="development">
+			<!--transactionManager 事务管理器-->
+			<transactionManager type="JDBC" />
+			<!--dataSource 数据源-->
+			<dataSource type="POOLED">
+				<property name="driver" value="${driver}" />
+				<property name="url" value="${url}" />
+				<property name="username" value="${name}" />
+				<property name="password" value="${password}" />
+			</dataSource>
+		</environment>
+	</environments>
+	
+	<mappers>
+		<mapper resource="xmlMapper/userMapper1.xml"/>
+		<mapper class="com.changwen.mybatis.annotation.UserMapperAnnotation"/>
+
+		<mapper resource="xmlMapper/orderMapper.xml"/>
+
+		<mapper resource="xmlMapper/OneToOneMapper.xml"/>
+		<mapper resource="xmlMapper/OneToManyMapper.xml"/>
+
+		<!--整合Spring-->
+		<mapper resource="mybatis-spring/userMapper.xml"/>
+
+	</mappers>
+</configuration>

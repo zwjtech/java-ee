@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!--namespace可以随意命名，只要唯一就行-->
+<mapper namespace="com.changwen.mybatis.bean.userMapper1">
+	<!-- 
+		根据id查询得到一个user对象
+	 -->
+	 <select id="getUserHelloWord" parameterType="int"
+			 resultType="com.changwen.mybatis.bean.User">
+	 	select * from users where id=#{id}
+	 </select>
+
+	<!--
+		CRUD操作
+	 -->
+	<!--添加parameterType传的是对象-->
+	<insert id="addUser" parameterType="User">
+		<!--这里的id不是自增长的-->
+		insert into users(id,name, age) values(#{id},#{name}, #{age})
+	</insert>
+
+	<delete id="deleteUser" parameterType="int">
+		delete from users where id=#{id}
+	</delete>
+
+	<update id="updateUser" parameterType="User">
+		update users set name=#{name},age=#{age} where id=#{id}
+	</update>
+
+	<select id="getUser" parameterType="int" resultType="User">
+		select * from users where id=#{id}
+	</select>
+
+	<select id="getAllUsers" resultType="User">
+		select * from users
+	</select>
+
+
+	<!--
+	实现多条件查询用户(姓名模糊匹配, 年龄在指定的最小值到最大值之间)
+	-->
+	<select id="getUserByCondition" parameterType="ConditionUser" resultType="User">
+		select * from d_user where
+
+		<if test='name != "%null%"'>
+			name like #{name} and
+		</if>
+
+		age between #{minAge} and #{maxAge}
+	</select>
+
+
+	<!--测试调用存储过程
+
+    查询得到男性或女性的数量, 如果传入的是0就女性否则是男性
+    parameterMap：引用<parameterMap>
+    statementType: 指定Statement的真实类型。CALLABLE 执行调用存储过程的语句
+
+ -->
+	<select id="getUserCount" parameterMap="getUserCountMap" statementType="CALLABLE">
+		CALL mybatis.ges_user_count(?,?)
+	</select>
+	<!--
+		parameterMap.put("sexid", 0);
+		parameterMap.put("usercount", -1);
+		type: 需要传递的参数的真实类型java.util.Map
+		<parameter>： 指定一个参数key-value
+	 -->
+	<parameterMap type="java.util.Map" id="getUserCountMap">
+		<parameter property="sexid" mode="IN" jdbcType="INTEGER"/>
+		<parameter property="usercount" mode="OUT" jdbcType="INTEGER"/>
+	</parameterMap>
+
+
+
+	<!--1. 映射语句文件中的所有select语句将会被缓存。
+2. 映射语句文件中的所有insert，update和delete语句会刷新缓存。
+3. 缓存会使用Least Recently Used（LRU，最近最少使用的）算法来收回。
+4. 缓存会根据指定的时间间隔来刷新。
+5. 缓存会存储1024个对象
+
+<cache
+eviction="FIFO"  //回收策略为先进先出
+flushInterval="60000" //自动刷新时间60s
+size="512" //最多缓存512个引用对象
+readOnly="true"/> //只读-->
+
+	<!--二级缓存: 是一个映射文件级的缓存
+	加了cache就设置了二级缓存-->
+	<cache/>
+
+	<select id="getUserByCache" parameterType="int" resultType="CUser">
+		select * from c_user where id=#{id}
+	</select>
+
+	<update id="updateUserByCache" parameterType="CUser">
+		update c_user set
+		name=#{name}, age=#{age} where id=#{id}
+	</update>
+</mapper>

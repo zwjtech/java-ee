@@ -1,0 +1,114 @@
+CREATE TABLE orders(
+	order_id INT PRIMARY KEY AUTO_INCREMENT,
+	order_no VARCHAR(20),
+	order_price FLOAT
+);
+INSERT INTO orders(order_no, order_price) VALUES('aaaa', 23);
+INSERT INTO orders(order_no, order_price) VALUES('bbbb', 33);
+INSERT INTO orders(order_no, order_price) VALUES('cccc', 22);
+
+
+--oracle
+CREATE TABLE orders(
+  order_id INT PRIMARY KEY,
+  order_no VARCHAR(20),
+  order_price FLOAT
+);
+
+
+--1.增加一个序列号
+CREATE SEQUENCE s_id
+INCREMENT BY 1     --每次加几
+START WITH 1         --序列从几开始
+
+--2. 增加一个触发器
+CREATE OR REPLACE TRIGGER TRI_orders
+  BEFORE INSERT ON	orders	FOR EACH ROW
+DECLARE
+	-- LOCAL VARIABLES HERE
+BEGIN
+	IF :NEW.order_id IS NULL THEN
+		SELECT s_id.NEXTVAL INTO :NEW.order_id FROM DUAL;
+	END IF;
+END TRI_orders;
+
+INSERT INTO orders( order_no, order_price) VALUES('aaaa', 23);
+INSERT INTO orders( order_no, order_price) VALUES('bbbb', 33);
+INSERT INTO orders(order_no, order_price) VALUES('cccc', 22);
+
+/*************************映射一对多**********************************/
+mysql
+CREATE TABLE teacher(
+	t_id INT PRIMARY KEY AUTO_INCREMENT,
+	t_name VARCHAR(20)
+);
+CREATE TABLE class(
+	c_id INT PRIMARY KEY AUTO_INCREMENT,
+	c_name VARCHAR(20),
+	teacher_id INT
+);
+ALTER TABLE class ADD CONSTRAINT fk_teacher_id FOREIGN KEY (teacher_id) REFERENCES teacher(t_id);
+
+INSERT INTO teacher(t_name) VALUES('LS1');
+INSERT INTO teacher(t_name) VALUES('LS2');
+
+INSERT INTO class(c_name, teacher_id) VALUES('bj_a', 1);
+INSERT INTO class(c_name, teacher_id) VALUES('bj_b', 2);
+
+---oracle
+CREATE TABLE teacher(
+	t_id INT PRIMARY KEY ,
+	t_name VARCHAR(20)
+);
+CREATE TABLE class(
+	c_id INT PRIMARY KEY,
+	c_name VARCHAR(20),
+	teacher_id INT
+);
+
+ALTER TABLE class ADD CONSTRAINT fk_teacher_id FOREIGN KEY (teacher_id) REFERENCES teacher(t_id);
+
+INSERT INTO teacher(t_id,t_name) VALUES(1,'LS1');
+INSERT INTO teacher(t_id,t_name) VALUES(2,'LS2');
+
+INSERT INTO class(c_id,c_name, teacher_id) VALUES(1,'bj_a', 1);
+INSERT INTO class(c_id,c_name, teacher_id) VALUES(2,'bj_b', 2);
+
+/*********************映射一对多*************************8/
+--mysql
+CREATE TABLE student(
+	s_id INT PRIMARY KEY AUTO_INCREMENT,
+	s_name VARCHAR(20),
+	class_id INT
+);
+INSERT INTO student(s_name, class_id) VALUES('xs_A', 1);
+INSERT INTO student(s_name, class_id) VALUES('xs_B', 1);
+INSERT INTO student(s_name, class_id) VALUES('xs_C', 1);
+INSERT INTO student(s_name, class_id) VALUES('xs_D', 2);
+INSERT INTO student(s_name, class_id) VALUES('xs_E', 2);
+INSERT INTO student(s_name, class_id) VALUES('xs_F', 2);
+
+--oracle
+create table d_user(
+	id int primary KEY,
+	name varchar(10),
+	age INT
+);
+
+CREATE SEQUENCE d_user_id2
+INCREMENT BY 1     --每次加几
+START WITH 1         --序列从几开始
+
+CREATE OR REPLACE TRIGGER TRI_d_user2
+  BEFORE INSERT ON	d_user	FOR EACH ROW
+DECLARE
+	-- LOCAL VARIABLES HERE
+BEGIN
+	IF :NEW.id IS NULL THEN
+		SELECT d_user_id2.NEXTVAL INTO :NEW.id FROM DUAL;
+	END IF;
+END TRI_d_user2  ;
+
+insert into d_user(name,age) values('Tom',12);
+insert into d_user(name,age) values('Bob',13);
+insert into d_user(name,age) values('Jack',18);
