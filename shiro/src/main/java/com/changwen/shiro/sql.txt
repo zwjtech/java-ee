@@ -1,0 +1,59 @@
+create table USERS(
+	id int primary KEY,
+	username varchar(10),
+	PASSWORD VARCHAR(20)
+);
+
+CREATE SEQUENCE users_id
+INCREMENT BY 1     --每次加几
+START WITH 1         --序列从几开始
+
+CREATE OR REPLACE TRIGGER TRI_users
+  BEFORE INSERT ON	users	FOR EACH ROW
+DECLARE
+	-- LOCAL VARIABLES HERE
+BEGIN
+	IF :NEW.id IS NULL THEN
+		SELECT users_id.NEXTVAL INTO :NEW.id FROM DUAL;
+	END IF;
+END TRI_users  ;
+
+insert into users(username,PASSWORD) values('changwen',123456);
+
+
+
+
+
+
+
+
+create table r_role(
+	id int primary KEY,
+	roleName varchar(20)
+
+);
+
+
+insert into r_role(id,roleName) values(1,'admin');
+insert into r_role(id,roleName) VALUES(2,'teacher');
+
+CREATE TABLE t_user(
+	id int primary KEY,
+	username varchar(20),
+  PASSWORD VARCHAR(20),
+  roleId INT
+  );
+
+INSERT INTO t_user(ID,username, password,roleid) VALUES(1,'java1234',123456,1);
+INSERT INTO t_user(ID,username, password,roleid) VALUES(2,'jack',123,2);
+INSERT INTO t_user(ID,username, PASSWORD) VALUES(3,'marry',234);
+INSERT INTO t_user(ID,username, PASSWORD) VALUES(4,'json',345);
+
+CREATE TABLE t_permission(
+   ID INT PRIMARY KEY,
+   permissionName VARCHAR(50),
+   roleId INT
+);
+
+INSERT INTO t_permission(ID,permissionname,roleid) VALUES(1,'user:*',1);
+INSERT INTO t_permission(ID,permissionname,roleid) VALUES(2,'student:*',2);
