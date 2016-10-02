@@ -14,15 +14,12 @@ import org.apache.shiro.subject.Subject;
 
 
 public class LoginServlet extends HttpServlet{
-
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		System.out.println("login doget");
+		// 没有登陆的转发到login.jap
 		req.getRequestDispatcher("login.jsp").forward(req, resp);
 	}
 

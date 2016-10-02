@@ -20,7 +20,8 @@ public class CryptographyUtil {
 	}
 
 	/**
-	 * Md5加密
+	 * Md5加密，不能解密
+	 * @param salt 盐值
 	 */
 	public static String md5(String str,String salt){
 		return new Md5Hash(str,salt).toString();
@@ -31,6 +32,6 @@ public class CryptographyUtil {
 		System.out.println("Base64加密："+CryptographyUtil.encBase64(password));
 		System.out.println("Base64解密："+CryptographyUtil.decBase64(CryptographyUtil.encBase64(password)));
 
-		System.out.println("Md5加密："+CryptographyUtil.md5(password, "java1234"));
+		System.out.println("Md5加密："+CryptographyUtil.md5(password, "123456"));
 	}
 }

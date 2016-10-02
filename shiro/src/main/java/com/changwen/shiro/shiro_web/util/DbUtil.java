@@ -12,9 +12,11 @@ public class DbUtil {
 	 * 获取数据库连接
 	 */
 	public Connection getCon() throws Exception{
-		//Class.forName("com.mysql.jdbc.Driver");
-		Class.forName("oracle.jdbc.OracleDriver");
+		Class.forName("com.mysql.jdbc.Driver");
 		Connection con=DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl", "root", "123456");
+
+//		Class.forName("oracle.jdbc.OracleDriver");
+//		Connection con=DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl", "root", "123456");
 		return con;
 	}
 
