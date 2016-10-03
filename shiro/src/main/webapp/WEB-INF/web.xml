@@ -5,6 +5,9 @@
     <display-name>shiro-base</display-name>
 
     <!-- 添加shiro支持,怎么配置可以参考官方文档 -->
+    <!--从Shiro 1.2开始引入了Environment/WebEnvironment的概念，
+    即由它们的实现提供相应的SecurityManager及其相应的依赖。ShiroFilter会自动找到Environment然后获取相应的依赖。
+    通过EnvironmentLoaderListener来创建相应的WebEnvironment，并自动绑定到ServletContext，默认使用IniWebEnvironment实现。-->
     <listener>
         <listener-class>org.apache.shiro.web.env.EnvironmentLoaderListener</listener-class>
     </listener>

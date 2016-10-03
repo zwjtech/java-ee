@@ -13,7 +13,7 @@ public class DbUtil {
 	 */
 	public Connection getCon() throws Exception{
 		Class.forName("com.mysql.jdbc.Driver");
-		Connection con=DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl", "root", "123456");
+		Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/db_shiro", "root", "123456");
 
 //		Class.forName("oracle.jdbc.OracleDriver");
 //		Connection con=DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl", "root", "123456");
@@ -28,7 +28,7 @@ public class DbUtil {
 			con.close();
 		}
 	}
-
+   // 测试
 	public static void main(String[] args) {
 		DbUtil dbUtil=new DbUtil();
 		try {
