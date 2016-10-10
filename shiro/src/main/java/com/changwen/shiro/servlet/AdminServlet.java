@@ -12,7 +12,7 @@ import java.io.IOException;
  *
  * @author liucw on 2016/3/20.
  */
-@WebServlet(name = "admin")
+@WebServlet(name = "adminServlet",urlPatterns = "/admin")
 public class AdminServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
 

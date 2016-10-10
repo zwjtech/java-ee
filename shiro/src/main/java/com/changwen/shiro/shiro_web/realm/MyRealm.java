@@ -14,9 +14,8 @@ import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 
-
+// 自定义的reaml
 public class MyRealm extends AuthorizingRealm{
-
 	private UserDao userDao=new UserDao();
 	private DbUtil dbUtil=new DbUtil();
 	/**
@@ -24,6 +23,7 @@ public class MyRealm extends AuthorizingRealm{
 	 */
 	@Override
 	protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token) throws AuthenticationException {
+		// 获取当前用户名
 		String userName=(String)token.getPrincipal();
 		Connection con=null;
 		try{

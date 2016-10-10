@@ -1,43 +1,41 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" id="WebApp_ID" version="2.5">
-  <display-name>shiro-base</display-name>
-  
-  <listener>
-	    <listener-class>org.apache.shiro.web.env.EnvironmentLoaderListener</listener-class>
-  </listener>
-   
-	<!-- 添加shiro支持 -->
-	<filter>
-	    <filter-name>ShiroFilter</filter-name>
-	    <filter-class>org.apache.shiro.web.servlet.ShiroFilter</filter-class>
-<!--		<init-param>
-			<param-name>configPath</param-name>
-			<param-value>/WEB-INF/shiro.ini</param-value>
-		</init-param>-->
-	</filter>
-	<filter-mapping>
-	    <filter-name>ShiroFilter</filter-name>
-	    <url-pattern>/*</url-pattern>
-	</filter-mapping>
-	
-	
-<!--	<servlet>
-		<servlet-name>loginServlet</servlet-name>
-		<servlet-class>com.changwen.shiro.servlet.LoginServlet</servlet-class>
-	</servlet>
-	
-	<servlet-mapping>
-		<servlet-name>loginServlet</servlet-name>
-		<url-pattern>/login</url-pattern>
-	</servlet-mapping>
-	
-	<servlet>
-		<servlet-name>adminServlet</servlet-name>
-		<servlet-class>com.changwen.shiro.servlet.AdminServlet</servlet-class>
-	</servlet>
-	
-	<servlet-mapping>
-		<servlet-name>adminServlet</servlet-name>
-		<url-pattern>/admin</url-pattern>
-	</servlet-mapping>-->
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee"
+         xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+         id="WebApp_ID" version="2.5">
+    <display-name>shiro-base</display-name>
+
+    <!-- 添加shiro支持,怎么配置可以参考官方文档 -->
+    <!--从Shiro 1.2开始引入了Environment/WebEnvironment的概念，
+    即由它们的实现提供相应的SecurityManager及其相应的依赖。ShiroFilter会自动找到Environment然后获取相应的依赖。
+    通过EnvironmentLoaderListener来创建相应的WebEnvironment，并自动绑定到ServletContext，默认使用IniWebEnvironment实现。-->
+    <listener>
+        <listener-class>org.apache.shiro.web.env.EnvironmentLoaderListener</listener-class>
+    </listener>
+    <filter>
+        <filter-name>ShiroFilter</filter-name>
+        <filter-class>org.apache.shiro.web.servlet.ShiroFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>ShiroFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+
+
+    <servlet>
+        <servlet-name>loginServlet</servlet-name>
+        <servlet-class>com.changwen.shiro.shiro_web.servlet.LoginServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>loginServlet</servlet-name>
+        <url-pattern>/login</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>adminServlet</servlet-name>
+        <servlet-class>com.changwen.shiro.shiro_web.servlet.AdminServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>adminServlet</servlet-name>
+        <url-pattern>/admin</url-pattern>
+    </servlet-mapping>
 </web-app>

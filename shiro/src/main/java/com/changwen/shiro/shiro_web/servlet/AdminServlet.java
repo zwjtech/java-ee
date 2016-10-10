@@ -24,7 +24,4 @@ public class AdminServlet extends HttpServlet{
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		System.out.println("admin do post");
 	}
-	
-	
-
 }

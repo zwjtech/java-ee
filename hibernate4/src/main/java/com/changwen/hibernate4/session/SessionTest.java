@@ -166,42 +166,42 @@ public class SessionTest {
      */
     @Test
     public void testEvict(){
+        //这两种对象数据库要存在
         News news1 = (News) session.get(News.class, 1);
         News news2 = (News) session.get(News.class, 2);
 
         news1.setTitle("AA");
         news2.setTitle("BB");
 
-        session.evict(news1);
+        session.evict(news1);  //结果只有两个select，一条update，对象1不能更新
     }
 
     /**
      * delete: 执行删除操作. 只要 OID 和数据表中一条记录对应, 就会准备执行 delete 操作
-     *         若 OID 在数据表中没有对应的记录, 则抛出异常
+     *         若 OID 在数据表中没有对应的记录, 则抛出异常！
      *
-     * 可以通过设置 utils 配置文件 utils.use_identifier_rollback 为 true,
+     * 可以通过设置 cfg.xml配置文件 utils.use_identifier_rollback 为 true,
      * 使删除对象后, 把其 OID 置为  null
      */
     @Test
     public void testDelete(){
 //		News news = new News();
-//		news.setId(1);
+//		news.setId(1); //这个游离对象是可以删除的
 
-        News news = (News) session.get(News.class, 163840);
+        News news = (News) session.get(News.class, 163840); //这个对象是持久化对象
         session.delete(news);
-
-        System.out.println(news);
+        System.out.println(news);  //输出的对象是有id的
     }
 
     /**
      * 注意:
      * 1. 若 OID 不为 null, 但数据表中还没有和其对应的记录. 会抛出一个异常.
-     * 2. 了解: OID 值等于 id 的 unsaved-value 属性值的对象, 也被认为是一个游离对象
+     * 2. 了解: OID 值等于 id 的 unsaved-value 属性值的对象(在hbm.xml文件), 也被认为是一个游离对象
      */
     @Test
     public void testSaveOrUpdate(){
-        News news = new News("FFF", "fff", new Date());
-        news.setId(11);
+        News news = new News("FFF", "fff", new Date()); //这是一个游离对象
+        news.setId(11);  //这个id应该在数据库里存在的
 
         session.saveOrUpdate(news);
     }
@@ -228,22 +228,23 @@ public class SessionTest {
      */
     @Test
     public void testUpdate(){
-        //若更新一个持久化对象, 不需要显示的调用 update 方法
-        News news = (News) session.get(News.class, 1);
-        news.setAuthor("changwen1");
+        //①.若更新一个持久化对象, 不需要显示的调用 update 方法
+        News news = (News) session.get(News.class, 1);  //发送一条select语句
+        news.setAuthor("changwen1");  //发送一条update 语句
         //sessionPojo.update(news);  //这个update方法没必要写
 
-        //更新一个游离对象, 需要显式的调用 sessionPojo 的 update 方法.
+        //②.更新一个游离对象, 需要显式的调用 sessionPojo 的 update 方法.
         News news2 = (News) session.get(News.class, 1);
         transaction.commit();
         session.close();
+
         session = sessionFactory.openSession();
         transaction = session.beginTransaction();
-        news2.setAuthor("changwen2"); //这时这里的new2为游离对象
+        news2.setAuthor("changwen2"); //这时这里的new2为游离对象,不会发送update 语句
         session.update(news2);  //需要显式的调用
 
-        News news3 = (News) session.get(News.class, 1);
-        session.update(news); //会抛出异常
+        News news3 = (News) session.get(News.class, 10);
+        session.update(news3); //数据表没数据还要更新，会抛出异常
 
     }
 
@@ -400,7 +401,7 @@ public class SessionTest {
 
     /**
      * Session 缓存. 只要 Session 实例没有结束生命周期,
-     * 且没有清理缓存，则存放在它缓存中的对象也不会结束生命周期
+     * 且没有清理缓存，则存放在它缓存中的对象就不会结束生命周期
      *
      * Session 缓存可减少 Hibernate 应用程序访问数据库的频率。
      */

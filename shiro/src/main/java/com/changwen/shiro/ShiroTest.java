@@ -2,11 +2,15 @@ package com.changwen.shiro;
 
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
+import org.apache.shiro.authc.Authenticator;
+import org.apache.shiro.authc.UnknownAccountException;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.config.IniSecurityManagerFactory;
 import org.apache.shiro.mgt.SecurityManager;
+import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.subject.Subject;
 import org.apache.shiro.util.Factory;
+import org.junit.Assert;
 import org.junit.Test;
 
 import java.util.Arrays;
@@ -26,34 +30,42 @@ public class ShiroTest {
      会话管理（Session Management) - 每用户相关的时间敏感的状态。
      Shiro还支持一些辅助特性，如Web应用安全、单元测试和多线程，它们的存在强化了上面提到的四个要素。
      */
-    public  Subject login(String configFile,String userName,String password){
-        // 读取配置文件，初始化SecurityManager工厂
+    //该方法在后面会经常使用，可以将其封装成一个工具类
+    private Subject login(String configFile, String userName, String password){
+        // 1.读取配置文件，初始化SecurityManager工厂,此处使用Ini配置文件初始化SecurityManager
         Factory<SecurityManager> factory=new IniSecurityManagerFactory(configFile);
-        // 获取securityManager实例
+        // 2.得到SecurityManager实例 并绑定给SecurityUtils
         SecurityManager securityManager=factory.getInstance();
         // 把securityManager实例绑定到SecurityUtils
         SecurityUtils.setSecurityManager(securityManager);
-        // 得到当前执行的用户
-        Subject currentUser=SecurityUtils.getSubject();
+
+        // 3、得到Subject及创建用户名/密码身份验证Token（即用户身份/凭证）
+        Subject subject=SecurityUtils.getSubject();
         // 创建token令牌，用户名/密码
         UsernamePasswordToken token=new UsernamePasswordToken(userName, password);
+
         try{
-            // 身份认证
-            currentUser.login(token);
+            //4、登录，即身份验证
+            subject.login(token);
             System.out.println("身份认证成功！");
         }catch(AuthenticationException e){
+            //5、身份验证失败
             e.printStackTrace();
             System.out.println("身份认证失败！");
         }
-        return currentUser;
+
+        Assert.assertEquals(true, subject.isAuthenticated()); //断言用户已经登录
+
+        //6、退出
+        return subject;
     }
 
     @Test
     public void testHelloWorld() {
-        Subject currentUser= login("classpath:shiroHelloWorld.ini", "java1234", "123456");
+        Subject subject= login("classpath:shiroHelloWorld.ini", "Tom", "123456");
 
         // 退出
-        currentUser.logout();
+        subject.logout();
     }
 
     /**
@@ -67,7 +79,7 @@ public class ShiroTest {
      */
     @Test
     public void testJdbcRealm() {
-        Subject currentUser= login("classpath:jdbc_realm.ini", "changwen", "123456");
+        Subject currentUser= login("classpath:jdbc_realm.ini", "jack", "123");
 
         // 退出
         currentUser.logout();
@@ -94,18 +106,23 @@ public class ShiroTest {
     //1.1 基于角色的访问控制
     @Test
     public void testHasRole() {
-        Subject currentUser= login("classpath:shiro_role.ini", "java1234", "123456");
-        // Subject currentUser=ShiroUtil.login("classpath:shiro_role.ini", "jack", "123");
+        Subject currentUser= login("classpath:shiro_role.ini", "tom", "123456");
 
         //hasRole(String roleName)判断roleName是否有这个权限
         System.out.println(currentUser.hasRole("role1")?"有role1这个角色":"没有role1这个角色");
+        //上面的也可以这么写
+        Assert.assertTrue(currentUser.hasRole("role1"));
 
         //hasRoles
         boolean []results=currentUser.hasRoles(Arrays.asList("role1", "role2", "role3"));
+ //       System.out.println(results[0]?"有role1这个角色":"没有role1这个角色");
+ //       System.out.println(results[1]?"有role2这个角色":"没有role2这个角色");
+ //       System.out.println(results[2]?"有role3这个角色":"没有role3这个角色");
+        //将上面写成这样
+        Assert.assertEquals(true, results[0]);
+        Assert.assertEquals(true, results[1]);
+        Assert.assertEquals(false, results[2]);
 
-        System.out.println(results[0]?"有role1这个角色":"没有role1这个角色");
-        System.out.println(results[1]?"有role2这个角色":"没有role2这个角色");
-        System.out.println(results[2]?"有role3这个角色":"没有role3这个角色");
         //hasAllRoles
         System.out.println(currentUser.hasAllRoles(Arrays.asList("role1","role2"))?"role1,role2这两个角色都有":"role1,role2这个两个角色不全有");
 
@@ -114,12 +131,13 @@ public class ShiroTest {
 
     @Test
     public void testCheckRole() {
-        Subject currentUser=login("classpath:shiro_role.ini", "java1234", "123456");
-        // Subject currentUser=ShiroUtil.login("classpath:shiro_role.ini", "jack", "123");
+        Subject currentUser=login("classpath:shiro_role.ini", "tom", "123456");
         currentUser.checkRole("role1");
-        currentUser.checkRoles(Arrays.asList("role1","role2"));
-        //currentUser.checkRoles("role1","role2","role3");
 
+        currentUser.checkRoles(Arrays.asList("role1","role2"));
+        //上一行代码或者这么写
+        currentUser.checkRoles("role1","role2");
+ //       currentUser.checkRoles("role1","role2","role3");//这里有有异常：Subject does not have role [role3]
         currentUser.logout();
     }
 
@@ -128,14 +146,15 @@ public class ShiroTest {
      */
     @Test
     public void testIsPermitted() {
-        Subject currentUser= login("classpath:shiro_permission.ini", "java1234", "123456");
-        // Subject currentUser=ShiroUtil.login("classpath:shiro_permission.ini", "jack", "123");
+        Subject currentUser= login("classpath:shiro_permission.ini", "tom", "123456");
         System.out.println(currentUser.isPermitted("user:select")?"有user:select这个权限":"没有user:select这个权限");
-        System.out.println(currentUser.isPermitted("user:update")?"有user:update这个权限":"没有user:update这个权限");
+//        Assert.assertTrue(currentUser.isPermitted("user:select")); //上面一行代码可以写成这样
+
         boolean results[]=currentUser.isPermitted("user:select","user:update","user:delete");
         System.out.println(results[0]?"有user:select这个权限":"没有user:select这个权限");
         System.out.println(results[1]?"有user:update这个权限":"没有user:update这个权限");
         System.out.println(results[2]?"有user:delete这个权限":"没有user:delete这个权限");
+
         System.out.println(currentUser.isPermittedAll("user:select","user:update")?"有user:select,update这两个权限":"user:select,update这两个权限不全有");
 
         currentUser.logout();
@@ -143,10 +162,32 @@ public class ShiroTest {
     @Test
     public void testCheckPermitted() {
         Subject currentUser= login("classpath:shiro_permission.ini", "java1234", "123456");
-        // Subject currentUser=ShiroUtil.login("classpath:shiro_permission.ini", "jack", "123");
         currentUser.checkPermission("user:select");
         currentUser.checkPermissions("user:select","user:update","user:delete");
         currentUser.logout();
     }
 
+    @Test
+    public void testMyReaml() {
+        Subject currentUser= login("classpath:shiro-realm1.ini", "zhang", "123");
+        currentUser.logout();
+    }
+
+    @Test
+    public void testAllSuccessfulStrategyWithSuccess() {
+        login("classpath:shiro-authenticator-all-success.ini", "zhang", "123");
+
+        Subject subject = SecurityUtils.getSubject();
+        //得到一个身份集合，其包含了Realm验证成功的身份信息
+        PrincipalCollection principalCollection = subject.getPrincipals();
+
+        System.out.println(principalCollection.asList());
+        Assert.assertEquals(2, principalCollection.asList().size());
+    }
+
+    @Test(expected = UnknownAccountException.class)
+    public void testAllSuccessfulStrategyWithFail() {
+        login("classpath:shiro-authenticator-all-fail.ini","zhang", "123");
+        Subject subject = SecurityUtils.getSubject();
+    }
 }

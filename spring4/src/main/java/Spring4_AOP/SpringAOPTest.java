@@ -1,6 +1,7 @@
 package Spring4_AOP;
 
 import Spring4_AOP.aopAnnotation.ArithmeticCalculator;
+import Spring4_AOP.aopAnnotation.ArithmeticCalculatorImpl;
 import Spring4_AOP.aopAnnotation.ArithmeticCalculatorLoggingImpl;
 import Spring4_AOP.aopAnnotation.ArithmeticCalculatorLoggingProxy;
 import Spring4_AOP.aopXML.ArithmeticCalculatorImplXML;
@@ -53,7 +54,7 @@ public class SpringAOPTest {
 
     @Test
     public void testProxyAOP() {
-        ArithmeticCalculator target = new ArithmeticCalculatorLoggingImpl();
+        ArithmeticCalculator target = new ArithmeticCalculatorImpl();
         ArithmeticCalculator proxy = new ArithmeticCalculatorLoggingProxy(target).getLoggingProxy();
 
         int result = proxy.add(1,2);

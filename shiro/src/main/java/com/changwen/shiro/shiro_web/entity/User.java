@@ -1,7 +1,6 @@
 package com.changwen.shiro.shiro_web.entity;
 
 public class User {
-
 	private Integer id;
 	private String userName;
 	private String password;
@@ -24,6 +23,4 @@ public class User {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	
-	
 }
