@@ -8,14 +8,13 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
 
-public class HelloWorld {
+public class HelloWorldTest {
 
 	public static void main(String[] args) {
 		//1. 创建 EntitymanagerFactory
 		//这个名字是persistence.xml配置文件里persistence-unit name="jpa-1"
 		String persistenceUnitName = "jpa-1";
-		
-		
+
 		EntityManagerFactory entityManagerFactory = 
 				Persistence.createEntityManagerFactory(persistenceUnitName);
 				

@@ -183,7 +183,7 @@ public class APITest {
 	/**
 	 * #getReference类似于 hibernate 中 Session 的 load 方法，会出现懒加载异常
 	 * 
-	 * 这里与下面的#find输出有点不同: 是先在控制台上打印代理对象，再细线!!，再打sql语句!!，再打结果
+	 * 这里与下面的#find输出有点不同: 是先在控制台上打印代理对象，再细线!!，再打sql语句(因为需要才打印的)!!，再打结果
 	 */
 	@Test
 	public void testGetReference(){
@@ -193,20 +193,17 @@ public class APITest {
 		System.out.println("-------------------------------------");
 //		transaction.commit();
 //		entityManager.close();
-		
 		System.out.println(customer);
 	}
 	
 	/**
 	 * #find 类似于 hibernate 中 Session 的 get 方法.
-	 *  
-	 * 这里是先在控制台上打印sql语句，再打细线，再打结果
 	 */
 	@Test
 	public void testFind() {
+		//这里是先在控制台上打印sql语句，再打细线，再打结果
 		Customer customer = entityManager.find(Customer.class, 1);
 		System.out.println("-------------------------------------");
-		
 		System.out.println(customer);
 	}
 }

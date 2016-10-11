@@ -32,7 +32,7 @@ public class API {
 		//Persistence  类主要是用于获取 EntityManagerFactory 实例
 		EntityManagerFactory entityManagerFactory = 
 				Persistence.createEntityManagerFactory(persistenceUnitName);
-				//Persistence.createEntityManagerFactory(persistenceUnitName, properites); //这个方法用得少
+				//Persistence.createEntityManagerFactory(persistenceUnitName, properites); //这个方法用得少，了解就行
 				
 		//2. 创建 EntityManager. 其中entityManagerFactory类似于 Hibernate 的 SessionFactory
 		EntityManager entityManager = entityManagerFactory.createEntityManager();

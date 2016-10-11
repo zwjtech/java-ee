@@ -21,8 +21,6 @@ public class CustomerHelloWorld {
 	public Integer getId() {
 		return id;
 	}
-
-
 	public void setId(Integer id) {
 		this.id = id;
 	}
@@ -31,8 +29,6 @@ public class CustomerHelloWorld {
 	public String getLastName() {
 		return lastName;
 	}
-
-
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
 	}
@@ -41,8 +37,6 @@ public class CustomerHelloWorld {
 	public String getEmail() {
 		return email;
 	}
-
-
 	public void setEmail(String email) {
 		this.email = email;
 	}
@@ -51,8 +45,6 @@ public class CustomerHelloWorld {
 	public int getAge() {
 		return age;
 	}
-
-
 	public void setAge(int age) {
 		this.age = age;
 	}
