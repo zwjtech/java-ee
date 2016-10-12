@@ -84,7 +84,6 @@ public class Customer2 {
 	public Set<Order2> getOrders() {
 		return orders;
 	}
-
 	public void setOrders(Set<Order2> orders) {
 		this.orders = orders;
 	}

@@ -81,12 +81,11 @@ public class Customer3 {
 	//可以通过 @OneToMany 的 cascade 属性来修改默认的删除策略. remove会在删除一的一端的同时，也会把多的一端删除
 	//注意: 若在 1 的一端的 @OneToMany 中使用 mappedBy 属性, 则 @OneToMany 端就不能再使用 @JoinColumn 属性了.
 	//并且mappedBy会让一的这一端放弃维护，而由多的一端维护（mappedBy里的会值是Order3里的字段customer3）
-//	@JoinColumn(name="CUSTOMER_ID")
+//	@JoinColumn(name="CUSTOMER_ID")  //用了mappedBy就不用JoinColumn
 	@OneToMany(fetch=FetchType.LAZY, cascade={CascadeType.REMOVE}, mappedBy="customer3")
 	public Set<Order3> getOrders() {
 		return orders;
 	}
-
 	public void setOrders(Set<Order3> orders) {
 		this.orders = orders;
 	}

@@ -7,10 +7,8 @@ import java.util.Set;
 @Table(name="JPA_ITEMS")
 @Entity
 public class Item {
-
 	private Integer id;
 	private String itemName;
-	
 	private Set<Category> categories = new HashSet<Category>();
 
 	@GeneratedValue
@@ -18,7 +16,6 @@ public class Item {
 	public Integer getId() {
 		return id;
 	}
-
 	public void setId(Integer id) {
 		this.id = id;
 	}
@@ -27,7 +24,6 @@ public class Item {
 	public String getItemName() {
 		return itemName;
 	}
-
 	public void setItemName(String itemName) {
 		this.itemName = itemName;
 	}
@@ -46,7 +42,6 @@ public class Item {
 	public Set<Category> getCategories() {
 		return categories;
 	}
-
 	public void setCategories(Set<Category> categories) {
 		this.categories = categories;
 	}

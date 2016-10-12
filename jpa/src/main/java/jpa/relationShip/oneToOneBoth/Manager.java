@@ -5,10 +5,8 @@ import javax.persistence.*;
 @Table(name="JPA_MANAGERS")
 @Entity
 public class Manager {
-
 	private Integer id;
 	private String mgrName;
-	
 	private Department dept;
 
 	@GeneratedValue
@@ -16,7 +14,6 @@ public class Manager {
 	public Integer getId() {
 		return id;
 	}
-
 	public void setId(Integer id) {
 		this.id = id;
 	}
@@ -25,7 +22,6 @@ public class Manager {
 	public String getMgrName() {
 		return mgrName;
 	}
-
 	public void setMgrName(String mgrName) {
 		this.mgrName = mgrName;
 	}
@@ -40,7 +36,6 @@ public class Manager {
 	public Department getDept() {
 		return dept;
 	}
-
 	public void setDept(Department dept) {
 		this.dept = dept;
 	}
