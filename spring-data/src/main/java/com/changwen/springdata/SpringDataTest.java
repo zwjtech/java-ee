@@ -31,8 +31,8 @@ public class SpringDataTest {
 
     {
         ctx = new ClassPathXmlApplicationContext("spring-config.xml");
-        personRepository = ctx.getBean(PersonRepository.class);
-        personService = ctx.getBean(PersonService.class);
+//        personRepository = ctx.getBean(PersonRepository.class);
+//        personService = ctx.getBean(PersonService.class);
 
     }
     /**

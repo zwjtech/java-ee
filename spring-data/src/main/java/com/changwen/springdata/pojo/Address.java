@@ -8,7 +8,6 @@ import javax.persistence.Table;
 @Table(name="jpa_addresses")
 @Entity
 public class Address {
-
     private Integer id;
     private String province;
     private String city;
@@ -18,7 +17,6 @@ public class Address {
     public Integer getId() {
         return id;
     }
-
     public void setId(Integer id) {
         this.id = id;
     }
@@ -26,7 +24,6 @@ public class Address {
     public String getProvince() {
         return province;
     }
-
     public void setProvince(String province) {
         this.province = province;
     }
@@ -34,9 +31,7 @@ public class Address {
     public String getCity() {
         return city;
     }
-
     public void setCity(String city) {
         this.city = city;
     }
-
 }
