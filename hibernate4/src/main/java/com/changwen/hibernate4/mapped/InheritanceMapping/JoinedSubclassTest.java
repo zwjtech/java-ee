@@ -23,7 +23,7 @@ public class JoinedSubclassTest {
     private SessionFactory sessionFactory;
     private Session session;
     private Transaction transaction;
-
+/**
     @Before
     public void init(){
         Configuration configuration = new Configuration().configure();
@@ -35,7 +35,7 @@ public class JoinedSubclassTest {
         session = sessionFactory.openSession();
         transaction = session.beginTransaction();
     }
-
+*/
     @After
     public void destroy(){
         transaction.commit();

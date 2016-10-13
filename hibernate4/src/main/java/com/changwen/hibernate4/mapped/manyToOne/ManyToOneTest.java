@@ -16,7 +16,7 @@ public class ManyToOneTest {
     private SessionFactory sessionFactory;
     private Session session;
     private Transaction transaction;
-
+/**
     @Before
     public void init(){
         Configuration configuration = new Configuration().configure();
@@ -28,7 +28,7 @@ public class ManyToOneTest {
         session = sessionFactory.openSession();
         transaction = session.beginTransaction();
     }
-
+**/
     @After
     public void destroy(){
         transaction.commit();
@@ -55,8 +55,6 @@ public class ManyToOneTest {
         //      而没有查询关联的1 的那一端的对象!
 //        Order order = (Order) sessionPojo.get(Order.class, 8);
 //        System.out.println(order.getOrderName());
-        //获取 Order 对象时, 默认情况下, 其关联的 Customer 对象是一个代理对象!
-//        System.out.println(order.getCustomer().getClass().getName());
 
         //结论2. 在需要使用到关联的对象时, 才发送对应的 SQL 语句.
 //        Customer customer = order.getCustomer();
@@ -65,14 +63,14 @@ public class ManyToOneTest {
 
         //3. 在查询 Customer 对象时, 由多的一端导航到 1 的一端时,
         //若此时 sessionPojo 已被关闭, 则默认情况下会发生 LazyInitializationException 异常
-        Order order2 = (Order) session.get(Order.class, 8);
-        System.out.println(order2.getOrderName());
+//        Order order2 = (Order) session.get(Order.class, 8);
+//        System.out.println(order2.getOrderName());
 
-        session.close(); //这里测试时需要把destory()方法里的transaction和session注解掉
+//        session.close(); //这里测试时需要把destory()方法里的transaction和session注解掉
 
-        Customer customer2 = order2.getCustomer();
-        System.out.println(customer2.getCustomerName());
-        //上面3的输出结果顺序是:sql语句-->order2.getOrderName()
+//        Customer customer2 = order2.getCustomer();
+//        System.out.println(customer2.getCustomerName());
+        //上面3的输出结果顺序是:sql语句-->order2.getOrderName()-->异常
 
         //4. 获取 Order 对象时, 默认情况下, 其关联的 Customer 对象是一个代理对象!
         Order order3 = (Order) session.get(Order.class, 8);
@@ -93,6 +91,7 @@ public class ManyToOneTest {
         order1.setCustomer(customer);
         order2.setCustomer(customer);
 
+        //这种写法更好
         //执行  save 操作: 先插入 Customer, 再插入 Order, 3 条 INSERT
         //先插入 1 的一端, 再插入 n 的一端, 只有 INSERT 语句.
         //推荐先插入 1 的一端, 后插入 n 的一端
@@ -110,7 +109,6 @@ public class ManyToOneTest {
 
     @Test
     public void test() {
-
     }
 
 }

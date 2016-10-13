@@ -396,7 +396,7 @@ public class SpringMVCTest {
      * 这个模块运行时可能会有异常，要把jar包放到WEN-INF的lib包里，用Maven好像不行
      */
     @RequestMapping("/testRequestMapping")
-    public String testRequestMapping() {
+    public String testRequestMapping2() {
         System.out.println("testRequestMapping");
         return SUCCESS;
     }

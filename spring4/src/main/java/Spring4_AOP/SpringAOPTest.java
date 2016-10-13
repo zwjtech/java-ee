@@ -30,7 +30,7 @@ public class SpringAOPTest {
         ApplicationContext ctx = new ClassPathXmlApplicationContext("Spring4_AOP/applicationContext-xml.xml");
 
         //2、从IOC容器中获取bean的实例
-        ArithmeticCalculatorImplXML arithmeticCalculator = (ArithmeticCalculatorImplXML) ctx.getBean("arithmeticCalculator");
+        ArithmeticCalculatorImplXML arithmeticCalculator = (ArithmeticCalculatorImplXML) ctx.getBean("arithmeticCalculatorXML");
 
         //3、使用bean
         int result = arithmeticCalculator.add(3, 3);
@@ -48,7 +48,7 @@ public class SpringAOPTest {
         ArithmeticCalculator arithmeticCalculator = (ArithmeticCalculator) ctx.getBean("arithmeticCalculator");
 
         //3、使用bean
-        int result = arithmeticCalculator.div(3, 1);
+        int result = arithmeticCalculator.div(3, 0);
         System.out.println("result:" + result);
     }
 

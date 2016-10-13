@@ -61,8 +61,7 @@
 
        <!-- 3. 配置事务切点, 并把切点和事务属性关联起来 -->
        <aop:config>
-              <aop:pointcut expression="execution(* Spring4_hibernate.service.*.*(..))"
-                            id="txPointcut"/>
+              <aop:pointcut expression="execution(* Spring4_hibernate.service.*.*(..))" id="txPointcut"/>
               <aop:advisor advice-ref="txAdvice" pointcut-ref="txPointcut"/>
        </aop:config>
 </beans>

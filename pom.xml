@@ -18,6 +18,8 @@
         <module>spring-security</module>
         <module>spring-data</module>
         <module>lucene</module>
+        <module>tools</module>
+        <module>activiti</module>
     </modules>
 
     <dependencies>

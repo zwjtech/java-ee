@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.changwen.shiro.shiro_web.util.CryptographyUtil;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.session.Session;
@@ -29,8 +30,14 @@ public class LoginServlet extends HttpServlet{
 		String userName=req.getParameter("userName");
 		String password=req.getParameter("password");
 		Subject subject=SecurityUtils.getSubject();
-		UsernamePasswordToken token=new UsernamePasswordToken(userName, password);
+		UsernamePasswordToken token=new UsernamePasswordToken(userName, CryptographyUtil.md5(password,"test"));
 		try{
+			// 建议不要这么写，用自己的封装的
+			if (subject.isRemembered()) {
+				System.out.println("--已经记住，可以不用登陆而做一些事情--");
+			} else {
+				token.setRememberMe(true);
+			}
 			subject.login(token);
 			Session session=subject.getSession();
 			System.out.println("sessionId:"+session.getId());

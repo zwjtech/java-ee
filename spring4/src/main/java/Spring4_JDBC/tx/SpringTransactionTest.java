@@ -12,7 +12,7 @@ public class SpringTransactionTest {
 	private Cashier cashier = null;
 	
 	{
-		ctx = new ClassPathXmlApplicationContext("applicationContext-tx.xml");
+		ctx = new ClassPathXmlApplicationContext("Spring4_JDBC/applicationContext-tx.xml");
 		bookShopDao = ctx.getBean(BookShopDao.class);
 		bookShopService = ctx.getBean(BookShopService.class);
 		cashier = ctx.getBean(Cashier.class);
@@ -27,7 +27,7 @@ public class SpringTransactionTest {
 	public void testBookShopService(){
 		bookShopService.purchase("AA", "1001");
 	}
-//
+
 	@Test
 	public void testBookShopDaoUpdateUserAccount(){
 		bookShopDao.updateUserAccount("AA", 200);

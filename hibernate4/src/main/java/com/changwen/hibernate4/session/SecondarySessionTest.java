@@ -29,6 +29,9 @@ public class SecondarySessionTest {
     private Session session;
     private Transaction transaction;
 
+    /**
+     *
+
     @Before
     public void init(){
         Configuration configuration = new Configuration().configure();
@@ -40,7 +43,7 @@ public class SecondarySessionTest {
         session = sessionFactory.openSession();
         transaction = session.beginTransaction();
     }
-
+     */
     @After
     public void destroy(){
         transaction.commit();

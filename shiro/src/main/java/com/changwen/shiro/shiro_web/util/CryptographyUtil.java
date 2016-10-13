@@ -28,10 +28,10 @@ public class CryptographyUtil {
 	}
 
 	public static void main(String[] args) {
-		String password="123456";
+		String password="123";
 		System.out.println("Base64加密："+CryptographyUtil.encBase64(password));
 		System.out.println("Base64解密："+CryptographyUtil.decBase64(CryptographyUtil.encBase64(password)));
 
-		System.out.println("Md5加密："+CryptographyUtil.md5(password, "123456"));
+		System.out.println("Md5加密："+CryptographyUtil.md5(password, "test")); //cc03e747a6afbbcbf8be7668acfebee5
 	}
 }

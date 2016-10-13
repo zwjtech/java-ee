@@ -16,7 +16,7 @@ public class OneToManyBothTest {
     private SessionFactory sessionFactory;
     private Session session;
     private Transaction transaction;
-
+/**
     @Before
     public void init(){
         Configuration configuration = new Configuration().configure();
@@ -28,7 +28,7 @@ public class OneToManyBothTest {
         session = sessionFactory.openSession();
         transaction = session.beginTransaction();
     }
-
+*/
     @After
     public void destroy(){
         transaction.commit();
@@ -52,8 +52,8 @@ public class OneToManyBothTest {
 
     @Test
     public void testUpdate(){
-        Order order = (Order) session.get(Order.class, 8);
-        order.getCustomer().setCustomerName("AAA"); //有对应的update的语句
+        Customer customer = (Customer) session.get(Customer.class,1);
+        customer.getOrders().iterator().next().setOrderName("BBB");
     }
 
     @Test
@@ -78,8 +78,6 @@ public class OneToManyBothTest {
         //      而没有查询关联的1 的那一端的对象!
 //        Order order = (Order) sessionPojo.get(Order.class, 8);
 //        System.out.println(order.getOrderName());
-        //获取 Order 对象时, 默认情况下, 其关联的 Customer 对象是一个代理对象!
-//        System.out.println(order.getCustomer().getClass().getName());
 
         //结论2. 在需要使用到关联的对象时, 才发送对应的 SQL 语句.
 //        Customer customer = order.getCustomer();
@@ -103,7 +101,7 @@ public class OneToManyBothTest {
     }
 
     /**
-     * 在hibernate中通过对 inverse 属性的来决定是由双向关联的哪一方来维护表和表之间的关系.
+     * 在hibernate.hbm.xml中通过对 inverse 属性的来决定是由双向关联的哪一方来维护表和表之间的关系.
      * inverse = false 的为主动方，inverse = true 的为被动方, 由主动方负责维护关联关系
      *
      * 在没有设置 inverse=true 的情况下，父子两边都维护父子关系
@@ -126,7 +124,7 @@ public class OneToManyBothTest {
 
         /* 在没有设置inverse的情况下：先插入 Customer, 再插入 Order, 3 条 INSERT, 2 条update
            因为1的那端和n的那端都维护关联关系，所有会多出update
-           如果在一的那端设置inverse=true，则只有3条insert!!
+           如果在一的那端设置inverse=true，让一的那端放弃维护关系,则只有3条insert!!
            */
 		session.save(customer1);
 		session.save(order1);
@@ -141,7 +139,6 @@ public class OneToManyBothTest {
     //测试的时候，请注意配置文件里的各种设置，如inverse
     @Test
     public void test() {
-
     }
 
 }

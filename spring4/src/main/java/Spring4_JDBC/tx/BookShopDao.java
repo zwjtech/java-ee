@@ -6,7 +6,6 @@ package Spring4_JDBC.tx;
  * @author Lcw 2015/11/14
  */
 public interface BookShopDao {
-
     //根据书号获取书的单价
     int findBookPriceByIsbn(String isbn);
 

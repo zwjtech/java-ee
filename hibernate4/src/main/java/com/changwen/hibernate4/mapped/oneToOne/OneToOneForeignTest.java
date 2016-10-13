@@ -25,17 +25,21 @@ public class OneToOneForeignTest {
     private Session session;
     private Transaction transaction;
 
-    @Before
-    public void init(){
-        Configuration configuration = new Configuration().configure();
-        ServiceRegistry serviceRegistry =
-                new ServiceRegistryBuilder().applySettings(configuration.getProperties())
-                        .buildServiceRegistry();
-        sessionFactory = configuration.buildSessionFactory(serviceRegistry);
+    /**
 
-        session = sessionFactory.openSession();
-        transaction = session.beginTransaction();
-    }
+     @Before
+     public void init(){
+     Configuration configuration = new Configuration().configure();
+     ServiceRegistry serviceRegistry =
+     new ServiceRegistryBuilder().applySettings(configuration.getProperties())
+     .buildServiceRegistry();
+     sessionFactory = configuration.buildSessionFactory(serviceRegistry);
+
+     session = sessionFactory.openSession();
+     transaction = session.beginTransaction();
+     }
+     *
+     */
 
     @After
     public void destroy(){

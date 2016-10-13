@@ -35,7 +35,6 @@ public class BookShopServiceImpl implements BookShopService {
      * ②. 使和当前线程绑定的 Session 解除绑定
      * ③. 关闭 Session
      */
-    @Override
     public void purchase(String username, String isbn) {
         int price = bookShopDao.findBookPriceByIsbn(isbn);
         bookShopDao.updateBookStock(isbn);

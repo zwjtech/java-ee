@@ -6,7 +6,7 @@
        http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
 
        <!-- 配置 bean -->
-       <bean id="arithmeticCalculator" class="Spring4_AOP.aopXML.ArithmeticCalculatorImplXML">
+       <bean id="arithmeticCalculatorXML" class="Spring4_AOP.aopXML.ArithmeticCalculatorImplXML">
        </bean>
 
        <!-- 配置切面的 bean. -->

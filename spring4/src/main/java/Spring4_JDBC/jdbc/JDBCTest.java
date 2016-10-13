@@ -22,10 +22,11 @@ public class JDBCTest {
     private ApplicationContext ctx;
 
     {
-        ctx = new ClassPathXmlApplicationContext("applicationContext.xml");
+        ctx = new ClassPathXmlApplicationContext("Spring4_JDBC/applicationContext.xml");
         jdbcTemplate = (JdbcTemplate) ctx.getBean("jdbcTemplate");
     }
 
+    //测试数据库连接
     @Test
     public void testDataSource() throws SQLException {
         DataSource dataSource = ctx.getBean(DataSource.class);
@@ -34,19 +35,18 @@ public class JDBCTest {
 
     /**
      * 批量insert, update, delete
-     最后一个参数是 Object[] 的 List 类型: 因为修改一条记录需要一个 Object 的数组,
-     那么多条不就需要多个 Object 的数组吗
+     * 最后一个参数是 Object[] 的 List 类型: 因为修改一条记录需要一个 Object 的数组,
+     * 那么多条不就需要多个 Object 的数组吗
      */
     @Test
     public void batchUpdate() {
-        String sql1 = "insert into examstudent (Type, id_card, exam_card, student_name, Location, Grade)" +
-                "value (?,?,?,?,?,?)";
+        String sql1 = "insert into Employee (lastName, email,dept_id)" +
+                "VALUES (?,?,?)";
         List<Object[] > batchArgs = new ArrayList<Object[]>();
-        batchArgs.add(new Object[]{6,111111, 222222,"changwen","hunan", 99});
-        batchArgs.add(new Object[]{4,1111111, 2222222,"changwen2","hunan2", 99});
+        batchArgs.add(new Object[]{"AA","AA@163.com",1});
+        batchArgs.add(new Object[]{"BB","BB@163.com",2});
 
         jdbcTemplate.batchUpdate(sql1, batchArgs);
-
     }
     /**
      * 执行insert, update, delete
@@ -66,11 +66,11 @@ public class JDBCTest {
      * 而需要调用 queryForObject(String sql, RowMapper<Employee> rowMapper, Object... args)
      * 1. 其中的 RowMapper 指定如何去映射结果集的行, 常用的实现类为 BeanPropertyRowMapper
      * 2. 使用 SQL 中列的别名完成列名和类的属性名的映射. 例如 last_name lastName
-     * 3. 不支持级联属性. JdbcTemplate 到底是一个 JDBC 的小工具, 而不是 ORM 框架
+     * 3. 不支持级联属性. JdbcTemplate 到底是一个 JDBC 的小工具, 而不是 ORM 框架!!!
      */
     @Test
     public void testQueryForObject() {
-        String sql = "SELECT id, last_name lastName, email, dept_id as \"department.id\" FROM employees WHERE id = ?";
+        String sql = "SELECT id, lastname , email, dept_id as \"department.id\" FROM employee WHERE id = ?";
         RowMapper<Employee> rowMapper = new BeanPropertyRowMapper<Employee>(Employee.class);
         Employee employee = jdbcTemplate.queryForObject(sql, rowMapper, 1);
 
@@ -83,7 +83,7 @@ public class JDBCTest {
      */
     @Test
     public void testQueryForList(){
-        String sql = "SELECT id, last_name lastName, email FROM employees WHERE id > ?";
+        String sql = "SELECT id, lastname , email FROM employee WHERE id > ?";
         RowMapper<Employee> rowMapper = new BeanPropertyRowMapper<Employee>(Employee.class);
         List<Employee> employees = jdbcTemplate.query(sql, rowMapper,1);
 
@@ -96,7 +96,7 @@ public class JDBCTest {
      */
     @Test
     public void testQueryForObject2(){
-        String sql = "SELECT count(id) FROM employees";
+        String sql = "SELECT count(id) FROM employee";
         long count = jdbcTemplate.queryForObject(sql, Long.class);
 
         System.out.println(count);

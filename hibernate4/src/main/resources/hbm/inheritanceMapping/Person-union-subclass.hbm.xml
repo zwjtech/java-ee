@@ -4,7 +4,6 @@
 
 <hibernate-mapping package="com.changwen.hibernate4.mapped.InheritanceMapping.pojo">
     <class name="Person" table="PERSONS">
-
         <id name="id" type="java.lang.Integer">
             <column name="ID" />
             <generator class="hilo" />
@@ -18,10 +17,8 @@
             <column name="AGE" />
         </property>
 
-
         <union-subclass name="Student" table="STUDENTS">
             <property name="school" column="SCHOOL" type="string"/>
         </union-subclass>
-
     </class>
 </hibernate-mapping>

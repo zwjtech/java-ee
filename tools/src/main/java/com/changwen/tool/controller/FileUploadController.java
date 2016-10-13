@@ -141,13 +141,13 @@ public class FileUploadController {
                     //创建一个文件输出流
                     FileOutputStream out = new FileOutputStream(savePath + "/" + suffix);
                     //创建一个缓冲区
-                    byte buffer[] = new byte[];
+                    byte buffer[] = new byte[1024];
                     //判断输入流中的数据是否已经读完的标识
-                    int len = ;
+                    int len = 0;
                     //循环将输入流读入到缓冲区当中，(len=in.read(buffer))>就表示in里面还有数据
-                    while ((len = in.read(buffer)) > ) {
+                    while ((len = in.read(buffer)) > 0) {
                         //使用FileOutputStream输出流将缓冲区的数据写入到指定的目录(savePath + "\\" + filename)当中
-                        out.write(buffer, , len);
+                        out.write(buffer, 0, len);
                     }
                     //关闭输入流
                     in.close();
@@ -165,17 +165,17 @@ public class FileUploadController {
     }
 
     /*
-* 多文件上传
-* 采用 MultipartFile[] multipartFile 上传文件方法
-*/
+     * 多文件上传:（其实是将上面的 MultipartFile 写成数组形式）
+     * 采用 MultipartFile[] multipartFile 上传文件方法
+     * */
     @RequestMapping(value = "fileUpload_spring_list")
     @ResponseBody
     public String fileUpload_spring_list(HttpServletRequest request, @RequestParam("file_upload") MultipartFile[] multipartFile) {
         //判断file数组不能为空并且长度大于
-        if (multipartFile != null && multipartFile.length > ) {
+        if (multipartFile != null && multipartFile.length >0 ) {
             //循环获取file数组中得文件
             try {
-                for (int i = ; i < multipartFile.length; i++) {
+                for (int i = 0; i < multipartFile.length; i++) {
                     MultipartFile file = multipartFile[i];
                     //保存文件
                     String fileName = Files_Helper_DG.FilesUpload_transferTo_spring(request, file, "/filesOut/Upload");

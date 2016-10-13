@@ -8,7 +8,6 @@ package com.changwen.hibernate4.mapped.manyToOne.pojo;
 public class Order {
     private Integer orderId;
     private String orderName;
-
     private Customer customer;
 
     public Integer getOrderId() {

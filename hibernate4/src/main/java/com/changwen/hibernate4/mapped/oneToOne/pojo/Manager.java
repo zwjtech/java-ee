@@ -6,10 +6,8 @@ package com.changwen.hibernate4.mapped.oneToOne.pojo;
  * @author lcw 2015/12/23
  */
 public class Manager {
-
     private Integer mgrId;
     private String mgrName;
-
     private Department dept;
 
     public Integer getMgrId() {
@@ -35,8 +33,5 @@ public class Manager {
     public void setDept(Department dept) {
         this.dept = dept;
     }
-
-
-
 }
 

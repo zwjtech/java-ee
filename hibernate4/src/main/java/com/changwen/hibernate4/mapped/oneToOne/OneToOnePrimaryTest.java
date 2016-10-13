@@ -23,6 +23,8 @@ public class OneToOnePrimaryTest {
     private Session session;
     private Transaction transaction;
 
+    /**
+
     @Before
     public void init(){
         Configuration configuration = new Configuration().configure();
@@ -34,7 +36,8 @@ public class OneToOnePrimaryTest {
         session = sessionFactory.openSession();
         transaction = session.beginTransaction();
     }
-
+     *
+     */
     @After
     public void destroy(){
         transaction.commit();

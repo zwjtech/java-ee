@@ -23,7 +23,7 @@ public class SubclassTest {
     private SessionFactory sessionFactory;
     private Session session;
     private Transaction transaction;
-
+/**
     @Before
     public void init(){
         Configuration configuration = new Configuration().configure();
@@ -35,7 +35,7 @@ public class SubclassTest {
         session = sessionFactory.openSession();
         transaction = session.beginTransaction();
     }
-
+*/
     @After
     public void destroy(){
         transaction.commit();
@@ -80,20 +80,16 @@ public class SubclassTest {
      */
     @Test
     public void testSave(){
-
         Person person = new Person();
         person.setAge(11);
         person.setName("AA");
-
         session.save(person);
 
         Student stu = new Student();
         stu.setAge(22);
         stu.setName("BB");
         stu.setSchool("ATGUIGU");
-
         session.save(stu);
-
     }
 
 }

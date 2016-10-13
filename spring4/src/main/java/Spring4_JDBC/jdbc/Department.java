@@ -6,7 +6,7 @@ package Spring4_JDBC.jdbc;
  * @author Lcw 2015/11/14
  */
 public class Department {
-    private int id;
+    private Integer id;
     private String name;
 
     @Override
@@ -17,11 +17,11 @@ public class Department {
                 '}';
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

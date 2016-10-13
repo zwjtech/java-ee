@@ -24,12 +24,12 @@
               <property name="dataSource" ref="dataSource"/>
        </bean>
 
-       <!-- 1. 配置事务管理器 -->
+       <!-- 1. 配置事务管理器,管理JDBC的 -->
        <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
               <property name="dataSource" ref="dataSource"/>
        </bean>
 
-       <!-- 2. 配置事务属性 -->
+       <!-- 2. 声明事务通知 ，配置事务属性 -->
        <tx:advice id="txAdvice" transaction-manager="transactionManager">
               <tx:attributes>
                      <!-- 根据方法名指定事务的属性 -->
@@ -40,7 +40,8 @@
               </tx:attributes>
        </tx:advice>
 
-       <!-- 3. 配置事务切入点, 以及把事务切入点和事务属性关联起来 -->
+       <!-- 3. 声明事务通知需要通知方法（即需要进行事务管理的方法）
+            配置事务切入点, 以及把事务切入点和事务属性关联起来 -->
        <aop:config>
               <aop:pointcut expression="execution(* Spring4_JDBC.tx.*.*(..))"
                             id="txPointCut"/>

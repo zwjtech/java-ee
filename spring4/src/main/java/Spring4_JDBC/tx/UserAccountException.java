@@ -6,10 +6,6 @@ package Spring4_JDBC.tx;
  * @author Lcw 2015/11/14
  */
 public class UserAccountException extends RuntimeException{
-
-    /**
-     *
-     */
     private static final long serialVersionUID = 1L;
 
     public UserAccountException() {
@@ -32,5 +28,4 @@ public class UserAccountException extends RuntimeException{
     public UserAccountException(Throwable cause) {
         super(cause);
     }
-
 }

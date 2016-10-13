@@ -13,7 +13,6 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Service("bookShopService")
 public class BookShopServiceImpl implements BookShopService {
-
     @Autowired
     private BookShopDao bookShopDao;
 
@@ -34,7 +33,6 @@ public class BookShopServiceImpl implements BookShopService {
             isolation=Isolation.READ_COMMITTED,
             readOnly=false,
             timeout=3)
-    @Override
     public void purchase(String username, String isbn) {
 
         try {

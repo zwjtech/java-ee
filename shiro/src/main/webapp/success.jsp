@@ -10,6 +10,9 @@
 </head>
 <body>
 欢迎你!
-
+<!--hasRole标签:如果当前Subject有任意一个角色（或的关系）将显示body体内容。  -->
+<shiro:hasRole name="admin">
+    用户[<shiro:principal/>]拥有角色admin<br/>
+</shiro:hasRole>
 </body>
 </html>

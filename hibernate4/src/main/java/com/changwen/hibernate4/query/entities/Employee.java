@@ -1,7 +1,6 @@
 package com.changwen.hibernate4.query.entities;
 
 public class Employee {
-
 	private Integer id;
 	private String name;
 	private float salary;
@@ -9,6 +8,15 @@ public class Employee {
 	
 	private Department dept;
 
+	public Employee(String email, float salary, Department dept) {
+		super();
+		this.salary = salary;
+		this.email = email;
+		this.dept = dept;
+	}
+
+	public Employee() {
+	}
 	public Integer getId() {
 		return id;
 	}
@@ -54,15 +62,6 @@ public class Employee {
 		return "Employee [id=" + id + "]";
 	}
 
-	public Employee(String email, float salary, Department dept) {
-		super();
-		this.salary = salary;
-		this.email = email;
-		this.dept = dept;
-	}
-	
-	public Employee() {
-		// TODO Auto-generated constructor stub
-	}
+
 	
 }

@@ -6,10 +6,8 @@ package com.changwen.hibernate4.mapped.oneToOne.pojo;
  * @author lcw 2015/12/23
  */
 public class Department {
-
     private Integer deptId;
     private String deptName;
-
     private Manager mgr;
 
     public Integer getDeptId() {

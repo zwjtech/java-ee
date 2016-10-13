@@ -38,7 +38,7 @@ public class QueryTest {
 	private SessionFactory sessionFactory;
 	private Session session;
 	private Transaction transaction;
-	
+	/**
 	@Before
 	public void init(){
 		Configuration configuration = new Configuration().configure();
@@ -50,7 +50,7 @@ public class QueryTest {
 		session = sessionFactory.openSession();
 		transaction = session.beginTransaction();
 	}
-	
+	*/
 	@After
 	public void destroy(){
 		transaction.commit();
@@ -322,13 +322,16 @@ public class QueryTest {
 		int pageNo = 22;
 		int pageSize = 5;
 		
-		List<Employee> emps = 
+		List<Employee> emps =
 								query.setFirstResult((pageNo - 1) * pageSize)
 								     .setMaxResults(pageSize)
 								     .list();
 		System.out.println(emps);
 	}
-	
+
+	/**
+	 * 命名查询
+	 */
 	@Test
 	public void testHQLNamedParameter(){
 		//1. 创建 Query 对象
