@@ -6,13 +6,10 @@ import java.util.Date;
 @Table(name="JPA_CUTOMERS")
 @Entity
 public class Customer1 {
-
 	private Integer id;
 	private String lastName;
-
 	private String email;
 	private int age;
-	
 	private Date createdTime;
 	private Date birth;
 
@@ -21,7 +18,6 @@ public class Customer1 {
 	public Integer getId() {
 		return id;
 	}
-
 	public void setId(Integer id) {
 		this.id = id;
 	}
@@ -70,5 +66,4 @@ public class Customer1 {
 	public void setBirth(Date birth) {
 		this.birth = birth;
 	}
-
 }

@@ -103,15 +103,14 @@ public class JpqlTest {
 	@Test
 	public void testQueryCache(){
 		String jpql = "FROM Customer c WHERE c.age > ?";
+
 		Query query = entityManager.createQuery(jpql).setHint(QueryHints.HINT_CACHEABLE, true);
-		
 		//占位符的索引是从 1 开始
 		query.setParameter(1, 1);
 		List<Customer> customers = query.getResultList();
 		System.out.println(customers.size());
 		
 		query = entityManager.createQuery(jpql).setHint(QueryHints.HINT_CACHEABLE, true);
-		
 		//占位符的索引是从 1 开始
 		query.setParameter(1, 1);
 		customers = query.getResultList();
@@ -139,25 +138,26 @@ public class JpqlTest {
 		System.out.println(customer);
 	}
 	
-	/************************************************/
+	/**************************使用createQuery**********************/
 	//默认情况下, 若只查询部分属性, 则将返回 Object[] 类型的结果. 或者 Object[] 类型的 List.
 	//也可以在实体类中创建对应的构造器, 然后再 JPQL 语句中利用对应的构造器返回实体类的对象.
 	@Test
 	public void testPartlyProperties(){
 		//String jpql = "SELECT c.lastName, c.age FROM Customer c WHERE c.id > ?";
 
+		// Customer需要有对应的构造器
 		String jpql = "SELECT new Customer(c.lastName, c.age) FROM Customer c WHERE c.id > ?";
 		List result = entityManager.createQuery(jpql).setParameter(1, 10).getResultList();
-		
+
 		System.out.println(result);
 	}
-	
+
 	@Test
 	public void testHelloJPQL(){
 		String jpql = "FROM Customer c WHERE c.age > ?";
 		Query query = entityManager.createQuery(jpql);
-		
-		//占位符的索引是从 1 开始
+
+		//占位符的索引是从 1 开始，?对应 10
 		query.setParameter(1, 10);
 		List<Customer> customers = query.getResultList();
 		System.out.println(customers.size());

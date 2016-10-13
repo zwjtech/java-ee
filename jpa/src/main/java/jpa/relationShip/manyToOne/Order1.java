@@ -6,10 +6,8 @@ import javax.persistence.*;
 @Table(name="JPA_ORDERS")
 @Entity
 public class Order1 {
-
 	private Integer id;
 	private String orderName;
-
 	private Customer1 customer1;
 
 	@GeneratedValue
@@ -17,7 +15,6 @@ public class Order1 {
 	public Integer getId() {
 		return id;
 	}
-
 	public void setId(Integer id) {
 		this.id = id;
 	}
@@ -26,7 +23,6 @@ public class Order1 {
 	public String getOrderName() {
 		return orderName;
 	}
-
 	public void setOrderName(String orderName) {
 		this.orderName = orderName;
 	}
@@ -40,10 +36,8 @@ public class Order1 {
 	public Customer1 getCustomer1() {
 		return customer1;
 	}
-
 	public void setCustomer1(Customer1 customer1) {
 		this.customer1 = customer1;
 	}
-
 }
 

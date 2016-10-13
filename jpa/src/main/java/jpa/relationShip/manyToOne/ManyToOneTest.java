@@ -90,8 +90,6 @@ public class ManyToOneTest {
 		
 		entityManager.persist(order1);
 		entityManager.persist(order2);
-		
 	}
-
 
 }
