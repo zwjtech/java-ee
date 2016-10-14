@@ -3,16 +3,18 @@ package com.changwen.activiti.a_helloworld;
 import java.util.List;
 
 import com.changwen.activiti.service.ActivitiProcess;
+import com.changwen.activiti.service.impl.ActivitiProcessImpl;
 import org.activiti.engine.task.Task;
 import org.junit.Test;
 
 public class HelloWorld {
-	private ActivitiProcess activitiProcess;
+	private ActivitiProcess activitiProcess = new ActivitiProcessImpl() ;
+
 
 	/**部署流程定义*/
 	@Test
 	public void deploymentProcessDefinition(){
-		activitiProcess.deploymentProcessDefinition("helloworld入门程序", "diagrams/helloworld.bpmn", "diagrams/helloworld.png");
+		activitiProcess.deploymentProcessDefinition_classpath("helloworld入门程序", "diagrams/helloworld.bpmn", "diagrams/helloworld.png");
 	}
 	
 	/**启动流程实例*/
@@ -25,7 +27,7 @@ public class HelloWorld {
 	/**查询当前人的个人任务*/
 	@Test
 	public void findMyPersonalTask(){
-		String assignee = "王五";
+		String assignee = "张三";
 		List<Task> list = activitiProcess.findMyPersonalTask(assignee);
 		if(list!=null && list.size()>0){
 			for(Task task:list){
@@ -45,7 +47,7 @@ public class HelloWorld {
 	@Test
 	public void completeMyPersonalTask() {
 		//任务ID
-		String taskId = "302";
+		String taskId = "104";
 		activitiProcess.completeMyPersonalTask(taskId);
 	}
 	
