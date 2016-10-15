@@ -1,7 +1,9 @@
 package com.changwen.activiti.service;
 
+import org.activiti.engine.history.HistoricActivityInstance;
 import org.activiti.engine.history.HistoricProcessInstance;
 import org.activiti.engine.history.HistoricTaskInstance;
+import org.activiti.engine.history.HistoricVariableInstance;
 import org.activiti.engine.repository.Deployment;
 import org.activiti.engine.repository.ProcessDefinition;
 import org.activiti.engine.repository.ProcessDefinitionQuery;
@@ -16,6 +18,7 @@ import java.util.List;
  * @author changwen on 2016/10/13.
  */
 public interface ActivitiProcess {
+    /***************************************流程定义的CRUD***************************************/
     /**
      * 部署流程定义（从classpath获取资源文件）
      *
@@ -28,12 +31,12 @@ public interface ActivitiProcess {
 
     Deployment deploymentProcessDefinition_zip(String deployName, String zipPath);
 
-    public Deployment deploymentProcessDefinition_inputStream(String deployName, InputStream inputStreambpmn,InputStream inputStreampng);
+    Deployment deploymentProcessDefinition_inputStream(String deployName, String bpmnPath, String pngPath);
 
-        /**
-         * 获取流程定义查询
-         */
-    ProcessDefinitionQuery findProcessDefinitionQuery();
+    /**
+     * 获取流程定义查询
+     */
+    ProcessDefinitionQuery findAllProcessDefinitionQuery();
 
     /***附加功能：查询最新版本的流程定义*/
     List<ProcessDefinition> findLastVersionProcessDefinition();
@@ -44,7 +47,7 @@ public interface ActivitiProcess {
      *                        级联删除：不管流程是否启动，都能可以删除
      *                        不带级联的删除：只能删除没有启动的流程，如果流程启动，就会抛出异常
      */
-    void deleteProcessDefinition(String deploymentId, boolean isCascadeDelete);
+    boolean deleteProcessDefinition(String deploymentId, boolean isCascadeDelete);
 
     /**
      * 附加功能：删除流程定义（删除key相同的所有不同版本的流程定义）
@@ -53,9 +56,11 @@ public interface ActivitiProcess {
     void deleteProcessDefinitionByKey(String processDefinitionKey);
 
     /**查看流程图
-     * @throws IOException */
+    */
     void viewPic(String deploymentId, String picPath) throws IOException;
 
+
+    //////////////////////////////////////////////////////////////////////////
     /**
      * 启动流程实例
      * @param processDefinitionKey 流程定义的key
@@ -64,19 +69,25 @@ public interface ActivitiProcess {
 
 
     /**查询当前人的个人任务*/
-    List<Task> findMyPersonalTask(String assignee);
+    List<Task> findAssigneeTasks(String assignee);
 
     /**
      * 完成我的任务
      * @param taskId  任务id
      */
-    void completeMyPersonalTask(String taskId );
+    void completeAssigneeTask(String taskId );
 
     /**查询流程状态（判断流程正在执行，还是结束）*/
-    public void isProcessEnd(String processInstanceId);
+    boolean isProcessEnd(String processInstanceId);
 
     /**查询历史任务（后面讲）*/
-    public List<HistoricTaskInstance> findHistoryTask(String taskAssignee);
+    List<HistoricTaskInstance> findHistoryTask(String taskAssignee);
 
-    public HistoricProcessInstance findHistoryProcessInstance(String processInstanceId);
+    HistoricProcessInstance findHistoryProcessInstance(String processInstanceId);
+
+    /**查询流程变量的历史表*/
+    List<HistoricVariableInstance> findHistoryProcessVariables(String variableName);
+
+    /**查询历史活动：某一次流程的执行一共经历了多少个活动*/
+    List<HistoricActivityInstance> findHistoryActiviti(String processInstanceId);
 }

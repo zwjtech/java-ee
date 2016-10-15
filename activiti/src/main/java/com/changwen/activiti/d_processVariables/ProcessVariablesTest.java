@@ -3,8 +3,6 @@ package com.changwen.activiti.d_processVariables;
 import java.io.InputStream;
 import java.util.List;
 
-import com.changwen.activiti.service.ActivitiProcess;
-import com.changwen.activiti.service.impl.ActivitiProcessImpl;
 import org.activiti.engine.ProcessEngine;
 import org.activiti.engine.ProcessEngines;
 import org.activiti.engine.RuntimeService;
@@ -16,12 +14,11 @@ import org.junit.Test;
 
 public class ProcessVariablesTest {
 
-	private ActivitiProcess activitiProcess = new ActivitiProcessImpl() ;
+ProcessEngine processEngine = ProcessEngines.getDefaultProcessEngine();
 	
 	/**部署流程定义（从InputStream）*/
 	@Test
 	public void deploymentProcessDefinition_inputStream(){
-
 		InputStream inputStreambpmn = this.getClass().getResourceAsStream("/diagrams/processVariables.bpmn");
 		InputStream inputStreampng = this.getClass().getResourceAsStream("/diagrams/processVariables.png");
 		Deployment deployment = processEngine.getRepositoryService()//与流程定义和部署对象相关的Service

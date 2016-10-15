@@ -9,37 +9,49 @@ import java.util.List;
 import java.util.Map;
 import java.util.zip.ZipInputStream;
 
-import com.changwen.activiti.service.ActivitiProcess;
-import com.changwen.activiti.service.impl.ActivitiProcessImpl;
 import org.activiti.engine.ProcessEngine;
 import org.activiti.engine.ProcessEngines;
 import org.activiti.engine.repository.Deployment;
 import org.activiti.engine.repository.ProcessDefinition;
-import org.activiti.engine.repository.ProcessDefinitionQuery;
 import org.apache.commons.io.FileUtils;
 import org.junit.Test;
 
 public class ProcessDefinitionTest {
-	private ActivitiProcess activitiProcess = new ActivitiProcessImpl() ;
 
+	ProcessEngine processEngine = ProcessEngines.getDefaultProcessEngine();
+	
 	/**部署流程定义（从classpath）*/
 	@Test
 	public void deploymentProcessDefinition_classpath(){
-		activitiProcess.deploymentProcessDefinition_classpath("helloworld入门程序", "diagrams/helloworld.bpmn", "diagrams/helloworld.png");
-
+		Deployment deployment = processEngine.getRepositoryService()//与流程定义和部署对象相关的Service
+						.createDeployment()//创建一个部署对象
+						.name("流程定义")//添加部署的名称
+						.addClasspathResource("diagrams/helloworld.bpmn")//从classpath的资源中加载，一次只能加载一个文件
+						.addClasspathResource("diagrams/helloworld.png")//从classpath的资源中加载，一次只能加载一个文件
+						.deploy();//完成部署
+		System.out.println("部署ID："+deployment.getId());//
+		System.out.println("部署名称："+deployment.getName());//
 	}
 	
 	/**部署流程定义（从zip）*/
 	@Test
 	public void deploymentProcessDefinition_zip(){
-		activitiProcess.deploymentProcessDefinition_zip("流程定义", "diagrams/helloworld.zip");
+		InputStream in = this.getClass().getClassLoader().getResourceAsStream("diagrams/helloworld.zip");
+		ZipInputStream zipInputStream = new ZipInputStream(in);
+		Deployment deployment = processEngine.getRepositoryService()//与流程定义和部署对象相关的Service
+						.createDeployment()//创建一个部署对象
+						.name("流程定义")//添加部署的名称
+						.addZipInputStream(zipInputStream)//指定zip格式的文件完成部署
+						.deploy();//完成部署
+		System.out.println("部署ID："+deployment.getId());//
+		System.out.println("部署名称："+deployment.getName());//
 	}
 	
 	/**查询流程定义*/
 	@Test
 	public void findProcessDefinition(){
-		ProcessDefinitionQuery processDefinitionQuery = activitiProcess.findProcessDefinitionQuery();
-		List<ProcessDefinition> list = processDefinitionQuery
+		List<ProcessDefinition> list = processEngine.getRepositoryService()//与流程定义和部署对象相关的Service
+						.createProcessDefinitionQuery()//创建一个流程定义的查询
 						/**指定查询条件,where条件*/
 //						.deploymentId(deploymentId)//使用部署对象ID查询
 //						.processDefinitionId(processDefinitionId)//使用流程定义ID查询
@@ -74,7 +86,20 @@ public class ProcessDefinitionTest {
 	public void deleteProcessDefinition(){
 		//使用部署ID，完成删除
 		String deploymentId = "601";
-		activitiProcess.deleteProcessDefinition(deploymentId,true);
+		/**
+		 * 不带级联的删除
+		 *    只能删除没有启动的流程，如果流程启动，就会抛出异常
+		 */
+//		processEngine.getRepositoryService()//
+//						.deleteDeployment(deploymentId);
+		
+		/**
+		 * 级联删除
+		 * 	  不管流程是否启动，都能可以删除
+		 */
+		processEngine.getRepositoryService()//
+						.deleteDeployment(deploymentId, true);
+		System.out.println("删除成功！");
 	}
 	
 	/**查看流程图
@@ -83,14 +108,50 @@ public class ProcessDefinitionTest {
 	public void viewPic() throws IOException{
 		/**将生成图片放到文件夹下*/
 		String deploymentId = "801";
-		activitiProcess.viewPic(deploymentId, "D:/");
+		//获取图片资源名称
+		List<String> list = processEngine.getRepositoryService()//
+						.getDeploymentResourceNames(deploymentId);
+		//定义图片资源的名称
+		String resourceName = "";
+		if(list!=null && list.size()>0){
+			for(String name:list){
+				if(name.indexOf(".png")>=0){
+					resourceName = name;
+				}
+			}
+		}
+		
+		
+		//获取图片的输入流
+		InputStream in = processEngine.getRepositoryService()//
+						.getResourceAsStream(deploymentId, resourceName);
+		
+		//将图片生成到D盘的目录下
+		File file = new File("D:/"+resourceName);
+		//将输入流的图片写到D盘下
+		FileUtils.copyInputStreamToFile(in, file);
 	}
 	
 	/***附加功能：查询最新版本的流程定义*/
 	@Test
 	public void findLastVersionProcessDefinition(){
-		List<ProcessDefinition> pdList = activitiProcess.findLastVersionProcessDefinition();
-
+		List<ProcessDefinition> list = processEngine.getRepositoryService()//
+						.createProcessDefinitionQuery()//
+						.orderByProcessDefinitionVersion().asc()//使用流程定义的版本升序排列
+						.list();
+		/**
+		 * Map<String,ProcessDefinition>
+  map集合的key：流程定义的key
+  map集合的value：流程定义的对象
+  map集合的特点：当map集合key值相同的情况下，后一次的值将替换前一次的值
+		 */
+		Map<String, ProcessDefinition> map = new LinkedHashMap<String, ProcessDefinition>();
+		if(list!=null && list.size()>0){
+			for(ProcessDefinition pd:list){
+				map.put(pd.getKey(), pd);
+			}
+		}
+		List<ProcessDefinition> pdList = new ArrayList<ProcessDefinition>(map.values());
 		if(pdList!=null && pdList.size()>0){
 			for(ProcessDefinition pd:pdList){
 				System.out.println("流程定义ID:"+pd.getId());//流程定义的key+版本+随机生成数
@@ -110,7 +171,19 @@ public class ProcessDefinitionTest {
 	public void deleteProcessDefinitionByKey(){
 		//流程定义的key
 		String processDefinitionKey = "helloworld";
-
-		activitiProcess.deleteProcessDefinitionByKey(processDefinitionKey);
+		//先使用流程定义的key查询流程定义，查询出所有的版本
+		List<ProcessDefinition> list = processEngine.getRepositoryService()//
+						.createProcessDefinitionQuery()//
+						.processDefinitionKey(processDefinitionKey)//使用流程定义的key查询
+						.list();
+		//遍历，获取每个流程定义的部署ID
+		if(list!=null && list.size()>0){
+			for(ProcessDefinition pd:list){
+				//获取部署ID
+				String deploymentId = pd.getDeploymentId();
+				processEngine.getRepositoryService()//
+							.deleteDeployment(deploymentId, true);
+			}
+		}
 	}
 }
