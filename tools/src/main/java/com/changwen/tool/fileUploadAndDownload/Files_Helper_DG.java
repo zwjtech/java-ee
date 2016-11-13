@@ -29,7 +29,6 @@ public final class Files_Helper_DG {
      * @param request       HttpServletRequest
      * @param multipartFile MultipartFile(spring)
      * @param filePath      filePath example "/files/Upload"
-     * @return
      */
     public static String FilesUpload_transferTo_spring(HttpServletRequest request, MultipartFile multipartFile, String filePath) {
         //get Date path
