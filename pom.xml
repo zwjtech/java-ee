@@ -20,6 +20,8 @@
         <module>lucene</module>
         <module>tools</module>
         <module>activiti</module>
+        <module>python2_7</module>
+        <module>python3</module>
     </modules>
 
     <dependencies>

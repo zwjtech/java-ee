@@ -209,7 +209,7 @@ public class Spring4_IOCTest {
     public void testDependencyInjection() {
         ApplicationContext ctx = new ClassPathXmlApplicationContext("Spring4_IOC/applicationContext.xml");
         Car car = (Car) ctx.getBean("car");
-        System.out.println(car);
+        System.out.println(car.toString());
 
         //测试car里有多个构造器，如何配置IOC
         Car car2 = (Car) ctx.getBean("car2");
