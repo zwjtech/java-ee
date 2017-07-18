@@ -21,6 +21,7 @@
         <module>tools</module>
         <module>activiti</module>
         <module>python</module>
+        <module>thirft</module>
     </modules>
 
     <dependencies>
