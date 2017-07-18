@@ -22,7 +22,9 @@
         <module>activiti</module>
         <module>python</module>
         <module>thirft</module>
+        <module>sprint-boot</module>
     </modules>
+
 
     <dependencies>
         <dependency>

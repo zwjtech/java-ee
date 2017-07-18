@@ -11,7 +11,7 @@
 <a href="springMVC/testRedirect">com.changwen.springmvc.crud2.SpringMVCTest Redirect</a>
 <br><br>
 
-<a href="springMVC/testView">Test View</a>
+<a href="springMVC/testView">com.changwen.java.Test View</a>
 <br><br>
 
 <a href="springMVC/testViewAndViewResolver">com.changwen.springmvc.crud2.SpringMVCTest ViewAndViewResolver</a>
@@ -76,7 +76,7 @@
 <a href="springMVC/testRequestHeader">com.changwen.springmvc.crud2.SpringMVCTest RequestHeader</a>
 <br><br>
 
-<a href="springMVC/testRequestParam?username=atguigu&age=11">Test RequestParam</a>
+<a href="springMVC/testRequestParam?username=atguigu&age=11">com.changwen.java.Test RequestParam</a>
 <br><br>
 
 <%-------------------------restfu----------------------------------->--%>
@@ -98,7 +98,7 @@
 </form>
 <br><br>
 
-<a href="springMVC/testRest/1">Test Rest Get</a>
+<a href="springMVC/testRest/1">com.changwen.java.Test Rest Get</a>
 
 
 --------------------------------------------------------------
@@ -106,7 +106,7 @@
     <a href="springMVC/testPathVariable/1">Test7. RequestMapping_PathVariable注解</a>
 
     <br><br>
-    <a href="springMVC/testAntPath/mnxyz/abc">Test AntPath</a>
+    <a href="springMVC/testAntPath/mnxyz/abc">com.changwen.java.Test AntPath</a>
 
     <br><br>
     <a href="springMVC/testParamsAndHeaders?username=changWen&age=10">Test5. RequestMapping_请求参数&请求头</a>
@@ -122,7 +122,7 @@
     <a href="springMVC/testGetMethod">测试 GET请求</a>
 
     <br><br>
-    <a href="springMVC/testRequestMapping">Test RequestMapping</a>
+    <a href="springMVC/testRequestMapping">com.changwen.java.Test RequestMapping</a>
 
 </body>
 </html>

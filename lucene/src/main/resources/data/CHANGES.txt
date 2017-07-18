@@ -424,7 +424,7 @@ Build
 * LUCENE-6741: Fix jflex files to regenerate the java files correctly.
   (Uwe Schindler)
 
-Test Framework
+com.changwen.java.Test Framework
 
 * LUCENE-6637: Fix FSTTester to not violate file permissions
   on -Dtests.verbose=true.  (Mesbah M. Alam, Uwe Schindler)
@@ -664,7 +664,7 @@ API Changes
 
 Other
 
-* LUCENE-6413: Test runner should report the number of suites completed/ 
+* LUCENE-6413: com.changwen.java.Test runner should report the number of suites completed/
   remaining. (Dawid Weiss)
 
 * LUCENE-5439: Add 'ant jacoco' build target. (Robert Muir)
@@ -686,7 +686,7 @@ Build
 
 * LUCENE-6420: Update forbiddenapis to v1.8  (Uwe Schindler)
 
-Test Framework
+com.changwen.java.Test Framework
 
 * LUCENE-6419: Added two-phase iteration assertions to AssertingQuery.
   (Adrien Grand)
@@ -1768,7 +1768,7 @@ Bug Fixes
   
 * LUCENE-5908: Fix Lucene43NGramTokenizer to be final
   
-Test Framework
+com.changwen.java.Test Framework
 
 * LUCENE-5786: Unflushed/ truncated events file (hung testing subprocess).
   (Dawid Weiss)
@@ -2069,7 +2069,7 @@ Bug fixes
 * LUCENE-5768, LUCENE-5777: Hunspell condition checks containing character classes
   were buggy. (Clinton Gormley, Robert Muir)
 
-Test Framework
+com.changwen.java.Test Framework
 
 * LUCENE-5622: Fail tests if they print over the given limit of bytes to 
   System.out or System.err. (Robert Muir, Dawid Weiss)
@@ -2373,7 +2373,7 @@ Tests
 * LUCENE-5630: Fix TestAllAnalyzersHaveFactories to correctly check for existence
   of class and corresponding Map<String,String> ctor.  (Uwe Schindler, Robert Muir)
 
-Test Framework
+com.changwen.java.Test Framework
 
 * LUCENE-5592: Incorrectly reported uncloseable files. (Dawid Weiss)
 
@@ -3577,7 +3577,7 @@ API Changes
 Build
 
 * LUCENE-4987: Upgrade randomized testing to version 2.0.10: 
-  Test framework may fail internally due to overly aggressive J9 optimizations. 
+  com.changwen.java.Test framework may fail internally due to overly aggressive J9 optimizations.
   (Dawid Weiss, Shai Erera)
 
 * LUCENE-5043: The eclipse target now uses the containing directory for the
@@ -4276,7 +4276,7 @@ Documentation
 
 Build
 
-* LUCENE-4654: Test duration statistics from multiple test runs should be 
+* LUCENE-4654: com.changwen.java.Test duration statistics from multiple test runs should be
   reused. (Dawid Weiss)
 
 * LUCENE-4636: Upgrade ivy to 2.3.0 (Shawn Heisey via Robert Muir)
@@ -5121,7 +5121,7 @@ Build
 * LUCENE-4094: Support overriding file.encoding on forked test JVMs
   (force via -Drandomized.file.encoding=XXX). (Dawid Weiss)
 
-* LUCENE-4189: Test output should include timestamps (start/end for each 
+* LUCENE-4189: com.changwen.java.Test output should include timestamps (start/end for each
   test/ suite). Added -Dtests.timestamps=[off by default]. (Dawid Weiss)
 
 * LUCENE-4110: Report long periods of forked jvm inactivity (hung tests/ suites).
@@ -6901,7 +6901,7 @@ Optimizations
   that need both (such as sorting by a field with a missing value).
   (Mike McCandless)
 
-Test Cases
+com.changwen.java.Test Cases
 
 * LUCENE-3420: Disable the finalness checks in TokenStream and Analyzer
   for implementing subclasses in different packages, where assertions are not
@@ -7012,7 +7012,7 @@ Optimizations
   greatly reduce RAM required during building, and CPU consumed, at
   the cost of a somewhat larger FST.  (Mike McCandless)
 
-Test Cases
+com.changwen.java.Test Cases
 
 * LUCENE-3327: Fix AIOOBE when TestFSTs is run with -Dtests.verbose=true
  (James Dyer via Mike McCandless)
@@ -7280,7 +7280,7 @@ Build
 * LUCENE-3128: "ant eclipse" creates a .project file for easier Eclipse
   integration (unless one already exists). (Daniel Serodio via Shai Erera)
 
-Test Cases
+com.changwen.java.Test Cases
 
 * LUCENE-3002: added 'tests.iter.min' to control 'tests.iter' by allowing to 
   stop iterating if at least 'tests.iter.min' ran and a failure occured. 
@@ -7966,7 +7966,7 @@ Build
   tests' framework classes. (Drew Farris, Grant Ingersoll, Shai Erera,
   Steven Rowe)
 
-Test Cases
+com.changwen.java.Test Cases
 
 * LUCENE-2037 Allow Junit4 tests in our environment (Erick Erickson
   via Mike McCandless)
@@ -8402,7 +8402,7 @@ Optimizations
  * LUCENE-2258: Remove unneeded synchronization in FuzzyTermEnum.
    (Uwe Schindler, Robert Muir)
 
-Test Cases
+com.changwen.java.Test Cases
 
  * LUCENE-2114: Change TestFilteredSearch to test on multi-segment
    index as well. (Simon Willnauer via Mike McCandless)
@@ -9583,7 +9583,7 @@ Build
  * LUCENE-1854: tar task should use longfile="gnu" to avoid false file
     name length warnings.  (Mark Miller)
 
-Test Cases
+com.changwen.java.Test Cases
 
  * LUCENE-1791: Enhancements to the QueryUtils and CheckHits utility 
     classes to wrap IndexReaders and Searchers in MultiReaders or 
@@ -10029,7 +10029,7 @@ Build
   3. LUCENE-1353: Javacc target in contrib/miscellaneous for 
      generating the precedence query parser. 
 
-Test Cases
+com.changwen.java.Test Cases
 
  1. LUCENE-1238: Fixed intermittent failures of TestTimeLimitedCollector.testTimeoutMultiThreaded.
     Within this fix, "greedy" flag was added to TimeLimitedCollector, to allow the wrapped 
@@ -10504,9 +10504,9 @@ Build
  8. LUCENE-1123: Allow overriding the specification version for 
     MANIFEST.MF (Michael Busch)
 
-Test Cases
+com.changwen.java.Test Cases
 
- 1. LUCENE-766: Test adding two fields with the same name but different 
+ 1. LUCENE-766: com.changwen.java.Test adding two fields with the same name but different
     term vector setting.  (Nicolas Lalevée via Doron Cohen)  
     
 ======================= Release 2.2.0 =======================
@@ -11243,7 +11243,7 @@ Optimizations
      FSIndexInput finalizer to the actual file so all clones don't
      register a new finalizer. (Yonik Seeley)
 
-Test Cases
+com.changwen.java.Test Cases
 
   1. Added TestTermScorer.java (Grant Ingersoll)
 
@@ -11276,7 +11276,7 @@ Documentation
      documentation on how Offset and Position info are stored in the TVF file.
      (Grant Ingersoll, Samir Abdou)
 
-  7. Added in link to Clover Test Code Coverage Reports under the Develop
+  7. Added in link to Clover com.changwen.java.Test Code Coverage Reports under the Develop
      section in Resources (Grant Ingersoll)
 
   8. LUCENE-748: Added details for semantics of IndexWriter.close on
