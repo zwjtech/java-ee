@@ -23,6 +23,13 @@
         </plugins>
     </build>
 
+    <!-- 在最底层的pom.xml
+    <parent>-->
+        <!--<groupId>org.springframework.boot</groupId>-->
+        <!--<artifactId>spring-boot-starter-parent</artifactId>-->
+        <!--<version>1.4.1.RELEASE</version>-->
+    <!--</parent>-->
+
     <properties>
         <java.version>1.7</java.version>
         <mybatis.version>3.3.1</mybatis.version>
@@ -47,25 +54,6 @@
             <version>3.1.0</version>
         </dependency>
 
-        <!-- https://mvnrepository.com/artifact/org.bouncycastle/bcprov-jdk16 -->
-        <dependency>
-            <groupId>org.bouncycastle</groupId>
-            <artifactId>bcprov-jdk16</artifactId>
-            <version>1.46</version>
-        </dependency>
-
-        <!-- 腾讯云 -->
-        <dependency>
-            <groupId>com.qcloud</groupId>
-            <artifactId>cos_api</artifactId>
-            <version>4.4</version>
-            <exclusions>
-                <exclusion>
-                    <artifactId>slf4j-log4j12</artifactId>
-                    <groupId>org.slf4j</groupId>
-                </exclusion>
-            </exclusions>
-        </dependency>
 
         <!-- Springboot -->
         <dependency>
@@ -212,11 +200,7 @@
             <artifactId>jedis</artifactId>
             <version>${jedis.version}</version>
         </dependency>
-        <dependency>
-            <groupId>javax.servlet</groupId>
-            <artifactId>javax.servlet-api</artifactId>
-            <version>RELEASE</version>
-        </dependency>
+
     </dependencies>
 
 </project>

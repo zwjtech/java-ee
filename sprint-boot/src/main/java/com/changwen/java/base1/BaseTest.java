@@ -4,6 +4,7 @@ import com.changwen.java.base1.aopTest.AopConfig;
 import com.changwen.java.base1.aopTest.DemoAnnotationService;
 import com.changwen.java.base1.aopTest.DemoMethodService;
 import com.changwen.java.base1.el.ELConfig;
+
 import com.changwen.java.base1.event.DemoPublisher;
 import com.changwen.java.base1.event.EventConfig;
 import com.changwen.java.base1.spring_aware.AwareConfig;
@@ -35,6 +36,9 @@ public class BaseTest {
 
         AwareService awareService = context.getBean(AwareService.class);
         awareService.outputResult();
+
+//        Bean 的名称：awareService
+//        ResourceLoader加载的文件内容为：123
     }
 
     // -------------------------------------------
@@ -46,9 +50,12 @@ public class BaseTest {
      */
     @org.junit.Test
     public void testEvent() {
-        context = new AnnotationConfigApplicationContext(ELConfig.class);
-        ELConfig elConfig = context.getBean(ELConfig.class);
-        elConfig.outputResource();
+        context = new AnnotationConfigApplicationContext(EventConfig.class);
+
+        DemoPublisher publisher = context.getBean(DemoPublisher.class);
+        publisher.publish("hello application event");
+
+        // 我DemoListener 接收到了 demoPublisher发布的消息：hello application event
     }
 
     @org.junit.Test
