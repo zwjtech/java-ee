@@ -7,6 +7,6 @@ import org.springframework.context.annotation.ComponentScan;
  * @author changwen on 2017/7/18.
  */
 @Configurable
-@ComponentScan("com.changwen.java.event")
+@ComponentScan("com.changwen.java.base1.event")
 public class EventConfig {
 }

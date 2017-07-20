@@ -18,7 +18,7 @@ import java.io.IOException;
  * @author changwen on 2017/7/18.
  */
 @Configurable
-@ComponentScan
+@ComponentScan("com.changwen.java.base1.el")
 @PropertySource("classpath:el/test.properties")  // 注入配置文件需要使用这个注解来指定文件地址
 public class ELConfig {
 

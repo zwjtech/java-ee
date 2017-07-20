@@ -9,7 +9,7 @@ import org.springframework.context.annotation.EnableAspectJAutoProxy;
  * @author changwen on 2017/7/18.
  */
 @Configurable
-@ComponentScan("com.changwen.java")
+@ComponentScan("com.changwen.java.base1.aopTest")
 @EnableAspectJAutoProxy   // 该注解开启spring 对AspectJ的支持
 public class AopConfig {
 }
