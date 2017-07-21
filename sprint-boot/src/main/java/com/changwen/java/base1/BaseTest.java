@@ -1,5 +1,7 @@
 package com.changwen.java.base1;
 
+import com.changwen.java.base1.Conditional.ConditionConfig;
+import com.changwen.java.base1.Conditional.ListService;
 import com.changwen.java.base1.aopTest.AopConfig;
 import com.changwen.java.base1.aopTest.DemoAnnotationService;
 import com.changwen.java.base1.aopTest.DemoMethodService;
@@ -27,6 +29,19 @@ public class BaseTest {
     @After
     public void after() {
         context.close();
+    }
+
+    /**
+     * 前面我们可以通过活动的profile获得不同的Bean。
+     * -@Conditional根据满足某一个特定条件创建一个特定的Bean。
+     */
+    @Test
+    public void testCondition() {
+        context = new AnnotationConfigApplicationContext(ConditionConfig.class);
+
+        ListService listService = context.getBean(ListService.class);
+        System.out.println(context.getEnvironment().getProperty("os.name")
+                + "系统下的列表命令为：" + listService.showListCmd());  // Mac OS X系统下的列表命令为：ls
     }
 
     /**
