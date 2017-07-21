@@ -9,7 +9,10 @@ import com.changwen.java.base1.event.DemoPublisher;
 import com.changwen.java.base1.event.EventConfig;
 import com.changwen.java.base1.spring_aware.AwareConfig;
 import com.changwen.java.base1.spring_aware.AwareService;
+import com.changwen.java.base1.task_executor.AsyncTaskService;
+import com.changwen.java.base1.task_executor.TaskExecutorConfig;
 import org.junit.After;
+import org.junit.Test;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 import java.io.IOException;
@@ -23,6 +26,29 @@ public class BaseTest {
     @After
     public void after() {
         context.close();
+    }
+
+    /**
+     * Spring 通过任务执行器(TaskExecutor)来实现多线程和并发编程。
+     * 使用ThreadPoolExecutor可实现一个基于线程池的TaskExecutor。
+     * 而实际开发中任务一般是非阻碍的，即异步的，
+     * 所以我们要在配置类中通过@EnableAsync开启对异步任务的支持，并通过在实际执行的Bean的方法中使用@Async注解来声明其是一个异步任务。
+     * <p>
+     * Java: ThreadPoolExecutor [newSingleThreadExecutor, newFixedThreadPool(固定数量)，newFixedThreadPool(默认60S可重用里面的线程)，newScheduledThreadPool(定时，周期)]
+     */
+    @Test
+    public void testTaskExecutor() throws InterruptedException {
+        context = new AnnotationConfigApplicationContext(TaskExecutorConfig.class);
+
+        AsyncTaskService asyncTaskService = context.getBean(AsyncTaskService.class);
+        for (int i = 0; i < 10; i++) {
+            asyncTaskService.executeAsyncTask(i);
+            asyncTaskService.executeAsyncTaskPlus(i);
+        }
+        Thread.sleep(1000);  // 这里需要让其睡眠一下，不然直接执行完后，线程池里的线程还没执行主线程就结束了
+        System.out.println("主线程:  " + Thread.currentThread().getName());
+
+        // 结果是并发执行的，而不是顺序执行的
     }
 
     /**
@@ -42,6 +68,7 @@ public class BaseTest {
     }
 
     // -------------------------------------------
+
     /**
      * Spring的事件需要遵循如下流程：
      * 1.自定义事件，继承ApplicationEvent
