@@ -7,6 +7,7 @@ import com.changwen.java.base1.el.ELConfig;
 
 import com.changwen.java.base1.event.DemoPublisher;
 import com.changwen.java.base1.event.EventConfig;
+import com.changwen.java.base1.schedule_task.TaskSchedulerConfig;
 import com.changwen.java.base1.spring_aware.AwareConfig;
 import com.changwen.java.base1.spring_aware.AwareService;
 import com.changwen.java.base1.task_executor.AsyncTaskService;
@@ -26,6 +27,16 @@ public class BaseTest {
     @After
     public void after() {
         context.close();
+    }
+
+    /**
+     * 计划/定时任务
+     * -@EnableScheduling 注解开启对计划任务的支持，然后在要执行计划任务的方法上注解@Schedule，声明这是一个计划任务
+     * 注解@Scheduled支持多种类型的计划任务，包含cron, fixDelay, fixRate
+     */
+    @Test
+    public void testSchedule() {
+        context = new AnnotationConfigApplicationContext(TaskSchedulerConfig.class);
     }
 
     /**
