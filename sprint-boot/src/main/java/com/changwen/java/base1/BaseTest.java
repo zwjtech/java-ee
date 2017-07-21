@@ -5,6 +5,8 @@ import com.changwen.java.base1.Conditional.ListService;
 import com.changwen.java.base1.aopTest.AopConfig;
 import com.changwen.java.base1.aopTest.DemoAnnotationService;
 import com.changwen.java.base1.aopTest.DemoMethodService;
+import com.changwen.java.base1.composit_annotion.DemoConfig;
+import com.changwen.java.base1.composit_annotion.DemoService;
 import com.changwen.java.base1.el.ELConfig;
 
 import com.changwen.java.base1.event.DemoPublisher;
@@ -29,6 +31,16 @@ public class BaseTest {
     @After
     public void after() {
         context.close();
+    }
+
+    /**
+     * 组合注解
+     */
+    @Test
+    public void testCompositeAnnotation() {
+        context = new AnnotationConfigApplicationContext(DemoConfig.class);
+        DemoService demoService = context.getBean(DemoService.class);
+        demoService.outputResult();  // 从组合注解配置照样获得的Bean
     }
 
     /**
