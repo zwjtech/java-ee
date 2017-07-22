@@ -32,6 +32,14 @@
         <version>1.4.1.RELEASE</version>
     </parent>
 
+    <!-- 代替spring-boot，同时附加了Spring Cloud的依赖 -->
+    <!--<parent>-->
+        <!--<groupId>org.springframework.boot</groupId>-->
+        <!--<artifactId>spring-cloud-starter-parent</artifactId>-->
+        <!--<version>Angel.SR3</version>-->
+        <!--<relativePath/>-->
+    <!--</parent>-->
+
     <dependencies>
         <dependency>
             <groupId>junit</groupId>
