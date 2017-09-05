@@ -4,7 +4,6 @@ import Spring4_AOP.aopAnnotation.ArithmeticCalculator;
 import Spring4_AOP.aopAnnotation.ArithmeticCalculatorImpl;
 import Spring4_AOP.aopAnnotation.ArithmeticCalculatorLoggingImpl;
 import Spring4_AOP.aopAnnotation.ArithmeticCalculatorLoggingProxy;
-import Spring4_AOP.aopXML.ArithmeticCalculatorImplXML;
 import org.junit.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
@@ -30,7 +29,7 @@ public class SpringAOPTest {
         ApplicationContext ctx = new ClassPathXmlApplicationContext("Spring4_AOP/applicationContext-xml.xml");
 
         //2、从IOC容器中获取bean的实例
-        ArithmeticCalculatorImplXML arithmeticCalculator = (ArithmeticCalculatorImplXML) ctx.getBean("arithmeticCalculatorXML");
+        ArithmeticCalculator arithmeticCalculator = (ArithmeticCalculator) ctx.getBean("arithmeticCalculatorXML");
 
         //3、使用bean
         int result = arithmeticCalculator.add(3, 3);
@@ -61,6 +60,9 @@ public class SpringAOPTest {
         System.out.println("-->" + result);
 
         result = proxy.div(4,2);
+        System.out.println("-->" + result);
+
+        result = proxy.mul(4,2);
         System.out.println("-->" + result);
     }
 

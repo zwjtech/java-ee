@@ -9,6 +9,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import javax.sql.DataSource;
 import java.sql.SQLException;
+import java.util.Arrays;
 
 
 /**
@@ -22,19 +23,19 @@ public class Test2 {
     private Cashier cashier = null;
 
     {
-        ctx = new ClassPathXmlApplicationContext("applicationContext.xml");
+        ctx = new ClassPathXmlApplicationContext("Spring4_hibernate/applicationContext.xml");
         bookShopService = ctx.getBean(BookShopService.class);
         cashier = ctx.getBean(Cashier.class);
     }
 
     @Test
     public void testCashier(){
-        //cashier.checkout("aa", Arrays.asList("1001", "1002"));
+        cashier.checkout("zwj", Arrays.asList("asdas", "4sdf"));
     }
 
     @Test
     public void testBookShopService(){
-        bookShopService.purchase("aa", "1001");
+        bookShopService.purchase("zwj", "4sdf");
     }
 
     @Test

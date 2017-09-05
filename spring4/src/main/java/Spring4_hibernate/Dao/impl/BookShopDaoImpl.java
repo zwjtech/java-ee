@@ -2,6 +2,7 @@ package Spring4_hibernate.Dao.impl;
 
 
 import Spring4_hibernate.Dao.BookShopDao;
+import Spring4_hibernate.exceptions.BookStockException;
 import Spring4_hibernate.exceptions.UserAccountException;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -42,12 +43,12 @@ public class BookShopDaoImpl implements BookShopDao {
         //验证书的库存是否充足.
         String hql2 = "SELECT b.stock FROM Book b WHERE b.isbn = ?";
         int stock =  (Integer)getSession().createQuery(hql2).setString(0, isbn).uniqueResult();
-//        if(0 == stock){
-//            throw new BookStockException("库存不足!");
-//        }
-//
-//        String hql = "UPDATE Book b SET b.stock = b.stock - 1 WHERE b.isbn = ?";
-//        getSession().createQuery(hql).setString(0, isbn).executeUpdate();
+        if(0 == stock){
+            throw new BookStockException("库存不足!");
+        }
+
+        String hql = "UPDATE Book b SET b.stock = b.stock - 1 WHERE b.isbn = ?";
+        getSession().createQuery(hql).setString(0, isbn).executeUpdate();
     }
 
     //@Override
