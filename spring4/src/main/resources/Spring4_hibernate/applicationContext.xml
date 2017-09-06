@@ -16,7 +16,6 @@
               <property name="password" value="${jdbc.password}"/>
               <property name="driverClass" value="${jdbc.driverClass}"/>
               <property name="jdbcUrl" value="${jdbc.jdbcUrl}"/>
-
               <property name="initialPoolSize" value="${jdbc.initPoolSize}"/>
               <property name="maxPoolSize" value="${jdbc.maxPoolSize}"/>
        </bean>

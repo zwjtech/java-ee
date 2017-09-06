@@ -8,6 +8,6 @@ import org.springframework.stereotype.Service;
  *
  * @author Lcw 2015/11/12
  */
-@Service
+@Service("userServiceTest")
 public class UserService extends BaseService<User> {
 }

@@ -17,7 +17,6 @@ import javax.sql.DataSource;
  * Spring 提供了两种类型的 IOC 容器实现.
  BeanFactory: IOC 容器的基本实现.
  ApplicationContext: 提供了更多的高级特性. 是 BeanFactory 的子接口.
-
  BeanFactory 是 Spring 框架的基础设施，面向 Spring 本身；
  ApplicationContext 面向使用 Spring 框架的开发者，几乎所有的应用场合都直接使用 ApplicationContext 而非底层的 BeanFactory
  无论使用何种方式, 配置文件时相同的.
@@ -30,7 +29,7 @@ public class Spring4_IOCTest {
     @Test
     public void testDI() {
         ApplicationContext ctx = new ClassPathXmlApplicationContext("Spring4_IOC/beans-generic.xml");
-        Spring4_IOC.di.UserService userService = (Spring4_IOC.di.UserService) ctx.getBean("userService");
+        Spring4_IOC.di.UserService userService = (Spring4_IOC.di.UserService) ctx.getBean("userServiceTest");
         System.out.println(userService);
         userService.add();
 
@@ -74,22 +73,25 @@ public class Spring4_IOCTest {
 
 
     /**
-     * Bean 的配置方式：-、通过全类名（反射）；二、通过工厂方法（静态工厂方法 & 实例工厂方法）；三、FactoryBean
-     *
+     * Bean 的配置方式：
+     * -、通过全类名（反射）；
+     * 二、通过工厂方法（静态工厂方法 & 实例工厂方法）；
+     * 三、FactoryBean
      * 测试FactoryBean
      * Spring 中有两种类型的 Bean, 一种是普通Bean, 另一种是工厂Bean, 即FactoryBean
      */
     @Test
     public void testFactoryBean() {
         ApplicationContext ctx = new ClassPathXmlApplicationContext("Spring4_IOC/beans-beanFactory.xml");
-        CarFactoryBean car = (CarFactoryBean) ctx.getBean("car");
+//        CarFactoryBean car = (CarFactoryBean) ctx.getBean("car");
+        Car car = (Car) ctx.getBean("car");
         System.out.println(car);
-
     }
 
     /**
-     * Bean 的配置方式：-、通过全类名（反射）；二、通过工厂方法（静态工厂方法 & 实例工厂方法）；三、FactoryBean
-     *
+     * Bean 的配置方式：-、通过全类名（反射）；
+     *二、通过工厂方法（静态工厂方法 & 实例工厂方法）；
+     * 三、FactoryBean
      * 静态工厂方法：直接调用某一个类的静态方法就可以返回Bean实例
      * 实例工厂方法：实例工厂的方法，即需要先创建工厂本身，再调用工厂的实例方法来返回bean的实例
      */

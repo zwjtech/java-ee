@@ -40,7 +40,7 @@ public class JDBCTest {
      */
     @Test
     public void batchUpdate() {
-        String sql1 = "insert into Employee (lastName, email,dept_id)" +
+        String sql1 = "insert into Employee (last_name, email,dept_id)" +
                 "VALUES (?,?,?)";
         List<Object[] > batchArgs = new ArrayList<Object[]>();
         batchArgs.add(new Object[]{"AA","AA@163.com",1});
@@ -53,11 +53,11 @@ public class JDBCTest {
      */
     @Test
     public void testUpdate() {
-        String sql = "UPDATE employees SET last_name = ? WHERE id = ?";
+        String sql = "UPDATE employee SET last_name = ? WHERE dept_id = ?";
         jdbcTemplate.update(sql, "Jack", 1);
 
-        String sql2 = "UPDATE examstudent SET Grade = ? where flow_id = ?";
-        jdbcTemplate.update(sql2, "80", 5);
+//        String sql2 = "UPDATE examstudent SET Grade = ? where flow_id = ?";
+//        jdbcTemplate.update(sql2, "80", 5);
     }
 
     /**
@@ -66,11 +66,12 @@ public class JDBCTest {
      * 而需要调用 queryForObject(String sql, RowMapper<Employee> rowMapper, Object... args)
      * 1. 其中的 RowMapper 指定如何去映射结果集的行, 常用的实现类为 BeanPropertyRowMapper
      * 2. 使用 SQL 中列的别名完成列名和类的属性名的映射. 例如 last_name lastName
+     *
      * 3. 不支持级联属性. JdbcTemplate 到底是一个 JDBC 的小工具, 而不是 ORM 框架!!!
      */
     @Test
     public void testQueryForObject() {
-        String sql = "SELECT id, lastname , email, dept_id as \"department.id\" FROM employee WHERE id = ?";
+        String sql = "SELECT id, last_name , email, dept_id as \"department.id\" FROM employee WHERE id = ?";
         RowMapper<Employee> rowMapper = new BeanPropertyRowMapper<Employee>(Employee.class);
         Employee employee = jdbcTemplate.queryForObject(sql, rowMapper, 1);
 
@@ -83,9 +84,9 @@ public class JDBCTest {
      */
     @Test
     public void testQueryForList(){
-        String sql = "SELECT id, lastname , email FROM employee WHERE id > ?";
+        String sql = "SELECT id, last_name , email FROM employee WHERE id > ?";
         RowMapper<Employee> rowMapper = new BeanPropertyRowMapper<Employee>(Employee.class);
-        List<Employee> employees = jdbcTemplate.query(sql, rowMapper,1);
+        List<Employee> employees = jdbcTemplate.query(sql, rowMapper,0);
 
         System.out.println(employees);
     }

@@ -25,7 +25,7 @@ public class CarFactoryBean implements FactoryBean<Car> {
     //下面是三个实现方法
     //返回bean的对象
     public Car getObject() throws Exception {
-        return new Car("BMW" , 500000);
+        return new Car("Audi" , 500000);
     }
 
     //返回bean的类型Class<?>  中?表示一个未知的类
