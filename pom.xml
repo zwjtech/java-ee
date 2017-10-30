@@ -25,6 +25,8 @@
         <module>sprint-boot</module>
         <module>docker</module>
         <module>python3</module>
+        <module>java8-features</module>
+        <module>java-multiThread</module>
     </modules>
 
     <!-- Inherit defaults from Spring Boot -->

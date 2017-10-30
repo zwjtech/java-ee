@@ -1,0 +1,18 @@
+Callable和Future
+Executor框架将工作单元划分为任务，即任务是逻辑上的工作单元，而线程是任务异步执行的机制。Runnable是任务的一个抽象，并且理想状态下任务是独立的执行，但是Runnable的run( )不能返回一个结果或者抛出一个受检查的异常，这与我们有些实际任务是不相符的。在通过线程或者executor执行Runnable任务中，不仅仅是不能返回任务的执行结果，有时我们希望可以控制某个任务，或取消或终止，但在executor中一旦提交任务，我们将很难单一的控制任务的生命周期，虽然ExecutorService扩展了Executor接口，添加了生命周期的控制，但是基于线程池的，针对的是所有任务，是无法单一的控制某个任务的。
+JDK还提供了另外一种更佳的任务抽象Callable，它和Runnable十分的相似，但也存在一些差异。Callable任务可以返回一个执行结果，但我们向executor提交一个Callable任务时，就会得到一个Future对象，这就像这个Callable提交到executor之后的一个发票回执，利用这个回执，在以后我们能获取任务的执行结果，或者当我们想取消该任务时，也可以利用这个任务提交时得到的Future对象去取消这个任务，而且利用这个Future我们还能在提交后的任意时间得到任务的状态（是否被取消，是否完成）。
+
+Callable和Runnable的异同点：
+Callable定义的方法是call( )，而Runnable定义的方法是run( )。
+Callable的call方法可以有返回值，而Runnable的run方法不能有返回值。
+Callable的call方法可抛出受检查的异常，而Runnable的run方法不能抛出异常。
+在工具类Executors中有一些工具方法可以把Runnable任务转成Callable。你可以使用executor去执行一个Callable任务，也可以将Callable转成FutureTask对象，然后交由线程去执行。
+
+Future是异步计算的结果，它描述了任务的生命周期，并提供了相关的方法来获得任务执行的结果、取消任务以及检查任务是否已经完成或者取消。
+有多种方式可以创建一个Future。ExecutorService中的所有submit方法都会返回一个Future,利用这个返回的Future你可以获取任务的执行结果，或者取消任务。可以显示将Runnable或者Callable实例化一个FutureTask。
+下面的例子演示了Callable和Future的一些方法，程序中定义了两个任务c1和c2，并且模拟c2的执行时间是8秒左右，然后依次调用future的相关方法.
+
+cancel( )方法可以试图取消任务的执行，如果当前任务已经完成、或已经被取消、或由于某些原因无法取消，则取消操作失败，返回false；如果该任务尚未运行，调用cancel( )方法将会使该任务永不会运行；如果调用cancel( )方法时，该任务已经运行，那么取决于参数boolean的值，如果是true，则表示立即中断该任务的执行，否则，等待该运行的任务结束后，尝试cancel并返回false。
+isCancel( )，如果在任务正常完成前将其取消，那么返回true，否则，返回false。
+isDone( ) , 如果任务已完成，则返回true，由于正常终止、异常或取消而完成，也会返回true。
+get( ) ， 如果任务已经完成，那么get会立即返回或者抛出一个Exception，如果任务没有完成，get会阻塞直到它完成。如果任务抛出了异常，get会将该异常封装为ExecutionException，然后重新抛出；如果任务被取消，get会抛出CancellationException。
