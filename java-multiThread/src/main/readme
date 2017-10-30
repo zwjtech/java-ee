@@ -1,3 +1,7 @@
+
+http://blog.csdn.net/diaorenxiang/article/details/38846255?readlog
+Java并发——Callable和Future
+
 Callable和Future
 Executor框架将工作单元划分为任务，即任务是逻辑上的工作单元，而线程是任务异步执行的机制。Runnable是任务的一个抽象，并且理想状态下任务是独立的执行，但是Runnable的run( )不能返回一个结果或者抛出一个受检查的异常，这与我们有些实际任务是不相符的。在通过线程或者executor执行Runnable任务中，不仅仅是不能返回任务的执行结果，有时我们希望可以控制某个任务，或取消或终止，但在executor中一旦提交任务，我们将很难单一的控制任务的生命周期，虽然ExecutorService扩展了Executor接口，添加了生命周期的控制，但是基于线程池的，针对的是所有任务，是无法单一的控制某个任务的。
 JDK还提供了另外一种更佳的任务抽象Callable，它和Runnable十分的相似，但也存在一些差异。Callable任务可以返回一个执行结果，但我们向executor提交一个Callable任务时，就会得到一个Future对象，这就像这个Callable提交到executor之后的一个发票回执，利用这个回执，在以后我们能获取任务的执行结果，或者当我们想取消该任务时，也可以利用这个任务提交时得到的Future对象去取消这个任务，而且利用这个Future我们还能在提交后的任意时间得到任务的状态（是否被取消，是否完成）。
