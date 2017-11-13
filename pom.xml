@@ -27,6 +27,8 @@
         <module>python3</module>
         <module>java8-features</module>
         <module>java-multiThread</module>
+        <module>netty</module>
+        <module>serviceProvider-spi</module>
     </modules>
 
     <!-- Inherit defaults from Spring Boot -->

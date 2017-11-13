@@ -1,5 +1,6 @@
 import org.junit.jupiter.api.Test;
 
+import java.io.File;
 import java.time.*;
 import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
@@ -154,6 +155,9 @@ public class Java8FeaturesTest {
         int cpuNum = Runtime.getRuntime()
                 .availableProcessors();
         System.out.println(cpuNum);
+        File storeTasksFile = new File(System.getProperty("java.io.tmpdir"),
+                "Store_Tasks_");
+
     }
 
 
